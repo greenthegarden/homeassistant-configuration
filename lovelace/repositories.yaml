@@ -1,0 +1,22 @@
+---
+---
+# lovelace_gen
+title: Repositories
+icon: mdi:github
+path: repositories
+cards:
+  - type: entities
+    entities:
+      - entity: sensor.greenthegarden_homeassistant_configuration_latest_commit
+        name: Latest commit
+      - entity: sensor.greenthegarden_homeassistant_configuration_latest_discussion
+        name: Latest discussion
+      - entity: sensor.greenthegarden_homeassistant_configuration_latest_issue
+        name: Latest issue
+      - entity: sensor.greenthegarden_homeassistant_configuration_latest_pull_request
+        name: Latest pull request
+      - entity: sensor.greenthegarden_homeassistant_configuration_latest_release
+        name: Latest release
+      - entity: sensor.greenthegarden_homeassistant_configuration_latest_tag
+        name: Latest tag
+    title: greenthegarden/homeassistant-configuration

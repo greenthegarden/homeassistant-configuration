@@ -17,3 +17,4 @@ views:
   - !include lovelace/storology.yaml
   - !include lovelace/printer.yaml
   - !include lovelace/system2.yaml
+  - !include lovelace/repositories.yaml
