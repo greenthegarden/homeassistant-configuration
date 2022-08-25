@@ -1,0 +1,17 @@
+---
+# lovelace_gen
+title: Nexus 7
+icon: mdi:tablet-android
+path: nexus
+cards:
+  - type: entities
+    title: Nexus 7
+    entities:
+      - entity: sensor.nexus_7_battery_level
+        name: Battery Level
+      - entity: sensor.nexus_7_battery_state
+        name: Battery State
+      - entity: sensor.nexus_7_charger_type
+        name: Charger Type
+      - entity: binary_sensor.nexus_7_is_charging
+        name: Is charging

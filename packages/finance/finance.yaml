@@ -1,0 +1,50 @@
+---
+# Package: Finance / Finance
+
+# Number inputs
+
+input_number:
+  shares_edv:
+    name: EDV shares
+    initial: !secret shares_number_edv
+    min: 0
+    max: 10000
+    step: 1
+    mode: box
+
+  shares_tls:
+    name: TLS shares
+    initial: !secret shares_number_tls
+    min: 0
+    max: 1000
+    step: 1
+    mode: box
+  shares_wow:
+    name: WOW shares
+    initial: !secret shares_number_wow
+    min: 0
+    max: 10000
+    step: 1
+    mode: box
+
+# Template
+# https://www.home-assistant.io/integrations/template
+template:
+  - sensor:
+      - name: "Shares value EDV"
+        device_class: monetary
+        unit_of_measurement: "$"
+        state: >
+          {{ states('input_number.shares_edv') | int(0) * states('sensor.asx_sensor_edv') | int(0) }}
+
+      - name: "Shares value TLS"
+        device_class: monetary
+        unit_of_measurement: "$"
+        state: >
+          {{ states('input_number.shares_tls') | int(0) * states('sensor.asx_sensor_tls') | int(0) }}
+
+      - name: "Shares value WOW"
+        device_class: monetary
+        unit_of_measurement: "$"
+        state: >
+          {{ states('input_number.shares_wow') | int(0) * states('sensor.asx_sensor_wow') | int(0) }}

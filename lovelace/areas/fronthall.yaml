@@ -1,0 +1,26 @@
+---
+title: Hall
+icon: mdi:camera
+path: area_fronthall
+cards:
+  - type: entities
+    show_header_toggle: false
+    entities:
+      - type: weblink
+        name: Motioneye
+        url: http://motioneye:8765/
+        icon: mdi:camera
+  - type: picture-entity
+    entity: camera.home
+    camera_view: live
+  - type: picture-entity
+    entity: camera.home_detection
+  # - type: picture-entity
+  #   entity: camera.webcam
+  #   camera_view: live
+  - type: entities
+    entities:
+      #     - entity: input_boolean.webcamaudio
+      #       icon: mdi:speaker
+      - entity: input_boolean.camera_home_detection
+        icon: mdi:camera

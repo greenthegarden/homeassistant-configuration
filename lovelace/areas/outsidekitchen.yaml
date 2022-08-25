@@ -1,0 +1,42 @@
+---
+# lovelace_gen
+title: Outside Kitchen
+icon: mdi:pot-steam-outline
+path: area_outside_kitchen
+cards:
+  - type: entities
+    entities:
+      - entity: sensor.thumper_80ah_voltage
+        name: Battery Voltage
+      - entity: sensor.solar_350watt_current
+        name: Solar Current
+      - entity: sensor.solar_system_350w_power
+        name: Solar Power
+      - entity: sensor.duo_solar_monitor_state
+        name: Duo State
+    title: Power System
+  - type: history-graph
+    hours_to_show: 24
+    entities:
+      - entity: sensor.solar_system_350w_power
+        name: Measured Solar Power
+      - entity: sensor.power_production_now
+        name: Estimated Solar Power
+    title: Solar Power
+  - type: entities
+    entities:
+      - entity: sensor.energy_next_hour
+        name: Estimated energy production - next hour
+      - entity: sensor.energy_current_hour
+        name: Estimated energy production - this hour
+      - entity: sensor.energy_production_today
+        name: Estimated energy production - today
+      - entity: sensor.energy_production_tomorrow
+        name: Estimated energy production - tomorrow
+      - entity: sensor.power_production_now
+        name: Estimated power production - now
+      - entity: sensor.power_highest_peak_time_today
+        name: Highest power peak time - today
+      - entity: sensor.power_highest_peak_time_tomorrow
+        name: Highest power peak time - tomorrow
+    title: Solar production forecast

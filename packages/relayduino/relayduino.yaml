@@ -1,0 +1,451 @@
+---
+# Package: Relayduino / Relayduino
+
+# Binary Sensors
+
+binary_sensor:
+  # Binary Sensors - Template:
+  - platform: template
+    sensors:
+      relayduino_mode:
+        value_template: >-
+          {% if is_state('input_boolean.relayduino_mode_automatic', 'on') %}
+            Automatic
+          {% else %}
+            Manual
+          {% endif %}
+        icon_template: >-
+          {% if is_state('switch.relayduino_mode_automatic', 'on') %}
+            mdi:water-pump
+          {% else %}
+            mdi:water-pump-off
+          {% endif %}
+        friendly_name: "Irrigation Mode"
+      relayduino_relay_state:
+        value_template: >-
+          {% if is_state('input_boolean.relayduino_relay_state', 'on') %}
+            On
+          {% else %}
+            Off
+          {% endif %}
+        icon_template: >-
+          {% if is_state('input_boolean.relayduino_relay_state', 'on') %}
+            mdi:water-pump
+          {% else %}
+            mdi:water-pump-off
+          {% endif %}
+
+      # relayduino_time:
+      #   friendly_name: "Relayduino Run Time"
+      #   value_template: >
+      #     {% set totalseconds = (states('sensor.sensor.relayduino_status_uptime') / 1000) | int(0) %}
+      #     {% set minutes = ((totalseconds / 60) | int(0) %}
+      #     {% set seconds = ((minutes %9) * 60 /2 ) | float | round(2) %}
+      #     {{minutes}} Minutes {{seconds}} Seconds
+
+# MQTT Sensor
+# https://www.home-assistant.io/integrations/sensor.mqtt/
+
+mqtt:
+  sensor:
+    # Relayduino devices
+    - name: "Relayduino status mqtt"
+      state_topic: "relayduino/status/mqtt"
+      force_update: true
+
+    - name: "Relayduino status interval"
+      state_topic: "relayduino/status/interval"
+
+    - name: "Relayduino satus IP"
+      state_topic: "relayduino/status/ip_addr"
+
+    - name: "Relayduino status memory"
+      state_topic: "relayduino/status/memory"
+      unit_of_measurement: "bytes"
+
+    - name: "Relayduino status uptime"
+      state_topic: "relayduino/status/uptime"
+      unit_of_measurement: "msecs"
+
+    - name: "Relayduino status relay"
+      state_topic: "relayduino/status/relay"
+
+    - name: "Relayduino status alarm"
+      state_topic: "relayduino/status/alarm"
+
+# Sensors
+
+sensor:
+  - platform: template
+    sensors:
+      relayduino_relay_running:
+        value_template: >-
+          {% if is_state('input_boolean.relayduino_relay_1_state', 'on') %}
+            {{ 1 | int(1) }}
+          {% elif is_state('input_boolean.relayduino_relay_2_state', 'on') %}
+            {{ 2 | int(2) }}
+          {% elif is_state('input_boolean.relayduino_relay_3_state', 'on') %}
+            {{ 3 | int(3) }}
+          {% elif is_state('input_boolean.relayduino_relay_4_state', 'on') %}
+            {{ 4 | int(4) }}
+          {% elif is_state('input_boolean.relayduino_relay_5_state', 'on') %}
+            {{ 5 | int(5) }}
+          {% elif is_state('input_boolean.relayduino_relay_6_state', 'on') %}
+            {{ 6 | int(6) }}
+          {% elif is_state('input_boolean.relayduino_relay_7_state', 'on') %}
+            {{ 7 | int(7) }}
+          {% elif is_state('input_boolean.relayduino_relay_8_state', 'on') %}
+            {{ 8 | int(8) }}
+          {% else %}
+            {{ 0 | int(0) }}
+          {% endif %}
+
+# Switch Template
+# https://www.home-assistant.io/integrations/switch.template/
+
+switch:
+  - platform: template
+    switches:
+      relayduino_mode:
+        value_template: "{{ is_state('input_boolean.relayduino_mode_automatic', 'on') }}"
+        friendly_name: "Relayduino mode"
+        turn_on:
+          - service: input_boolean.turn_on
+            target:
+              entity_id: input_boolean.relayduino_mode_automatic
+        turn_off:
+          - service: input_boolean.turn_off
+            target:
+              entity_id: input_boolean.relayduino_mode_automatic
+
+# Input Boolean
+# https://www.home-assistant.io/integrations/input_boolean/
+
+input_boolean:
+  relayduino_relay_state:
+    name: Relayduino Relay State
+    initial: off
+
+  relayduino_reset_days_count:
+    name: Reset day count`
+    initial: off
+
+  relayduino_mode_automatic:
+    name: Automatic
+    initial: on
+    icon: mdi:water
+
+  relayduino_relay_run:
+    name: Run
+    initial: off
+    icon: mdi:water
+
+  relayduino_use_main_relay:
+    name: Relay
+    initial: off
+    icon: mdi:valve
+
+input_number:
+  relayduino_relay:
+    name: Relay
+    min: 0
+    max: 8
+    initial: 0
+    step: 1
+    mode: box
+
+  relayduino_relay_next:
+    name: Relay next
+    min: 0
+    max: 8
+    initial: 0
+    step: 1
+    mode: box
+
+  relayduino_relay_duration:
+    name: Duration
+    min: 10
+    max: 240
+    initial: 10
+    step: 5
+    mode: box
+    unit_of_measurement: minutes
+    icon: mdi:timer
+
+  relayduino_relay_duration_next:
+    name: Duration next
+    min: 10
+    max: 240
+    initial: 10
+    step: 5
+    unit_of_measurement: minutes
+    icon: mdi:timer
+
+  relayduino_main_relay:
+    name: Main Relay
+    min: 1
+    max: 8
+    initial: 8
+    step: 1
+    mode: box
+
+# Timers
+# https://www.home-assistant.io/integrations/timer/
+
+timer:
+  # Relayduino status every 5 minutes
+  relayduino_healthcheck_timer:
+    duration: "00:11:00"
+    restore: true
+    restore_grace_period: "00:15:00"
+
+  relayduino_response_timer:
+    duration: "00:00:10"
+
+# Automations
+
+automation:
+  - alias: Reset day count
+    id: reset_day_count
+    trigger:
+      platform: state
+      entity_id: input_boolean.relayduino_reset_days_count
+      from: "off"
+      to: "on"
+    action:
+      service: counter.reset
+      target:
+        entity_id:
+          - counter.relayduino_relay_1_days_count
+          - counter.relayduino_relay_2_days_count
+          - counter.relayduino_relay_3_days_count
+          - counter.relayduino_relay_4_days_count
+          - counter.relayduino_relay_5_days_count
+          - counter.relayduino_relay_6_days_count
+          - counter.relayduino_relay_7_days_count
+          - counter.relayduino_relay_8_days_count
+
+  # Action sequence
+  # Automatic:
+  #   When time > start time, day counter is incremented (defined for each relay)
+  #   When day count exceeds relay internal set input_number.relayduino_duration_next to
+  #     duration of relay, and set relayduino_relay_next to relay index
+  #   When input_select.relayduino_relay_next switches from "OFF",
+  #     send control message to relayduino with relay number and duration
+
+  # Sets relayduino_relay_state to on when any relay is on
+  - alias: Relayduino running
+    id: relayduino_running
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.relayduino_relay_running
+        above: 0
+    condition: []
+    action:
+      - service: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.relayduino_relay_state
+
+  # Sets relayduino_relay_state to off when no relay is on
+  - alias: Relayduino not running
+    id: relayduino_not_running
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.relayduino_relay_running
+        below: 1
+    condition: []
+    action:
+      - service: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.relayduino_relay_state
+
+  #######################################################################
+  # actions applied when in manual mode
+
+  - alias: Relayduino set relay next manual
+    id: relayduino_set_relay_next_manual
+    trigger:
+      platform: state
+      entity_id: input_boolean.relayduino_relay_run
+      from: "off"
+      to: "on"
+    condition:
+      condition: state
+      entity_id: input_boolean.relayduino_mode_automatic
+      state: "off"
+    action:
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.relayduino_relay_duration_next
+        data:
+          value: "{{ states('input_number.relayduino_relay_duration') | int(0) }}"
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.relayduino_relay_next
+        data:
+          value: "{{ states('input_number.relayduino_relay') | int(0) }}"
+
+  # Switch relay off when in manual mode via UI
+  - alias: Relayduino relay off
+    id: relayduino_relay_off
+    trigger:
+      platform: state
+      entity_id: input_boolean.relayduino_relay_run
+      from: "on"
+      to: "off"
+    condition:
+      - condition: numeric_state
+        entity_id: sensor.relayduino_relay_running
+        above: 0
+    action:
+      - service: mqtt.publish
+        data:
+          topic: relayduino/control/relay
+          payload: "{{ states('sensor.relayduino_relay_running') | int(0) }},0"
+      - service: timer.start
+        entity_id: timer.relayduino_response_timer
+      - condition: state
+        entity_id: input_boolean.relayduino_use_main_relay
+        state: "on"
+      - service: mqtt.publish
+        data:
+          topic: relayduino/control/relay
+          payload: "{{ states('input_number.relayduino_main_relay') | int(0) }},0"
+
+  #######################################################################
+  # actions applied when in both automatic and manual modes
+  - alias: Send on control message to relayduino
+    id: send_on_control_message_to_relayduino
+    trigger:
+      platform: numeric_state
+      entity_id: input_number.relayduino_relay_next
+      above: 0
+    condition:
+      - condition: numeric_state
+        entity_id: input_number.relayduino_relay_duration_next
+        above: 0
+    action:
+      - service: mqtt.publish
+        data:
+          topic: relayduino/control/relay
+          payload: >-
+            {{ states('input_number.relayduino_relay_next') | int(0) }},
+            {{ states('input_number.relayduino_relay_duration_next') | int(0) }}
+      - service: timer.start
+        entity_id: timer.relayduino_response_timer
+      - condition: state
+        entity_id: input_boolean.relayduino_use_main_relay
+        state: "on"
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 1
+          milliseconds: 0
+      - service: mqtt.publish
+        data:
+          topic: relayduino/control/relay
+          payload: >-
+            {{ states('input_number.relayduino_main_relay') | int(0) }},
+            {{ states('input_number.relayduino_relay_duration_next') | int(0) }}
+    # should have an alert here if relayduino does not respond
+
+  # Occurs after response from relayduino and relay is on
+  - alias: Relayduino relay reset
+    id: relayduino_relay_reset
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.relayduino_relay_running
+      above: 0
+      # platform: state
+      # # entity_id: input_boolean.relayduino_relay_state
+      # from: "off"
+      # to: "on"
+    condition: []
+    action:
+      - condition: template
+        value_template: "{{ states('sensor.relayduino_relay_running') | int(0) == states('input_number.relayduino_relay_next') | int(0) }}"
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.relayduino_relay_next
+        data:
+          value: 0
+
+  # Switch off when changing from automatic to manual
+  - alias: Relayduino relay switch off
+    id: relayduino_relay_switch_off
+    trigger:
+      platform: state
+      entity_id: input_boolean.relayduino_mode_automatic
+      from: "on"
+      to: "off"
+    action:
+      - service: input_number.set_value
+
+        target:
+          entity_id: input_number.relayduino_relay
+        data:
+          value: 0
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.relayduino_run_manual
+
+  #######################################################################
+  # healthchecks
+
+  - alias: Relayduino healthcheck start
+    id: relayduino_healthcheck_start
+    trigger:
+      - platform: homeassistant
+        event: start
+      - platform: mqtt
+        id: mqtt_relayduino_status
+        topic: relayduino/status/#
+    condition: []
+    action:
+      - service: timer.start
+        entity_id: timer.relayduino_healthcheck_timer
+
+  # - alias: Relayduino healthcheck reset
+  #   id: relayduino_healthcheck_reset
+  #   trigger:
+  #     platform: mqtt
+  #     id: mqtt_relayduino_status
+  #     topic: relayduino/status/#
+  #   condition: []
+  #   action:
+  #     - service: timer.start
+  #       entity_id: timer.relayduino_healthcheck_timer
+
+  - alias: Relayduino healthcheck expired
+    id: relayduino_healthcheck_expired
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.relayduino_healthcheck_timer
+    action:
+      - service: notify.mobile_app_nokia_5_3
+        data:
+          message: Relayduino silent
+
+  - alias: Relayduino response received
+    id: relayduino_response_received
+    trigger:
+      platform: mqtt
+      id: mqtt_relayduino_status_relay
+      topic: relayduino/status/relay
+    condition: []
+    action:
+      - service: timer.cancel
+        entity_id: timer.relayduino_response_timer
+
+  - alias: Relayduino response expired
+    id: relayduino_response_expired
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.relayduino_response_timer
+    action:
+      - service: notify.mobile_app_nokia_5_3
+        data:
+          message: Relayduino response not received

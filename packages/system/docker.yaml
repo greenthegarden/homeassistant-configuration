@@ -1,0 +1,41 @@
+---
+# https://github.com/ualex73/monitor_docker
+monitor_docker:
+  - name: Docker
+    url: tcp://homeassistant-docker-socket-proxy:2375
+    containers:
+      - appdaemon
+      - consul
+      - emqx
+      - grafana
+      - grocy
+      - homeassistant-db
+      - homeassistant-influxdb
+      - homeassistant
+      - nextcloud
+      - nut-upsd
+      - prometheus
+      - traefik
+    rename:
+      appdaemon: AppDaemon
+      consul: Consul
+      emqx: EMQX
+      grafana: Grafana
+      grocy: Grocy
+      homeassistant-db: "Home Assistant DB"
+      homeassistant-influxdb: "Home Assistant InfluxDB"
+      homeassistant: "Home Assistant"
+      nextcloud: Nextcloud
+      nut-upsd: "Network UPS Tools"
+      prometheus: Prometheus
+      traefik: Traefik
+    monitored_conditions:
+      - version
+      - containers_running
+      - containers_total
+      - cpu_percentage
+      - image
+      - memory
+      - state
+      - status
+      - uptime

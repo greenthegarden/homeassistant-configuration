@@ -1,0 +1,33 @@
+---
+# Package: Power / Opennem
+
+# OpenNEM
+# https://github.com/bacco007/sensor.opennem
+
+# new templating structure
+template:
+  - sensor:
+      - name: sa_power_price
+        state: "{{ state_attr('sensor.opennem_sa', 'price') }}"
+        unit_of_measurement: "$"
+        state_class: measurement
+
+      - name: "Renewables versus Generation"
+        state: >
+          {% set renewables = state_attr('sensor.opennem_sa', 'renewables') | float(0.0) %}
+          {% set generation = state_attr('sensor.opennem_sa', 'generation') | float(0.0) %}
+          {% if is_number(renewables) and is_number(generation) %}
+          {{ (100 * renewables / generation) | round(1, default=0) }}
+          {% endif %}
+        unit_of_measurement: "%"
+        state_class: measurement
+
+      - name: "Generation versus Demand"
+        state: >
+          {% set generation = state_attr('sensor.opennem_sa', 'generation') | float(0.0) %}
+          {% set demand = state_attr('sensor.opennem_sa', 'demand') | float(0.0) %}
+          {% if is_number(generation) and is_number(demand) %}
+          {{ (100 * generation / demand) | round(1, default=0) }}
+          {% endif %}
+        unit_of_measurement: "%"
+        state_class: measurement

@@ -1,0 +1,64 @@
+---
+# lovelace_gen
+title: Storology
+icon: mdi:nas
+path: storology
+cards:
+  - type: conditional
+    conditions:
+      - entity: sensor.storology
+        state: "Online"
+    card:
+      type: entities
+      title: Storology
+      entities:
+        # NAS System Information
+        - entity: sensor.storology_cpu_utilization_total
+          name: CPU Load (Total)
+        - entity: sensor.storology_memory_usage_real
+          name: Memory Usage
+        - entity: sensor.storology_temperature
+          name: Temperature
+        - entity: update.storology_dsm_update
+          name: Update Available
+        - entity: binary_sensor.storology_security_status
+          name: Security Status
+        # Drive 1 Information
+        - type: section
+          label: Drive 1
+        - entity: sensor.storology_drive_1_status
+          name: Status (SMART)
+        - entity: binary_sensor.storology_drive_1_below_min_remaining_life
+          name: Below Min Remaining Life
+        - entity: binary_sensor.storology_drive_1_exceeded_max_bad_sectors
+          name: Exceeded Max Bad Sectors
+        - entity: sensor.storology_drive_1_temperature
+          name: Temperature
+        # Drive 2 Information
+        - type: section
+          label: Drive 2
+        - entity: sensor.storology_drive_2_status
+          name: Status (SMART)
+        - entity: binary_sensor.storology_drive_2_below_min_remaining_life
+          name: Below Min Remaining Life
+        - entity: binary_sensor.storology_drive_2_exceeded_max_bad_sectors
+          name: Exceeded Max Bad Sectors
+        - entity: sensor.storology_drive_2_temperature
+          name: Temperature
+        # Volume 1 Information
+        - type: section
+          label: Volume 1
+        - entity: sensor.storology_volume_1_status
+          name: Status
+        - entity: sensor.storology_volume_1_volume_used
+          name: Volume Used
+        - entity: sensor.storology_volume_1_average_disk_temp
+          name: Avg Disk Temperature
+        # Buttons
+        - type: divider
+        - type: buttons
+          entities:
+            - entity: button.storology_reboot
+              name: Reboot
+            - entity: button.storology_shutdown
+              name: Shutdown

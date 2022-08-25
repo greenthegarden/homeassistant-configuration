@@ -1,0 +1,34 @@
+---
+# lovelace_gen
+title: Thanh
+icon: mdi:face-woman
+path: thanh
+visible:
+  - user: a8a4038a056e468b933ab70408050fd5
+theme: happy
+cards:
+  - type: vertical-stack
+    cards:
+      - type: entities
+        title: Thanh
+        entities:
+          - entity: sensor.thanh_home_away
+            name: Home or away
+          - entity: sensor.skin_type_5_safe_exposure_time
+            name: UV safe exposure time
+          - entity: input_boolean.thanh_bed
+            name: In bed
+      - type: entities
+        title: Devices
+        entities:
+          - entity: sensor.thanh_phone
+            name: Phone
+          - entity: sensor.thanh_ipad
+            name: iPad
+      - type: entities
+        title: iPad
+        entities:
+          - entity: sensor.philips_ipad_battery_level
+            name: Battery Level
+          - entity: sensor.philips_ipad_battery_state
+            name: Battery State

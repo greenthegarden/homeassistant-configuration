@@ -1,0 +1,37 @@
+---
+# lovelace_gen
+title: Perth
+icon: mdi:webcam
+path: perth
+cards:
+  - type: entities
+    # title: World Times
+    entities:
+      - entity: sensor.time_in_perth
+        name: Perth
+  - type: entities
+    title: Record
+    entities:
+      - input_boolean.camera_perth_record
+  - type: history-graph
+    title: Camera recording
+    entities:
+      - entity: input_boolean.camera_perth_recording_status
+        name: Recording
+  - type: vertical-stack
+    cards:
+      - type: entities
+        title: Perth
+        entities:
+          - camera.living_room
+      - type: picture-entity
+        entity: camera.living_room
+        camera_view: live
+        tap_action:
+          action: call-service
+          service: camera.snapshot
+          service_data:
+            entity_id: camera.living_room
+            # filename: '/media/camera/snapshots/living_room-{{ now(tzinfo=timezone.utc).strftime("%Y%m%d-%H%M%S") }}.jpg'
+            # filename: /media/camera/snapshots/living_room-{{ strptime(states('sensor.time_in_perth'), '%Y%m%d-%H%M%S') }}.jpg
+            filename: '/media/camera/snapshots/living_room-{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'

@@ -1,0 +1,40 @@
+---
+# lovelace_gen
+title: MQTT
+icon: mdi:network
+path: mqtt
+cards:
+  - type: entities
+    title: MQTT Broker Clients
+    entities:
+      - type: weblink
+        name: MQTT Broker
+        url: http://emqx.home-assistant.localdomain
+        icon: mdi:network
+
+  - type: entities
+    entities:
+      - sensor.mqtt_broker_clients
+
+  - type: custom:auto-entities
+    card:
+      type: entities
+      title: MQTT Broker Clients
+    filter:
+      template: |
+        {% set clients = sensor.mqtt_broker_clients.split(' ') %}
+        {% for client in clients %}
+          {{ client }}
+        {% endfor %}
+
+  - type: entities
+    title: Sensors
+    entities:
+      - entity: timer.relayduino_healthcheck_timer
+        name: Irrigation
+      - entity: timer.weatherstation_healthcheck_timer
+        name: Weatherstation
+      - entity: timer.weathersense_1_healthcheck_timer
+        name: Weathersense 1
+      - entity: timer.weathersense_2_healthcheck_timer
+        name: Weathersense 2

@@ -1,0 +1,19 @@
+---
+title: Cameras
+icon: mdi:camera
+path: cameras
+cards:
+  - type: picture-entity
+    entity: camera.home
+    camera_view: live
+  - type: picture-entity
+    entity: camera.home_detection
+  # - type: picture-entity
+  #   entity: camera.webcam
+  #   camera_view: live
+  - type: entities
+    entities:
+      #     - entity: input_boolean.webcamaudio
+      #       icon: mdi:speaker
+      - entity: input_boolean.camera_home_detection
+        icon: mdi:camera

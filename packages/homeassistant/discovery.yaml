@@ -1,0 +1,10 @@
+---
+# Discovery
+#
+# Home Assistant can discover and automatically configure zeroconf/mDNS and uPnP devices on your network.
+#
+# https://www.home-assistant.io/integrations/discovery/
+#
+discovery:
+  # ignore:
+  #   - google_cast

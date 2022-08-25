@@ -1,0 +1,44 @@
+# ---
+
+# # https://www.home-assistant.io/integrations/ffmpeg_noise/
+# binary_sensor:
+#   platform: ffmpeg_noise
+#   name: webcam_noise
+#   input: rtsp://192.168.1.192:8888/out.mp3
+#   # input: http://192.168.1.192:8082
+#   # extra_arguments: -filter:a highpass=f=300,lowpass=f=2500,volume=volume=2 -codec:a libmp3lame -ar 16000
+#   # # output: -f mp3 icecast://stream_user:stream_pw@127.0.0.1:8000/babyphone.mp3
+#   # initial_state: false
+#   # duration: 2
+#   # reset: 60
+#   # peak: -32
+
+# input_boolean:
+#   webcamaudio:
+#     name: webcamaudio
+#     initial: off
+
+# automation:
+#   - alias: "Webcamaudio on"
+#     id: webcamaudio_on
+#     trigger:
+#       platform: state
+#       entity_id: input_boolean.webcamaudio
+#       from: "off"
+#       to: "on"
+#     action:
+#       service: ffmpeg.start
+#       target:
+#         entity_id: binary_sensor.ffmpeg_noise
+
+#   - alias: "Webcamaudio off"
+#     id: webcamaudio_off
+#     trigger:
+#       platform: state
+#       entity_id: input_boolean.webcamaudio
+#       from: "on"
+#       to: "off"
+#     action:
+#       service: ffmpeg.stop
+#       target:
+#         entity_id: binary_sensor.ffmpeg_noise

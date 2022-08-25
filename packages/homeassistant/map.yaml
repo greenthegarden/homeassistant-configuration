@@ -1,0 +1,8 @@
+---
+# Map
+#
+# Enables a map showing the location of tracked devices
+#
+# https://www.home-assistant.io/integrations/map/
+#
+map:

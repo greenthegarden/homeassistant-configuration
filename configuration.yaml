@@ -1,0 +1,223 @@
+---
+# Home Assistant Configuration
+# https://www.home-assistant.io/docs/configuration/
+
+# Home Assistant
+# https://home-assistant.io/docs/configuration/basic/
+# homeassistant: !include homeassistant.yaml
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: !secret home_elevation
+
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Select timezone from http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: !secret home_tz
+  # Select currency from https://en.wikipedia.org/wiki/ISO_4217#Active_codes
+  currency: !secret home_currency
+
+  # external_url: !secret home_assistant_url_external
+  # internal_url: !secret home_assistant_url_internal
+
+  # allowlist_external_dirs:
+  #   - "/tmp"
+
+  # allowlist_external_urls:
+  #   - "http://images.com/image1.png"
+
+  # Media Directories
+  # https://www.home-assistant.io/integrations/media_source/#local-media
+  # media_dirs:
+  #   camera: /media/camera/snapshots
+  #   motion: /media/camera/motion_events
+
+  legacy_templates: false
+
+  # Packages
+  packages: !include_dir_named packages
+
+  # Authenticated Providers
+  # https://www.home-assistant.io/docs/authentication/providers/
+  auth_providers:
+    - type: homeassistant
+    - type: trusted_networks
+      trusted_networks:
+        - 192.168.1.0/24
+      #      - !secret external_ip
+      allow_bypass_login: true
+      # trusted_users:
+      #   192.168.1.24: 4cd6c52e90d84b0a96bda6f9c4b648c4  # User ID
+
+automation: !include automations.yaml
+
+# External configuration items
+# https://www.home-assistant.io/docs/configuration/splitting_configuration/
+
+# Home Assistant API
+# The api integration exposes a RESTful API and allows one to
+# interact with a Home Assistant instance that is running headless.
+# https://www.home-assistant.io/integrations/api
+api:
+
+# Python Scripts
+# To include python scripts
+# https://www.home-assistant.io/integrations/python_script/
+python_script:
+
+# lovelace_gen
+# Improve the lovelace yaml parser for Home Assistant.
+# https://github.com/thomasloven/hass-lovelace_gen
+lovelace_gen:
+
+# Lovelace
+# Lovelace is the Home Assistant dashboard.
+# https://www.home-assistant.io/lovelace
+lovelace: !include lovelace.yaml
+
+# Zone
+# Zones allow certain regions on earth to be specified
+# https://www.home-assistant.io/integrations/zone/
+zone: !include zone.yaml
+
+# Default Config
+# Configure a default setup of Home Assistant (frontend, api, etc)
+# https://www.home-assistant.io/integrations/default_config/
+# default_config:
+
+# Camera
+# https://www.home-assistant.io/integrations/camera/
+# camera:
+#   # https://www.home-assistant.io/integrations/iss/#show-position-on-map-with-camera-platform
+#   - platform: generic
+#     name: ISS Map
+#     still_image_url: http://staticmap.openstreetmap.de/staticmap.php?center={{ state_attr('binary_sensor.iss', 'lat') }},{{ state_attr('binary_sensor.iss', 'long') }}&zoom=4&size=865x512&maptype=mapnik&markers={{ state_attr('binary_sensor.iss', 'lat') }},{{ state_attr('binary_sensor.iss', 'long') }},lightblue
+#     limit_refetch_to_url_change: true
+
+# - platform: mjpeg
+#   name: Security Camera
+#   mjpeg_url: http://192.168.1.70:8081
+#   verify_ssl: false
+
+# Enables configuration UI
+# https://www.home-assistant.io/integrations/config/
+config:
+
+# Conversation
+# Allows you to issue voice commands from the frontend in enabled browsers
+# https://www.home-assistant.io/integrations/conversation/
+# conversation:
+
+# Device Tracker
+# https://www.home-assistant.io/integrations/device_tracker/
+# https://www.home-assistant.io/integrations/nmap_tracker/
+# device_tracker:
+#   - platform: nmap_tracker
+#     hosts: 192.168.1.0/24
+#     exclude:
+#       - 192.168.1.55
+#       - 192.168.1.254
+#     interval_seconds: 12
+#     # home_interval: 10
+#     new_device_defaults:
+#       track_new_devices: true
+# Replaced by https://www.home-assistant.io/integrations/unifi
+
+# FFmpeg
+# Allows other Home Assistant integrations to process video and audio streams
+# https://www.home-assistant.io/integrations/ffmpeg/
+ffmpeg:
+
+# Home Assistant Frontend
+# Official frontend to control Home Assistant.
+# https://www.home-assistant.io/integrations/frontend/
+frontend:
+  themes:
+    happy:
+      primary-color: pink
+      text-primary-color: purple
+      mdc-theme-primary: plum
+    sad:
+      primary-color: steelblue
+      modes:
+        dark:
+          secondary-text-color: slategray
+    day_and_night:
+      primary-color: coral
+      modes:
+        light:
+          secondary-text-color: olive
+        dark:
+          secondary-text-color: slategray
+
+# HTTP
+# Serves all files and data required for the Home Assistant frontend
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# https://www.home-assistant.io/integrations/http/
+# Based on https://community.home-assistant.io/t/solved-howto-home-assistant-vm-behind-traefik-unable-to-connect-to-home-assistant/322776
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 192.168.1.0/24 # Local LAN Subnet
+    - 172.21.0.0/16 # Docker Subnet
+    - 127.0.0.1
+    - ::1
+    - fe80::/64
+
+# InfluxDB
+# https://www.home-assistant.io/integrations/influxdb/
+influxdb:
+  api_version: 2
+  ssl: false
+  host: homeassistant-influxdb
+  port: 8086
+  token: homeassistant
+  organization: homeassistant
+  bucket: homeassistant
+  tags:
+    source: ha
+  tags_attributes:
+    - friendly_name
+  default_measurement: units
+  exclude:
+    domains:
+      - persistent_notification
+      - person
+  include:
+    entities: !include_dir_merge_list influxdb
+
+# Introduction
+# Show links to resources in log and frontend
+#introduction:
+
+# Media Source
+# Allows integrations to expose media for use inside Home Assistant
+# through the Media Browser panel or through supported media players
+# like Google Cast
+# https://www.home-assistant.io/integrations/media_source/
+# https://www.home-assistant.io/more-info/local-media/setup-media
+media_source:
+
+# Mobile App
+# Allows Home Assistant mobile apps to easily integrate with Home Assistant
+# https://www.home-assistant.io/integrations/mobile_app/
+mobile_app:
+
+# Prometheus
+# Exposes metrics in format for Prometheus
+# https://www.home-assistant.io/integrations/prometheus/
+prometheus:
+
+# Stream
+# Provides a way to proxy live streams
+# https://www.home-assistant.io/integrations/stream
+stream:
+# Text-to-Speech
+# https://www.home-assistant.io/integrations/#text-to-speech
+# tts:
+#   - platform: google_translate

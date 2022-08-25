@@ -1,0 +1,80 @@
+---
+# lovelace_gen
+title: Batteries
+icon: mdi:battery-high
+path: batteries
+cards:
+  - type: custom:battery-state-card
+    title: "Battery levels"
+    entities:
+      - sensor.ups_battery_charge
+      - sensor.nokia_5_3_battery_level
+      - sensor.philips_ipad_battery_level
+      - sensor.tradfri_on_off_switch
+      - entity: binary_sensor.weathersensor_battery_low
+        name: "Weatherstation"
+        state_map:
+          - from: "off"
+            to: 100
+          - from: "on"
+            to: 25
+      - entity: binary_sensor.weathersense_1_battery_low
+        name: "Weathersense 1"
+        state_map:
+          - from: "off"
+            to: 100
+          - from: "on"
+            to: 25
+      - entity: binary_sensor.weathersense_2_battery_low
+        name: "Weathersense 2"
+        state_map:
+          - from: "off"
+            to: 100
+          - from: "on"
+            to: 25
+
+  # - type: vertical-stack
+  #   cards:
+  #     - type: entities
+  #       title: Air Quality
+  #       icon: mdi:factory
+  #       entities:
+  #         - entity: sensor.weathersense_airquality_load_voltage
+  #           name: Load Voltage
+  #         - entity: sensor.weathersense_airquality_load_current
+  #           name: Load Current
+  #         - entity: sensor.weathersense_airquality_solar_panel_voltage
+  #           name: Solar Panel Voltage
+  #         - entity: sensor.weathersense_airquality_solar_panel_current
+  #           name: Solar Panel Current
+  #         - entity: sensor.weathersense_airquality_battery_voltage
+  #           name: Battery Voltage
+  #         - entity: sensor.weathersense_airquality_battery_current
+  #           name: Battery Current
+
+  - type: custom:battery-state-card
+    title: "Charging indicators"
+    charging_state:
+      attribute: # whenever one of below attributes is matching
+        - name: "Battery State"
+          value: "Charging"
+        - name: "is_charging"
+          value: true
+      state: # or if entity state matches one of the following
+        - "charging"
+        - "Charging"
+    entities:
+      - sensor.nokia_5_3_battery_state
+      - sensor.philips_ipad_battery_state
+
+  - type: entities
+    title: UPS
+    entities:
+      - entity: sensor.ups_status
+        name: Status
+      - entity: sensor.ups_battery_charge
+        name: Battery Charge
+      - entity: sensor.ups_load
+        name: Load
+      - entity: sensor.ups_input_voltage
+        name: Input Voltage

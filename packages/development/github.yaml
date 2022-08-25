@@ -1,0 +1,43 @@
+---
+# Package: Development / Github
+
+sensor:
+  # - platform: github
+  #   access_token: !secret github_access_token
+  #   repositories:
+  #     - path: "greenthegarden/home-assistant-configuration-lovelace"
+  #       name: Home Assistant
+  #     - path: "greenthegarden/my-iot-environment"
+  #       name: Infrastructure
+
+  #
+  # Github template sensors
+  # Through these sensors I read how many stars my github config has and what the last commit message was
+  #
+  - platform: template
+    sensors:
+      github_homeassistant_config_stars:
+        value_template: "{{ state_attr('sensor.smarthome_homeassistant_config','stargazers') }}"
+        friendly_name: "Home Assistant Configuration stars"
+        unit_of_measurement: Stars
+        icon_template: mdi:star
+
+  - platform: template
+    sensors:
+      github_homeassistant_commit_message:
+        value_template: "{{ state_attr('sensor.smarthome_homeassistant_config','latest_commit_message') }}"
+        friendly_name: "Home Assistant Configuration Commit Message"
+
+  - platform: template
+    sensors:
+      github_infrastructure_stars:
+        value_template: "{{ state_attr('sensor.smarthome_homeassistant_config','stargazers') }}"
+        friendly_name: "Infrastructure stars"
+        unit_of_measurement: Stars
+        icon_template: mdi:star
+
+  - platform: template
+    sensors:
+      github_infrastructure_commit_message:
+        value_template: "{{ state_attr('sensor.smarthome_homeassistant_config','latest_commit_message') }}"
+        friendly_name: "Infrastructure COmmit Message"

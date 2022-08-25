@@ -1,0 +1,63 @@
+---
+# lovelace_gen
+title: Areas
+icon: mdi:floor-plan
+path: areas
+cards:
+  - type: area
+    area: region
+    navigation_path: /lovelace-areas/area_region
+  - type: area
+    area: home
+    navigation_path: /lovelace-areas/area_home
+  - type: area
+    area: porch
+    navigation_path: /lovelace-areas/area_porch
+  - type: area
+    area: front_hall
+    navigation_path: /lovelace-areas/area_fronthall
+  - type: area
+    area: living_room
+    navigation_path: /lovelace-areas/area_living_room
+  # - type: area
+  #   area: dining_room
+  #   navigation_path: /lovelace-areas/area_dining_room
+  - type: area
+    area: family_room
+    navigation_path: /lovelace-areas/area_family_room
+  # - type: area
+  #   area: kitchen
+  #   navigation_path: /lovelace-areas/area_kitchen
+  # - type: area
+  #   area: pantry
+  # navigation_path: /lovelace-areas/area_pantry
+  - type: area
+    area: network_cabinet
+    navigation_path: /lovelace-areas/area_network_cabinet
+  # - type: area
+  #   area: utility_room
+  #   navigation_path: /lovelace-areas/area_utility_room
+  - type: area
+    area: bedroom_back
+    navigation_path: /lovelace-areas/area_bedroom_back
+  # - type: area
+  #   area: storage_room
+  # navigation_path: /lovelace-areas/area_storage_room
+  - type: area
+    area: bedroom_front_small
+    navigation_path: /lovelace-areas/area_bedroom_front_small
+  # - type: area
+  #   area: passageway
+  # navigation_path: /lovelace-areas/area_passageway
+  - type: area
+    area: bedroom_front_big
+    navigation_path: /lovelace-areas/area_bedroom_front_big
+  # - type: area
+  #   area: garage
+  #   navigation_path: /lovelace-areas/area_garage
+  # - type: area
+  #   area: shed
+  #   navigation_path: /lovelace-areas/area_shed
+  - type: area
+    area: outside_kitchen
+    navigation_path: /lovelace-areas/area_outside_kitchen

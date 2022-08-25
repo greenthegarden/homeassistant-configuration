@@ -1,0 +1,190 @@
+---
+# MQTT Sensor
+# https://www.home-assistant.io/integrations/sensor.mqtt/
+
+# SwitchDoc Labs WeatherSenseAQ Sensor
+
+# Topic: weathersense/WSAQI
+# Payload:
+# {
+#   "time" : "2021-02-27 12:49:58",
+#   "model" : "SwitchDoc Labs AQI",
+#   "len" : 46,
+#   "messageid" : 0,
+#   "deviceid" : 1,
+#   "protocolversion" : 1,
+#   "softwareversion" : 1,
+#   "weathersenseprotocol" : 15,
+#   "PM1.0S" : 3,
+#   "PM2.5S" : 4,
+#   "PM10S" : 4,
+#   "PM1.0A" : 3,
+#   "PM2.5A" : 4,
+#   "PM10A" : 4,
+#   "AQI" : 16,
+#   "loadvoltage" : 4.960,
+#   "batteryvoltage" : 4.160,
+#   "batterycurrent" : 154.000,
+#   "loadcurrent" : 77.100,
+#   "solarpanelvoltage" : 3.032,
+#   "solarpanelcurrent" : -0.000,
+#   "auxa": 3,
+#   "mic" : "CRC"
+# }
+
+# The values and units of the are:
+# • timestamp: When the packet has been received
+# • model: SwitchDoc Labs AQI
+# • len: Number of bytes in the packet
+# • messageid: Reset to 0 on bootup
+# • deviceid: 1 – If you have more than one AQ sensor, you can change this ID by recompiling the software
+# • protocolversion: Current protocol of the AQ sensor
+# • softwareversion: This shows the current version of the software on the Mini Pro Plus
+# • weathersenseprotocol: 15 for WeatherSenseAQ
+# • PM1.0S – concentration of 1.0 micron particles ug/m***3 (Standard)
+# • PM2.5S– concentration of 2.5 micron particles ug/m***3 (Standard)
+# • PM10S – concentration of 10 micron particles ug/m***3 (Standard)
+# • PM1.0A – concentration of 1.0 micron particles ug/m***3 (Atmospheric)
+# • PM2.5A– concentration of 2.5 micron particles ug/m***3 (Atmospheric)
+# • PM10S – concentration of 10 micron particles ug/m***3 (Atmospheric)
+# • AQI – The Air Quality Index of the above data – EPA calculation
+# The solar data collected by the device is:
+# • loadvoltage: Voltage supplied to the computer (V)
+# • batteryvoltage: Voltage of the LiPo Battery (V)
+# • batterycurrent: Current being supplied by the battery (mA)
+# • loadcurrent: Current being supplied to the computer (mA)
+# • solarpanelvoltage: Voltage of the Solar Panel (V)
+# • solarpanelcurrent: Current being supplied by the Solar Pane (mA)
+# The AuxA variable contains state information about what sensors the WeatherSenseAQ has connected to and if
+# the sensor is in low voltage mode.
+# Each bit of the lower four bits of the AuxA variable (0CAB) are coded as:
+# C = 1, Voltage below 2.9, HM3301 not turned on, 0 means normal operation
+# A = 1, SunAirPlus2 (Solar) Present, 0 not present
+# B = 1, HM3301 Present, 0 not present
+
+# Uses sensor: https://wiki.seeedstudio.com/Grove-Laser_PM2.5_Sensor-HM3301/
+
+# Device data
+mqtt:
+  sensor:
+    - name: WeatherSense AirQuality Device ID
+      state_topic: "weathersense/WSAQI"
+      value_template: "{{ value_json.deviceid | int(1) }}"
+
+    - name: WeatherSense AirQuality State
+      state_topic: "weathersense/WSAQI"
+      value_template: "{{ value_json.auxa | int(0) }}"
+
+    # Air Quality data
+    # - name: WeatherSense AirQuality PM1.0S
+    # device_class: pm1
+    #   state_class: measurement
+    #   state_topic: "weathersense/WSAQI"
+    #   value_template: "{{ value_json.'PM1.0S' | int(0) }}"
+
+    # - name: WeatherSense AirQuality PM2.5S
+    # device_class: pm25
+    #   state_class: measurement
+    #   state_topic: "weathersense/WSAQI"
+    #   value_template: "{{ value_json.'PM2.5S' | int(0) }}"
+
+    - name: WeatherSense AirQuality PM10S
+      device_class: pm10
+      state_class: measurement
+      state_topic: "weathersense/WSAQI"
+      value_template: "{{ value_json.PM10S | int(0) }}"
+
+    - name: WeatherSense AirQuality PM10A
+      device_class: pm10
+      state_class: measurement
+      state_topic: "weathersense/WSAQI"
+      value_template: "{{ value_json.PM10A | int(0) }}"
+
+    - name: WeatherSense AirQuality Air Quality Index
+      device_class: aqi
+      state_class: measurement
+      state_topic: "weathersense/WSAQI"
+      unit_of_measurement: "AQI"
+      value_template: "{{ value_json.AQI | int(0) }}"
+
+    # Power data
+    - name: WeatherSense AirQuality Load Voltage
+      device_class: voltage
+      state_class: measurement
+      state_topic: "weathersense/WSAQI"
+      unit_of_measurement: "V"
+      value_template: "{{ value_json.loadvoltage | float(0.0) }}"
+
+    - name: WeatherSense AirQuality Battery Voltage
+      device_class: voltage
+      state_class: measurement
+      state_topic: "weathersense/WSAQI"
+      unit_of_measurement: "V"
+      value_template: "{{ value_json.batteryvoltage | float(0.0) }}"
+
+    - name: WeatherSense AirQuality Battery Current
+      device_class: current
+      state_class: measurement
+      state_topic: "weathersense/WSAQI"
+      unit_of_measurement: "mA"
+      value_template: "{{ value_json.batterycurrent | float(0.0) }}"
+
+    - name: WeatherSense AirQuality Load Current
+      device_class: current
+      state_class: measurement
+      state_topic: "weathersense/WSAQI"
+      unit_of_measurement: "mA"
+      value_template: "{{ value_json.loadcurrent | float(0.0) }}"
+
+    - name: WeatherSense AirQuality Solar Panel Voltage
+      device_class: voltage
+      state_class: measurement
+      state_topic: "weathersense/WSAQI"
+      unit_of_measurement: "V"
+      value_template: "{{ value_json.solarpanelvoltage | float(0.0) }}"
+
+    - name: WeatherSense AirQuality Solar Panel Current
+      device_class: current
+      state_class: measurement
+      state_topic: "weathersense/WSAQI"
+      unit_of_measurement: "mA"
+      value_template: "{{ value_json.solarpanelcurrent | float(0.0) }}"
+
+# Timers
+# https://www.home-assistant.io/integrations/timer/
+timer:
+  # Weatherstation status every 18 minutes
+  weathersense_aq_healthcheck_timer:
+    duration: "00:40:00"
+    restore: true
+    restore_grace_period: "00:45:00"
+
+# Automations
+automation:
+  #######################################################################
+  # healthchecks
+
+  - alias: Weathersense AQ healthcheck start
+    id: weathersense_aq_healthcheck_start
+    trigger:
+      - platform: homeassistant
+        event: start
+      - platform: mqtt
+        id: mqtt_weathersense_report
+        topic: weathersense/WSAQI/#
+    condition: []
+    action:
+      - service: timer.start
+        entity_id: timer.weathersense_aq_healthcheck_timer
+
+  - alias: Weathersense AQ healthcheck expired
+    id: weathersense_aq_healthcheck_expired
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.weathersense_aq_healthcheck_timer
+    action:
+      - service: notify.mobile_app_nokia_5_3
+        data:
+          message: Weathersense AQ silent

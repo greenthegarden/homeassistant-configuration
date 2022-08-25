@@ -1,0 +1,146 @@
+---
+# lovelace_gen
+title: Energy
+icon: mdi:solar-power
+path: power
+cards:
+  - type: entities
+    # title: Device Access Links
+    show_header_toggle: false
+    entities:
+      - type: weblink
+        name: EmonPi
+        url: http://192.168.1.172/emoncms/app/view
+        icon: mdi:power-socket-au
+  - type: vertical-stack
+    cards:
+      - type: custom:power-wheel-card
+        title_power: "Power distribution"
+        title_energy: "Energy distribution"
+        title_money: "Energy costs/savings"
+        solar_power_entity: sensor.solar_power_generation
+        grid_power_entity: sensor.grid_power_import_export
+        production_is_positive: false
+        # solar_energy_entity: sensor.emoncms_solar
+        # grid_energy_consumption_entity: sensor.emoncms_import
+        # grid_energy_production_entity: sensor.home_power_usage
+        energy_consumption_rate: 0.20
+        energy_production_rate: 0.15
+        money_unit: "$"
+        solar_icon: "mdi:white-balance-sunny"
+        grid_icon: "mdi:flash"
+        home_icon: "mdi:home-assistant"
+        power_decimals: 2
+        energy_decimals: 2
+        money_decimals: 0
+        color_icons: true
+        consuming_color: "#33ff33"
+        producing_color: "#dd5500"
+        invert_grid_colors: false
+        active_arrow_color: "#ffff00"
+        initial_view: "energy"
+        initial_auto_toggle_view: true
+        auto_toggle_view_period: 5
+      - type: entities
+        title: AC Power
+        entities:
+          - entity: sensor.grid_power_import
+            name: Import
+          - entity: sensor.grid_power_export
+            name: Export
+          - entity: sensor.solar_power_generation
+            name: Solar
+          - entity: sensor.home_power_usage
+            name: Use
+          - entity: sensor.emoncms2_vrms
+            name: Voltage
+      - type: history-graph
+        # title: AC Power
+        hours_to_show: 24
+        entities:
+          - entity: sensor.grid_power_import
+            name: Import
+          - entity: sensor.solar_power_generation
+            name: Solar
+          - entity: sensor.home_power_usage
+            name: Use
+      - type: history-graph
+        # title: AC Voltage
+        hours_to_show: 24
+        entities:
+          - entity: sensor.emoncms2_vrms
+            name: Voltage
+          - entity: sensor.voltage_average
+
+  - type: vertical-stack
+    cards:
+      - type: entities
+        title: 12v solar
+        entities:
+          - entity: sensor.solar_current
+      - type: history-graph
+        hours_to_show: 24
+        entities:
+          - entity: sensor.solar_current
+
+  - type: vertical-stack
+    cards:
+      - type: entities
+        title: Daily Energy
+        entities:
+          - entity: sensor.grid_energy_import_daily
+            name: Import
+          - entity: sensor.solar_energy_generation_daily
+            name: Solar
+          - entity: sensor.home_energy_usage_daily
+            name: Use
+      - type: entities
+        title: Monthly Energy
+        entities:
+          - entity: sensor.grid_energy_import_monthly
+            name: Import
+          - entity: sensor.solar_energy_generation_monthly
+            name: Solar
+          - entity: sensor.home_energy_usage_monthly
+            name: Use
+      - type: entities
+        title: Annual Energy
+        entities:
+          - entity: sensor.grid_energy_import_annually
+            name: Import
+          - entity: sensor.solar_energy_generation_annually
+            name: Solar
+          - entity: sensor.home_energy_usage_annually
+            name: Use
+
+  - type: vertical-stack
+    cards:
+      - type: entities
+        title: South Australia Energy
+        entities:
+          - type: attribute
+            entity: sensor.opennem_sa
+            attribute: genvsdemand
+            name: Generation v Demand
+            suffix: MW
+          # - entity: sensor.generation_versus_demand
+          - entity: sensor.renewables_versus_generation
+            icon: mdi:transmission-tower
+      - type: history-graph
+        entities:
+          - entity: sensor.sa_power_price
+            name: SA Power Price
+# attribute genvsdemand
+
+# - type: vertical-stack
+#   cards:
+#     - type: entities
+#       title: Local CO2 Intensity
+#       entities:
+#         - entity: sensor.co2_intensity_34_89_138_63
+#           name: CO2 Intensity
+#     - type: sensor
+#       entity: sensor.co2_intensity_34_89_138_63
+#       name: CO2 Intensity
+#       graph: line
+#       hours_to_show: 40

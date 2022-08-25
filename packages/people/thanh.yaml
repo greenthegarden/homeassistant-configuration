@@ -1,0 +1,97 @@
+---
+# Package: People / Thanh
+
+# Person
+# Enables Person Component
+# https://www.home-assistant.io/integrations/person/
+# person:
+#   - name: Thanh
+#     id: thanh
+#     user_id: !secret person_thanh_user_id
+#     device_trackers: !secret person_thanh_device_tracers
+
+# Binary Sensors
+
+binary_sensor:
+  - platform: template
+    sensors:
+      thanh_home:
+        friendly_name: "Thanh at home"
+        value_template: >-
+          {{ is_state('device_tracker.thanh_mobile', 'home') }}
+
+# Input Boolean
+
+input_boolean:
+  thanh_bed:
+    name: Thanh in bed
+    icon: mdi:bed
+
+# Sensors
+
+sensor:
+  - platform: template
+    sensors:
+      thanh_home_away:
+        friendly_name: Thanh at home
+        value_template: >-
+          {% if is_state('binary_sensor.thanh_home', 'on') %}
+            Home
+          {% else %}
+            Away
+          {% endif %}
+        icon_template: >-
+          {% if is_state('binary_sensor.thanh_home', 'on') %}
+            mdi:home-account
+          {% else %}
+            mdi:home-remove
+          {% endif %}
+
+      # Thanh's Devices
+
+      # hostname: thanh_ipad
+      # source_type: router
+      thanh_ipad:
+        friendly_name: Thanh's iPad
+        value_template: >-
+          {% if is_state('device_tracker.thanh_ipad', 'home') %}
+            Online
+          {% else %}
+            Offline
+          {% endif %}
+        icon_template: >-
+          {% if is_state('device_tracker.thanh_ipad', 'home') %}
+            mdi:tablet
+          {% else %}
+            mdi:cellphone-nfc-off
+          {% endif %}
+
+      thanh_laptop:
+        friendly_name: Thanh's Laptop
+        value_template: >-
+          {% if is_state('device_tracker.dstg158451', 'home') %}
+            Online
+          {% else %}
+            Offline
+          {% endif %}
+        icon_template: >-
+          {% if is_state('device_tracker.dstg158451', 'home') %}
+            mdi:google-chrome
+          {% else %}
+            mdi:cloud-off-outline
+          {% endif %}
+
+      thanh_phone:
+        friendly_name: Thanh's Phone
+        value_template: >-
+          {% if is_state('device_tracker.thanh_mobile', 'home') %}
+            Online
+          {% else %}
+            Offline
+          {% endif %}
+        icon_template: >-
+          {% if is_state('device_tracker.thanh_mobile', 'home') %}
+            mdi:cellphone
+          {% else %}
+            mdi:cellphone-nfc-off
+          {% endif %}

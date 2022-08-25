@@ -1,0 +1,16 @@
+---
+# lovelace_gen
+
+# Lovelace User Interface
+# https://www.home-assistant.io/lovelace/
+
+title: Home
+# background:
+views:
+  - !include lovelace/home.yaml
+  - !include lovelace/philip.yaml
+  - !include lovelace/thanh.yaml
+  - !include lovelace/environment.yaml
+  - !include lovelace/power.yaml
+  - !include lovelace/services.yaml
+  - !include lovelace/docs.yaml

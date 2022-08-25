@@ -1,0 +1,78 @@
+---
+# lovelace_gen
+title: Devices
+icon: mdi:devices
+path: devices
+cards:
+  - type: entities
+    title: Service Access Links
+    show_header_toggle: false
+    entities:
+      - type: weblink
+        name: Gateway
+        url: http://192.168.1.1
+        icon: mdi:wifi
+      - type: weblink
+        name: AdBlock
+        url: http://192.168.1.2
+        icon: mdi:wifi
+      - type: weblink
+        name: Nextcloud
+        url: http://192.168.1.186:8888
+        icon: mdi:file-cloud
+      - type: weblink
+        name: Storology
+        url: http://storology:5000
+        icon: mdi:nas
+      - type: weblink
+        name: Photo Station
+        url: http://storology/photo
+        icon: mdi:image-album
+      - type: weblink
+        name: Printer
+        url: http://printer
+        icon: mdi:printer-wireless
+      - type: weblink
+        name: EmonPi
+        url: http://192.168.1.172/emoncms/app/view
+        icon: mdi:power-socket-au
+      - type: weblink
+        name: RF Gateway
+        url: http://192.168.1.191:9001
+        icon: mdi:antenna
+      - type: weblink
+        name: Grocy
+        url: http://192.168.1.186:9283
+        icon: mdi:cart-outline
+
+  - type: entities
+    title: Home Assistant Services Access Links
+    show_header_toggle: false
+    entities:
+      - type: weblink
+        name: Node Exporter
+        url: http://192.168.1.186:9100
+      - type: weblink
+        name: Prometheus
+        url: http://192.168.1.186:9090
+      - type: weblink
+        name: InfluxDB
+        url: http://192.168.1.186:8086
+      - type: weblink
+        name: Grafana
+        url: http://192.168.1.186:3000
+      - type: weblink
+        name: What's Up Docker
+        url: http://192.168.1.186:3003
+      - type: weblink
+        name: Uptime Kuma
+        url: http://192.168.1.186:3001
+      - type: weblink
+        name: MQTT Broker
+        url: http://192.168.1.186:18083
+      - type: weblink
+        name: AppDaemon
+        url: http://192.168.1.186:5050
+      - type: weblink
+        name: Portainer
+        url: https://192.168.1.186:9443

@@ -1,0 +1,11 @@
+---
+# Cast
+#
+# This is de cast component.
+#
+# https://www.home-assistant.io/components/cast/
+#
+# cast:
+#   media_player:
+#     - host: !secret chromecast_castotolgy
+#     - host: !secret chromecast_bedroom

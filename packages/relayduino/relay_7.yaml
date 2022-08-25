@@ -1,0 +1,221 @@
+---
+# Package: Relayduino / Relay 7
+
+# Binary Sensors
+# https://www.home-assistant.io/integrations/binary_sensor/
+binary_sensor:
+  # Binary Sensors - Template:
+  - platform: template
+    sensors:
+      relayduino_relay_7_state:
+        value_template: >-
+          {% if is_state('input_boolean.relayduino_relay_7_state', 'on') %}
+            On
+          {% else %}
+            Off
+          {% endif %}
+        icon_template: >-
+          {% if is_state('input_boolean.relayduino_relay_7_state', 'on') %}
+            mdi:water-pump
+          {% else %}
+            mdi:water-pump-off
+          {% endif %}
+        friendly_name: "Relay 7"
+
+# Input Boolean
+# https://www.home-assistant.io/integrations/input_boolean/
+
+input_boolean:
+  # whether relay is to be operated
+  relayduino_relay_7_enabled:
+    name: Enabled
+    initial: off
+  # state of the relay
+  relayduino_relay_7_state:
+    name: State
+    initial: off
+
+# Counters
+# Count occurrences fired by automations
+# https://www.home-assistant.io/integrations/counter
+
+counter:
+  # counter for days interval
+  relayduino_relay_7_days_count:
+    name: Day count
+    initial: 0
+    restore: true
+    step: 1
+
+# Input Datetime
+# https://www.home-assistant.io/integrations/input_datetime/
+
+input_datetime:
+  # start time
+  relayduino_relay_7_start_time:
+    name: Start Time
+    has_time: true
+    has_date: false
+    icon: mdi:clock-outline
+    initial: "18:30:00"
+
+  # https://community.home-assistant.io/t/count-days-since-last-time/90427/4
+  relayduino_relay_7_last_run:
+    name: Last Run
+    has_date: true
+    has_time: true
+    icon: mdi:clock-outline
+
+# Input Number
+# https://www.home-assistant.io/integrations/input_number/
+
+input_number:
+  relayduino_relay_7_relay:
+    name: Relay
+    min: 1
+    max: 8
+    initial: 7
+    step: 1
+    mode: box
+    icon: mdi:water-pump
+
+  # number of days between activation
+  relayduino_relay_7_interval:
+    name: Interval
+    min: 1
+    max: 14
+    initial: 1
+    step: 1
+    mode: box
+    unit_of_measurement: days
+    icon: mdi:timer
+
+  # duration relay is on
+  relayduino_relay_7_duration:
+    name: Duration
+    min: 10
+    max: 30
+    initial: 10
+    step: 5
+    mode: box
+    unit_of_measurement: minutes
+    icon: mdi:timer
+
+# Automations
+
+automation:
+  #######################################################################
+  # actions applied when in automatic mode
+
+  # increment day counter at start time
+  # only increment counter when set to automatic
+  - alias: Relayduino relay 7 days count increment
+    id: relayduino_relay_7_days_count_increment
+    trigger:
+      platform: template
+      value_template: >
+        {{ ( states('sensor.time') == ( state_attr('input_datetime.relayduino_relay_7_start_time', 'timestamp') | int(0) ) | timestamp_custom('%H:%M', False)) }}
+    condition:
+      - condition: and
+        conditions:
+          - condition: state
+            entity_id: input_boolean.relayduino_mode_automatic
+            state: "on"
+          - condition: state
+            entity_id: input_boolean.relayduino_relay_7_enabled
+            state: "on"
+    action:
+      service: counter.increment
+      entity_id: counter.relayduino_relay_7_days_count
+
+  # set relay and duration values for next
+  - alias: Relayduino relay 7 set next
+    id: relayduino_relay_7_set_next
+    trigger:
+      platform: template
+      value_template: >
+        {{ states('counter.relayduino_relay_7_days_count') | int(0) >= states('input_number.relayduino_relay_7_interval') | int(0) }}
+    condition:
+      - condition: and
+        conditions:
+          - condition: state
+            entity_id: input_boolean.relayduino_mode_automatic
+            state: "on"
+          - condition: state
+            entity_id: input_boolean.relayduino_relay_7_enabled
+            state: "on"
+    action:
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.relayduino_relay_duration_next
+        data:
+          value: "{{ states('input_number.relayduino_relay_7_duration') | int(0) }}"
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 1
+          milliseconds: 0
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.relayduino_relay_next
+        data:
+          value: "{{ states('input_number.relayduino_relay_7_relay') | int(0) }}"
+
+  #######################################################################
+  # actions applied for status messages from relayduino
+
+  - alias: Relayduino relay 7 status message on
+    id: relayduino_relay_7_status_message_on
+    trigger_variables:
+      relay: "7"
+    trigger:
+      platform: mqtt
+      id: relay_7_on
+      topic: relayduino/status/relay
+      payload: "{{ relay ~ ',1' }}"
+      # payload: "1,1"
+    condition: []
+    action:
+      - service: input_boolean.turn_on
+        entity_id: input_boolean.relayduino_relay_7_state
+      # - service: input_number.set_value
+      #   target:
+      #     entity_id: input_number.relayduino_relay_running
+      #   data:
+      #     value: "{{ states('input_number.relayduino_relay_7_relay') | int(0) }}"
+
+      - service: input_datetime.set_datetime
+        target:
+          entity_id: input_datetime.relayduino_relay_7_last_run
+        data:
+          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+      - service: notify.mobile_app_nokia_5_3
+        data:
+          message: Relayduino relay 7 on
+      - condition: state
+        entity_id: input_boolean.relayduino_mode_automatic
+        state: "on"
+      - service: counter.reset
+        entity_id: counter.relayduino_relay_7_days_count
+
+  - alias: Relayduino relay 7 status message off
+    id: relayduino_relay_7_status_message_off
+    trigger_variables:
+      relay: "7"
+    trigger:
+      platform: mqtt
+      id: relay_7_off
+      topic: relayduino/status/relay
+      # payload: "1,0"
+      payload: "{{ relay ~ ',0' }}"
+    condition: []
+    action:
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.relayduino_relay_7_state
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.relayduino_relay_run
+      # - service: input_number.set_value
+      #   target:
+      #     entity_id: input_number.relayduino_relay_running
+      #   data:
+      #     value: 0

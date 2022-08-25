@@ -1,0 +1,8 @@
+---
+# Nextcloud
+# Pulls summary Nextcloud information into Home Assistant.
+# https://www.home-assistant.io/integrations/nextcloud/
+nextcloud:
+  url: http://nextcloud
+  username: monitor
+  password: XHwXC-79i9F-4zPnG-xn7Rn-CPdJR

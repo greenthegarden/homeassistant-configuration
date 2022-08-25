@@ -1,0 +1,8 @@
+---
+# lovelace_gen
+title: Living Room
+icon: mdi:sofa-outline
+path: area_living_room
+cards:
+  - type: media-control
+    entity: media_player.bedroom_tv

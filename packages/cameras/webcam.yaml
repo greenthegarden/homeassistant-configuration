@@ -1,0 +1,14 @@
+# ---
+
+# camera:
+#   - platform: mjpeg
+#     name: Webcam
+#     still_image_url: "http://192.168.1.192/picture/2/current/"
+#     mjpeg_url: "http://192.168.1.192:8082"
+#     verify_ssl: false
+
+#   - platform: push
+#     name: Webcam Detection
+#     buffer: 3
+#     timeout: 5
+#     webhook_id: webcam

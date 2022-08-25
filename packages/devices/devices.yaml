@@ -1,0 +1,207 @@
+---
+# Package: Devices / Devices
+
+# Binary Sensors
+
+# binary_sensor:
+
+# Sensors
+
+sensor:
+  # Sensors - Template:
+
+  - platform: template
+    sensors:
+      # hostname: none
+      router:
+        friendly_name: UDM
+        value_template: >-
+          {% if is_state('device_tracker.68_d7_9a_24_23_a4', 'home') %}
+            Online
+          {% else %}
+            Offline
+          {% endif %}
+        icon_template: >-
+          {% if is_state('device_tracker.68_d7_9a_24_23_a4', 'home') %}
+            mdi:router
+          {% else %}
+            mdi:cloud-off-outline
+          {% endif %}
+
+      # hostname: Chromecast
+      chromecast:
+        friendly_name: Chromecast
+        value_template: >-
+          {% if is_state('device_tracker.chromecast_2', 'home') %}
+            Online
+          {% else %}
+            Offline
+          {% endif %}
+        icon_template: >-
+          {% if is_state('device_tracker.chromecast_2', 'home') %}
+            mdi:google-chrome
+          {% else %}
+            mdi:cloud-off-outline
+          {% endif %}
+
+      castology:
+        friendly_name: Castology
+        value_template: >-
+          {% if is_state('device_tracker.chromecast', 'home') %}
+            Online
+          {% else %}
+            Offline
+          {% endif %}
+        icon_template: >-
+          {% if is_state('device_tracker.chromecast', 'home') %}
+            mdi:google-chrome
+          {% else %}
+            mdi:cloud-off-outline
+          {% endif %}
+
+      # DNS host (ADGUARD)
+      # hostname: dns
+      dns:
+        friendly_name: DNS
+        value_template: >-
+          {% if is_state('device_tracker.dns', 'home') %}
+            Online
+          {% else %}
+            Offline
+          {% endif %}
+        icon_template: >-
+          {% if is_state('device_tracker.dns', 'home') %}
+            mdi:router
+          {% else %}
+            mdi:cloud-off-outline
+          {% endif %}
+
+      # hostname: emonpi
+      emonpi:
+        friendly_name: EmonPi
+        value_template: >-
+          {% if is_state('device_tracker.emonpi', 'home') %}
+            Online
+          {% else %}
+            Offline
+          {% endif %}
+        icon_template: >-
+          {% if is_state('device_tracker.emonpi', 'home') %}
+            mdi:power-socket-au
+          {% else %}
+            mdi:cloud-off-outline
+          {% endif %}
+
+      # Home Automation Server
+      # hostname: home_assistant
+      home_assistant:
+        friendly_name: Home Automation Server
+        value_template: >-
+          {% if is_state('device_tracker.home_assistant', 'home') %}
+            Online
+          {% else %}
+            Offline
+          {% endif %}
+        icon_template: >-
+          {% if is_state('device_tracker.home_assistant', 'home') %}
+            mdi:power-socket-au
+          {% else %}
+            mdi:cloud-off-outline
+          {% endif %}
+
+      # Nexus 7 Tablet
+      nexus7:
+        friendly_name: Nexus 7
+        value_template: >-
+          {% if is_state('device_tracker.nexus_7', 'home') %}
+            Online
+          {% else %}
+            Offline
+          {% endif %}
+        icon_template: >-
+          {% if is_state('device_tracker.nexus_7', 'home') %}
+            mdi:tablet
+          {% else %}
+            mdi:cellphone-nfc-off
+          {% endif %}
+
+      # hostname: rtl433
+      gateway_rtl_433:
+        friendly_name: RF Gateway
+        value_template: >-
+          {% if is_state('device_tracker.rtl433', 'home') %}
+            Online
+          {% else %}
+            Offline
+          {% endif %}
+        icon_template: >-
+          {% if is_state('device_tracker.rtl433', 'home') %}
+            mdi:antenna
+          {% else %}
+            mdi:cloud-off-outline
+          {% endif %}
+
+      # hostname: GW-44916024A9EB
+      ikea_gateway:
+        friendly_name: IKEA Gateway
+        value_template: >-
+          {% if is_state('device_tracker.ikea_gateway', 'home') %}
+            Online
+          {% else %}
+            Offline
+          {% endif %}
+        icon_template: >-
+          {% if is_state('device_tracker.ikea_gateway', 'home') %}
+            mdi:router
+          {% else %}
+            mdi:cloud-off-outline
+          {% endif %}
+
+      # hostname: Storology
+      # source_type: router
+      storology:
+        friendly_name: Storology
+        value_template: >-
+          {% if is_state('device_tracker.storology', 'home') %}
+            Online
+          {% else %}
+            Offline
+          {% endif %}
+        icon_template: >-
+          {% if is_state('device_tracker.storology', 'home') %}
+            mdi:nas
+          {% else %}
+            mdi:cloud-off-outline
+          {% endif %}
+
+      # hostname: none
+      # source_type: router
+      uhoo:
+        friendly_name: uHoo
+        value_template: >-
+          {% if is_state('device_tracker.uhoo', 'home') %}
+            Online
+          {% else %}
+            Offline
+          {% endif %}
+        icon_template: >-
+          {% if is_state('device_tracker.uhoo', 'home') %}
+            mdi:home-thermometer
+          {% else %}
+            mdi:cloud-off-outline
+          {% endif %}
+
+      printer:
+        friendly_name: Brother MFC-L2703DW
+        value_template: >-
+          {% if is_state('device_tracker.BRWA8A79536739F', 'home') %}
+            Online
+          {% else %}
+            Offline
+          {% endif %}
+        icon_template: >-
+          {% if is_state('device_tracker.BRWA8A79536739F', 'home') %}
+            mdi:printer-wireless
+          {% else %}
+            mdi:printer-off
+          {% endif %}

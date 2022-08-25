@@ -1,0 +1,8 @@
+---
+# lovelace_gen
+title: Family Room
+icon: mdi:sofa-outline
+path: area_family_room
+cards:
+  - type: media-control
+    entity: media_player.castology

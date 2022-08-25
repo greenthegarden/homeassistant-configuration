@@ -1,0 +1,93 @@
+---
+
+input_number:
+  weather_today_temperature_max:
+    name: Today max temperature
+    min: 0
+    max: 50
+    unit_of_measurement: "°C"
+    icon: mdi:thermometer
+
+automation:
+  # Get today's temperature 30 hour before sunrise
+  - alias: Set maximum expected temperature
+    id: set_weather_today_temperature_max
+    trigger:
+      # platform: sun
+      # # Possible values: sunset, sunrise
+      # event: sunrise
+      # # Optional time offset. This example will trigger 45 minutes before sunset.
+      # offset: "-00:30:00"
+      - platform: time
+        at: "05:00:00"
+    condition: []
+    action:
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.weather_today_temperature_max
+        data:
+          value: "{{ states('sensor.marden_temp_max_0') | int(0) }}"
+
+  #######################################################################
+  # irrigation updates due to the weather
+
+  # Update interval based on temperature for shrubs
+  - alias: Relayduino relay 3 set interval
+    id: relayduino_relay_3_set_interval
+    trigger:
+      - platform: state
+        entity_id:
+          - input_number.weather_today_temperature_max
+    condition:
+      - condition: and
+        conditions:
+          - condition: state
+            entity_id: input_boolean.relayduino_mode_automatic
+            state: "on"
+          - condition: state
+            entity_id: input_boolean.relayduino_relay_3_enabled
+            state: "on"
+    action:
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.relayduino_relay_3_interval
+        data:
+          value: >
+            {% set state = states('input_number.weather_today_temperature_max') %}
+            {% set count = states('counter.relayduino_relay_3_days_count') %}
+            {% set interval_default = 3 %}
+            {% set interval_hot = 2 %}
+            {% if is_number(state) and state | float >= 30.0 and count < interval_hot %}
+              interval_hot
+            {% else %}
+              interval_default
+            {% endif %}
+
+  # Update duration for vegetables
+  - alias: Relayduino relay 4 set duration
+    id: relayduino_relay_4_set_duration
+    trigger:
+      - platform: state
+        entity_id:
+          - input_number.weather_today_temperature_max
+    condition:
+      - condition: and
+        conditions:
+          - condition: state
+            entity_id: input_boolean.relayduino_mode_automatic
+            state: "on"
+          - condition: state
+            entity_id: input_boolean.relayduino_relay_4_enabled
+            state: "on"
+    action:
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.relayduino_relay_4_duration
+        data:
+          value: >
+            {% set state = states('input_number.weather_today_temperature_max') %}
+            {% if is_number(state) and state | float >= 30.0 %}
+              15
+            {% else %}
+              10
+            {% endif %}

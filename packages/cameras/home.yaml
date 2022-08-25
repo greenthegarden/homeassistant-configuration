@@ -1,0 +1,31 @@
+---
+camera:
+  # - platform: mjpeg
+  #   name: Home
+  #   still_image_url: "http://motioneye/picture/1/current/"
+  #   mjpeg_url: "http://motioneye:8081"
+  #   verify_ssl: false
+
+  # Based on https://www.home-assistant.io/integrations/push/
+  # configure in motioneye within File Storage' > 'Run A Command'
+  # curl -X POST -F "image=@%f" http://home-assistant:8123/api/webhook/home_detection_files
+  - platform: push
+    name: Home Detection
+    buffer: 3
+    timeout: 5
+    webhook_id: home_detection_files
+
+# test using
+# curl -d "" http://192.168.1.55:8123/api/webhook/home_detection
+automation:
+  - alias: Home camera detection notification
+    id: camera_home_detection_notification
+    description: Movement at home
+    trigger:
+      - platform: webhook
+        webhook_id: home_detection
+    condition: []
+    action:
+      - service: notify.mobile_app_nokia_5_3
+        data:
+          message: Camera home detection

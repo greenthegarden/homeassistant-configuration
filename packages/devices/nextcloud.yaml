@@ -1,0 +1,10 @@
+# ---
+# Package: Devices / Nextcloud
+
+# Nextcloud
+# Pulls summary Nextcloud information into Home Assistant
+# https://www.home-assistant.io/integrations/nextcloud/
+# nextcloud:
+#   url: !secret nextcloud_url
+#   username: !secret nextcloud_monitor_username
+#   password: !secret nextcloud_monitor_app_password

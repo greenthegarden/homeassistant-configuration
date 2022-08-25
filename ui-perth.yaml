@@ -1,0 +1,10 @@
+---
+# lovelace_gen
+
+# Lovelace User Interface
+# https://www.home-assistant.io/lovelace/
+
+title: Perth
+# background:
+views:
+  - !include lovelace/perth.yaml

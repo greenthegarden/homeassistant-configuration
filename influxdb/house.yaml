@@ -1,0 +1,93 @@
+---
+# These are the house wide entities that I want
+# to store into InfluxDB.
+#
+# I like to specify (whitelist) each entity to store,
+# since that keeps my InfluxDB clean and small.
+#
+
+# Energy/gas consumption
+# - sensor.power_consumption
+# - sensor.gas_consumption
+# - sensor.power_consumption
+# - sensor.power_consumption_normal
+# - sensor.power_consumption_low
+# - sensor.voltage_phase_l1
+# - sensor.power_consumption_phase_l1
+# - sensor.daily_energy_peak
+
+# Indoor Conditions
+- sensor.weathersense_indoor_1_humidity
+- sensor.weathersense_indoor_1_temperature
+- sensor.weathersense_indoor_2_humidity
+- sensor.weathersense_indoor_2_temperature
+
+# Outdoor Conditions
+- sensor.weatherstation_humidity
+- sensor.weatherstation_temperature
+
+# Irrigation
+- binary_sensor.relayduino_relay_1_state
+- binary_sensor.relayduino_relay_2_state
+- binary_sensor.relayduino_relay_3_state
+- binary_sensor.relayduino_relay_4_state
+- binary_sensor.relayduino_relay_5_state
+- binary_sensor.relayduino_relay_6_state
+- binary_sensor.relayduino_relay_7_state
+- binary_sensor.relayduino_relay_8_state
+- sensor.irrigation_flowrate
+
+# Soil
+- sensor.duo_moisture_sht10_temperature
+- sensor.duo_moisture_sht10_humidity
+- sensor.duo_moisture_moisture_sensor_1
+- sensor.duo_moisture_moisture_sensor_2
+
+# Forecast
+- sensor.bom_today_max
+- sensor.bom_today_min
+- sensor.marden_rain_amount_max_0
+- sensor.marden_rain_amount_max_1
+- sensor.marden_rain_amount_max_2
+- sensor.marden_rain_amount_max_3
+- sensor.marden_rain_amount_max_4
+- sensor.marden_rain_amount_max_5
+- sensor.marden_rain_amount_max_6
+- sensor.marden_rain_amount_max_7
+- sensor.marden_rain_amount_min_0
+- sensor.marden_rain_amount_min_1
+- sensor.marden_rain_amount_min_2
+- sensor.marden_rain_amount_min_3
+- sensor.marden_rain_amount_min_4
+- sensor.marden_rain_amount_min_5
+- sensor.marden_rain_amount_min_6
+- sensor.marden_rain_amount_min_7
+- sensor.marden_rain_chance_0
+- sensor.marden_rain_chance_1
+- sensor.marden_rain_chance_2
+- sensor.marden_rain_chance_3
+- sensor.marden_rain_chance_4
+- sensor.marden_rain_chance_5
+- sensor.marden_rain_chance_6
+- sensor.marden_rain_chance_7
+- sensor.marden_temp_max_0
+- sensor.marden_temp_max_1
+- sensor.marden_temp_max_2
+- sensor.marden_temp_max_3
+- sensor.marden_temp_max_4
+- sensor.marden_temp_max_5
+- sensor.marden_temp_max_6
+- sensor.marden_temp_max_7
+- sensor.marden_temp_min_0
+- sensor.marden_temp_min_1
+- sensor.marden_temp_min_2
+- sensor.marden_temp_min_3
+- sensor.marden_temp_min_4
+- sensor.marden_temp_min_5
+- sensor.marden_temp_min_6
+- sensor.marden_temp_min_7
+# Binary sensors
+
+# Switch
+
+# Other sensors

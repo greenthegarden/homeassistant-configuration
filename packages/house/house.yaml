@@ -1,0 +1,382 @@
+---
+# Package: House / House
+
+# Template
+# https://www.home-assistant.io/integrations/template
+template:
+  - binary_sensor:
+      - name: "Indoor temperature lower than outside"
+        state: "{{ states('sensor.indoor_temperature') | float(0.0) < states('sensor.outdoor_temperature') | float(0.0) }}"
+
+      - name: "Indoor temperature higher than outside"
+        state: "{{ states('sensor.indoor_temperature') | float(0.0) > states('sensor.outdoor_temperature') | float(0.0) }}"
+
+      - name: "Weathersense Indoor 1 Battery Low"
+        state: "{{ states('sensor.weathersense_indoor_1_battery') != 'OK' }}"
+
+      - name: "Weathersense Indoor 2 Battery Low"
+        state: "{{ states('sensor.weathersense_indoor_2_battery') != 'OK' }}"
+
+  - sensor:
+      - name: "Indoor Temperature"
+        device_class: temperature
+        unit_of_measurement: "°C"
+        state_class: measurement
+        state: "{{ states('sensor.indoor_temperature_average') | float(0.0) }}"
+
+      - name: "Indoor Humidity"
+        device_class: humidity
+        unit_of_measurement: "%"
+        state_class: measurement
+        state: "{{ states('sensor.indoor_humidity_average') | float(0.0) }}"
+
+# Binary Sensors
+
+binary_sensor:
+  - platform: trend
+    sensors:
+      indoor_temperature_falling:
+        entity_id: sensor.indoor_temperature
+        device_class: cold
+        friendly_name: "Temperature falling"
+        sample_duration: 7200
+        max_samples: 120
+        min_gradient: -0.0008
+      indoor_temperature_rising:
+        entity_id: sensor.indoor_temperature
+        device_class: heat
+        friendly_name: "Temperature rising"
+        sample_duration: 7200
+        max_samples: 120
+        min_gradient: 0.0008
+
+# MQTT Sensor
+# https://www.home-assistant.io/integrations/sensor.mqtt/
+
+mqtt:
+  sensor:
+    # Enviro+ Module 3 Climate Measurements
+    - name: Enviro+ 3 BME280 Temperature
+      state_topic: "homeassistant/sensor/enviroplus_3_bme280/state"
+      device_class: temperature
+      unit_of_measurement: "°C"
+      value_template: "{{ value_json.temperature }}"
+
+    - name: Enviro+ 3 BME280 Pressure
+      state_topic: "homeassistant/sensor/enviroplus_3_bme280/state"
+      device_class: pressure
+      unit_of_measurement: "MPa"
+      value_template: "{{ value_json.pressure }}"
+
+    - name: Enviro+ 3 BME280 Humidity
+      state_topic: "homeassistant/sensor/enviroplus_3_bme280/state"
+      device_class: humidity
+      unit_of_measurement: "%"
+      value_template: "{{ value_json.humidity }}"
+
+    # Enviro+ Module 3 MICS6814 (Gas) Measurements
+    - name: Enviro+ 3 Gas Oxidising
+      state_topic: "homeassistant/sensor/enviroplus_3_mics6814/state"
+      device_class: gas
+      unit_of_measurement: "kO"
+      value_template: "{{ value_json.oxidising }}"
+
+    - name: Enviro+ 3 Gas Reducing
+      state_topic: "homeassistant/sensor/enviroplus_3_mics6814/state"
+      device_class: gas
+      unit_of_measurement: "kO"
+      value_template: "{{ value_json.reducing }}"
+
+    - name: Enviro+ 3 Gas NH3
+      state_topic: "homeassistant/sensor/enviroplus_3_mics6814/state"
+      device_class: gas
+      unit_of_measurement: "kO"
+      value_template: "{{ value_json.nh3 }}"
+
+    # SwitchDoc Labs Wireless Inside Temperature and Humidity Sensor F016TH
+
+    # Topic: weathersense/F016TH/2
+    # Payload:
+    #   {
+    #     "time": "2021-11-14 08:19:50",
+    #     "model": "SwitchDoc Labs F016TH Thermo-Hygrometer",
+    #     "device": 109,
+    #     "modelnumber": 5,
+    #     "channel": 2,
+    #     "battery": "OK",
+    #     "temperature_F": 63.4,
+    #     "humidity": 53,
+    #     "mic": "CRC"
+    # }
+
+    - name: WeatherSense Indoor 1 Channel
+      state_topic: "weathersense/F016TH/1"
+      icon: mdi:identifier
+      unique_id: weathersense_indoor_1_channel
+      value_template: "{{ value_json.channel }}"
+
+    - name: WeatherSense Indoor 1 Battery
+      state_topic: "weathersense/F016TH/1"
+      unique_id: weathersense_indoor_1_battery
+      value_template: "{{ value_json.battery }}"
+
+    - name: WeatherSense Indoor 1 Temperature
+      state_topic: "weathersense/F016TH/1"
+      device_class: temperature
+      unique_id: weathersense_indoor_1_temperature
+      unit_of_measurement: "°C"
+      value_template: "{{ ((( value_json.temperature_F | float(0.0) ) - 32) * 5/9) | round(1) }}"
+
+    - name: WeatherSense Indoor 1 Humidity
+      state_topic: "weathersense/F016TH/1"
+      device_class: humidity
+      unique_id: weathersense_indoor_1_humidity
+      unit_of_measurement: "%"
+      value_template: "{{ value_json.humidity }}"
+
+    - name: WeatherSense Indoor 2 Channel
+      state_topic: "weathersense/F016TH/2"
+      icon: mdi:identifier
+      unique_id: weathersense_indoor_2_channel
+      value_template: "{{ value_json.channel }}"
+
+    - name: WeatherSense Indoor 2 Battery
+      state_topic: "weathersense/F016TH/2"
+      unique_id: weathersense_indoor_2_battery
+      value_template: "{{ value_json.battery }}"
+
+    - name: WeatherSense Indoor 2 Temperature
+      state_topic: "weathersense/F016TH/2"
+      device_class: temperature
+      unique_id: weathersense_indoor_2_temperature
+      unit_of_measurement: "°C"
+      value_template: "{{ ((( value_json.temperature_F | float(0.0) ) - 32) * 5/9) | round(1) }}"
+
+    - name: WeatherSense Indoor 2 Humidity
+      state_topic: "weathersense/F016TH/2"
+      device_class: humidity
+      unique_id: weathersense_indoor_2_humidity
+      unit_of_measurement: "%"
+      value_template: "{{ value_json.humidity }}"
+
+# Sensors
+
+sensor:
+  - platform: derivative
+    source: sensor.indoor_temperature
+    name: Indoor temperature change per hour
+    round: 1
+    unit_time: h # the resulting "unit_of_measurement" will be °C/h if the sensor.temperate has set °C as it's unit
+    time_window: "00:30:00" # we look at the change over the last half hour
+
+  # Average
+  # https://github.com/Limych/ha-average
+  - platform: average
+    name: Indoor Temperature Average
+    entities:
+      - sensor.weathersense_indoor_1_temperature
+      - sensor.weathersense_indoor_2_temperature
+      # - sensor.enviro_3_bme280_temperature
+
+  - platform: average
+    name: Indoor Humidity Average
+    entities:
+      - sensor.weathersense_indoor_1_humidity
+      - sensor.weathersense_indoor_2_humidity
+
+  # Mold Indicator
+  # https://www.home-assistant.io/integrations/mold_indicator/
+  - platform: mold_indicator
+    indoor_temp_sensor: sensor.indoor_temperature
+    indoor_humidity_sensor: sensor.indoor_humidity
+    outdoor_temp_sensor: sensor.weatherstation_temperature
+    calibration_factor: 2.0
+
+# Thermal Comfort
+thermal_comfort:
+  - custom_icons: true
+    sensor:
+      - name: "Weathersense Indoor 1"
+        temperature_sensor: sensor.weathersense_indoor_1_temperature
+        humidity_sensor: sensor.weathersense_indoor_1_humidity
+      - name: "Weathersense Indoor 2"
+        temperature_sensor: sensor.weathersense_indoor_2_temperature
+        humidity_sensor: sensor.weathersense_indoor_2_humidity
+
+# Input Boolean
+# https://www.home-assistant.io/integrations/input_boolean/
+
+input_boolean:
+  windows_open:
+    name: Windows open
+    icon: mdi:window-open-variant
+
+  heater_on:
+    name: Heater on
+    icon: mdi:radiator
+
+# Input Number
+# https://www.home-assistant.io/integrations/input_number/
+
+input_number:
+  temperature_delay:
+    name: Delay for temperature alerts
+    initial: 5
+    min: 0
+    max: 30
+    step: 5
+    unit_of_measurement: minutes
+    icon: mdi:target
+
+# Timers
+# https://www.home-assistant.io/integrations/timer/
+
+timer:
+  # Weathersense status every 5 minutes
+  weathersense_1_healthcheck_timer:
+    duration: "00:10:00"
+    restore: true
+    restore_grace_period: "00:15:00"
+
+  weathersense_2_healthcheck_timer:
+    duration: "00:10:00"
+    restore: true
+    restore_grace_period: "00:15:00"
+
+automation:
+  - alias: Indoor Temperature alert
+    id: alert_indoor_temperature
+    trigger:
+      platform: numeric_state
+      entity_id:
+        - sensor.weathersense_indoor_1_temperature
+        - sensor.weathersense_indoor_2_temperature
+      above: 24
+      for:
+        minutes: "{{ states('input_number.temperature_delay') | int }}"
+    action:
+      service: notify.mobile_app_nokia_5_3
+      data:
+        message: >
+          "{{ trigger.to_state.attributes.friendly_name }} above 24°C"
+
+  # Send alert when outside temperature less than indoor - time to open windows
+  - alias: Open windows in summer
+    id: windows_summmer_open
+    trigger:
+      - platform: template
+        value_template: "{{ states('sensor.outdoor_temperature') | float(0.0) < states('sensor.indoor_temperature') | float(0.0) }}"
+
+        for:
+          minutes: "{{ states('input_number.temperature_delay') | int(0) }}"
+    condition:
+      condition: or
+      conditions:
+        - condition: state
+          entity_id: "sensor.season"
+          state: "spring"
+        - condition: state
+          entity_id: "sensor.season"
+          state: "summer"
+    action:
+      - service: notify.mobile_app_nokia_5_3
+        data:
+          message: >
+            "Open windows! Outside temperature {{ states('sensor.outdoor_temperature') }} lower than inside {{ states('sensor.indoor_temperature') }}"
+
+  - alias: Close windows in summer
+    id: windows_summer_close
+    trigger:
+      - platform: template
+        value_template: "{{ states('sensor.outdoor_temperature') | float(0.0) > states('sensor.indoor_temperature') | float(0.0) }}"
+        for:
+          minutes: "{{ states('input_number.temperature_delay') | int(0) }}"
+    condition:
+      condition: or
+      conditions:
+        - condition: state
+          entity_id: "sensor.season"
+          state: "spring"
+        - condition: state
+          entity_id: "sensor.season"
+          state: "summer"
+    action:
+      - service: notify.mobile_app_nokia_5_3
+        data:
+          message: >
+            "Close windows! Outside temperature {{ states('sensor.outdoor_temperature') }} higher than inside {{ states('sensor.indoor_temperature') }}"
+
+  #######################################################################
+  # healthchecks
+
+  - alias: Weathersense 1 healthcheck start
+    id: weathersense_1_healthcheck_start
+    trigger:
+      - platform: homeassistant
+        event: start
+      - platform: mqtt
+        topic: weathersense/F016TH/1/#
+        id: mqtt_weathersense_report
+    condition: []
+    action:
+      - service: timer.start
+        entity_id: timer.weathersense_1_healthcheck_timer
+
+  # - alias: Weatherstation 1 healthcheck reset
+  #   id: weatherstation_1_healthcheck_reset
+  #   trigger:
+  #     platform: mqtt
+  #     topic: weathersense/F016TH/1/#
+  #     id: mqtt_weathersense_report
+  #   condition: []
+  #   action:
+  #     - service: timer.start
+  #       entity_id: timer.weathersense_1_healthcheck_timer
+
+  - alias: Weatherstation 1 healthcheck expired
+    id: weatherstation_1_healthcheck_expired
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.weathersense_1_healthcheck_timer
+    action:
+      - service: notify.mobile_app_nokia_5_3
+        data:
+          message: Weatherstation 1 silent
+
+  - alias: Weathersense 2 healthcheck start
+    id: weathersense_2_healthcheck_start
+    trigger:
+      - platform: homeassistant
+        event: start
+      - platform: mqtt
+        topic: weathersense/F016TH/2/#
+        id: mqtt_weathersense_report
+    condition: []
+    action:
+      - service: timer.start
+        entity_id: timer.weathersense_2_healthcheck_timer
+
+  # - alias: Weatherstation 2 healthcheck reset
+  #   id: weatherstation_2_healthcheck_reset
+  #   trigger:
+  #     platform: mqtt
+  #     id: mqtt_weathersense_report
+  #     topic: weathersense/F016TH/2/#
+  #   condition: []
+  #   action:
+  #     - service: timer.start
+  #       entity_id: timer.weathersense_2_healthcheck_timer
+
+  - alias: Weatherstation 2 healthcheck expired
+    id: weatherstation_2_healthcheck_expired
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.weathersense_2_healthcheck_timer
+    action:
+      - service: notify.mobile_app_nokia_5_3
+        data:
+          message: Weatherstation 2 silent

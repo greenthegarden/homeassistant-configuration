@@ -1,0 +1,13 @@
+---
+# template:
+#   - sensor:
+#       - name: solar_system_500w_power
+#         device_class: power
+#         state: >
+#           {% set voltage = 12 | float(0.0 ) %}
+#           {% set current = states('sensor.solar_350watt_current') | float(0.0 ) %}
+#           {% if is_number(voltage) and is_number(current) %}
+#           {{ (voltage * current) | round(1, default=0) }}
+#           {% endif %}
+#         state_class: measurement
+#         unit_of_measurement: "W"

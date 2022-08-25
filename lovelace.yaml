@@ -1,0 +1,96 @@
+---
+# Enables the lovelace UI
+# https://www.home-assistant.io/lovelace/dashboards-and-views
+mode: yaml
+
+# Include external resources only add when mode is yaml,
+# otherwise manage in the resources in the lovelace configuration panel.
+resources:
+  - url: /local/auto-entities.js
+    type: module
+
+  - url: /local/bar-card.js
+    type: module
+
+  - url: /local/battery-state-card.js?v=2.1.1
+    type: module
+
+  - url: /local/community/bom-radar-card/bom-radar-card.js
+    type: module
+
+  - url: /local/community/bom-weather-card/bom-weather-card.js
+    # - url: /local/bom-weather-card.js
+    type: module
+
+  - url: /local/button-card.js
+    type: module
+
+  - url: /local/card-mod.js
+    type: module
+
+  - url: /local/fold-entity-row.js
+    type: module
+
+  - url: /local/logbook-card.js?v=1
+    type: module
+
+  - url: /local/lovelace-card-templater.js?v=0.0.17
+    type: js
+
+  - url: /local/mini-graph-card-bundle.js?v=0.11.0
+    type: module
+
+  - url: /local/multiple-entity-row.js?v=4.2.0
+    type: module
+
+  - url: /local/mushroom.js?v=1.6.2
+    type: module
+
+  - url: /local/power-wheel-card.js
+    type: module
+
+  - url: /local/sun-card.js
+    type: module
+
+  - url: /local/thermal_comfort_icons.js?v=1.3.0
+    type: js
+
+  - url: /local/vertical-stack-in-card.js
+    type: module
+
+# Add more dashboards
+dashboards:
+  lovelace-areas: # Needs to contain a hyphen (-)
+    mode: yaml
+    filename: ui-areas.yaml
+    title: Areas
+    icon: mdi:home-outline
+    show_in_sidebar: true
+  lovelace-perth:
+    mode: yaml
+    filename: ui-perth.yaml
+    title: Perth
+    icon: mdi:account-supervisor-circle
+    show_in_sidebar: true
+  lovelace-system: # Needs to contain a hyphen (-)
+    mode: yaml
+    filename: ui-system.yaml
+    title: System
+    icon: mdi:server
+    show_in_sidebar: true #   require_admin: true
+  lovelace-irrigation: # Needs to contain a hyphen (-)
+    mode: yaml
+    filename: ui-irrigation.yaml
+    title: Irrigation
+    icon: mdi:water
+    show_in_sidebar: true #   require_admin: true
+# lovelace-dev: # Needs to contain a hyphen (-)
+#   mode: storage
+#   filename: ui-dev.yaml
+#   title: Dev
+#   icon: mdi:water
+# lovelace-hidden:
+#   mode: yaml
+#   title: hidden
+#   show_in_sidebar: false
+#   filename: hidden.yaml

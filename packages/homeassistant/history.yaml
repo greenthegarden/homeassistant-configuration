@@ -1,0 +1,16 @@
+---
+# History
+#
+# The history component will track everything that is going on within
+# Home Assistant and allows the user to browse through it.
+#
+# https://www.home-assistant.io/integrations/history/
+#
+history:
+  # include:
+  #   # entities: !include_dir_merge_list ../influxdb
+  #   domains:
+  #     - sensor
+  exclude:
+    entities:
+      - person.philip

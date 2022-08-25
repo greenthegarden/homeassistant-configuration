@@ -1,0 +1,45 @@
+---
+# MQTT Sensor
+# https://www.home-assistant.io/integrations/sensor.mqtt/
+
+mqtt:
+  sensor:
+    # Relayshield devices
+    - name: "Relayshield status mqtt"
+      state_topic: "relayshield/status/mqtt"
+      force_update: true
+
+    - name: "Relayshield status interval"
+      state_topic: "relayshield/status/interval"
+
+    - name: "Relayshield satus IP"
+      state_topic: "relayshield/status/ip_addr"
+
+    - name: "Relayshield status memory"
+      state_topic: "relayshield/status/memory"
+      unit_of_measurement: "bytes"
+
+    - name: "Relayshield status uptime"
+      state_topic: "relayshield/status/uptime"
+      unit_of_measurement: "msecs"
+
+    - name: "Relayshield status relay"
+      state_topic: "relayshield/status/relay"
+
+    - name: "Relayshield status alarm"
+      state_topic: "relayshield/status/alarm"
+
+    - name: "Relayshield status relay"
+      state_topic: "relayshield/status/relay"
+
+    - name: "Relayshield measurement current"
+      state_topic: "relayshield/status/current"
+      device_class: current
+      state_class: measurement
+      unit_of_measurement: "A"
+
+    - name: "Relayshield measurement voltage"
+      state_topic: "relayshield/status/voltage"
+      device_class: voltage
+      state_class: measurement
+      unit_of_measurement: "V"

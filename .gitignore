@@ -1,0 +1,35 @@
+# do not keep surplus vscode files
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+
+# Whitelisted files/folders which will not be ignored.
+!*.yaml
+!.gitignore
+!*.md
+
+# home-assistant files
+.cloud/
+.storage/
+.HA_VERSION
+.uuid
+home-assistant_v2.db*
+home-assistant.log*
+# known_devices.yaml
+secrets.yaml
+blueprints/
+automations.yaml
+# do not keep text to voice recordings
+tts/
+
+# python generated
+__pycache__/*
+*.pyc
+
+# camera footage
+www/camera/**
+!www/camera/README.md
+
+# nonroot
+# https://github.com/tribut/homeassistant-docker-venv
+nonroot/

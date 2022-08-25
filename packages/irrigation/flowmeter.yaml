@@ -1,0 +1,55 @@
+---
+# Integration - Riemann sum integral
+# https://www.home-assistant.io/integrations/integration/
+sensor:
+  - platform: integration
+    source: sensor.irrigation_flowrate
+    name: water_used
+    unit_time: h
+    round: 0
+
+# Timers
+# https://www.home-assistant.io/integrations/timer/
+
+timer:
+  # Flowmeter updates every 5 minutes when no flow
+  flowmeter_healthcheck_timer:
+    duration: "00:11:00"
+    restore: true
+    restore_grace_period: "00:15:00"
+
+# Automations
+
+automation:
+  #######################################################################
+  # healthchecks
+
+  - alias: Flowmeter healthcheck start
+    id: flowmeter_healthcheck_start
+    trigger:
+      - platform: homeassistant
+        event: start
+      - platform: mqtt
+        topic: homeassistant/sensor/deadbeeffeea/flowmeter/state
+    condition: []
+    action:
+      - service: timer.start
+        entity_id: timer.flowmeter_healthcheck_timer
+
+  - alias: Flowmeter healthcheck expired
+    id: flowmeter_healthcheck_expired
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.flowmeter_healthcheck_timer
+    condition: []
+    action:
+      - service: notify.mobile_app_nokia_5_3
+        data:
+          message: Flowmeter silent
+
+  #######################################################################
+  # alerts
+
+  # - alias:

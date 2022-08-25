@@ -1,0 +1,66 @@
+---
+# docker
+title: Docker
+icon: mdi:docker
+path: docker
+cards:
+  - type: entities
+    title: Docker
+    entities:
+      - entity: sensor.docker_version
+      - entity: sensor.docker_containers_running
+      - entity: sensor.docker_containers_total
+  - type: entities
+    title: Home Assistant
+    entities:
+      - entity: sensor.docker_homeassistant_image
+      - entity: sensor.docker_homeassistant_cpu
+      - entity: sensor.docker_homeassistant_memory
+      - entity: sensor.docker_homeassistant_status
+  - type: entities
+    title: Containers
+    entities:
+      - entity: binary_sensor.wud_container_dockersocketproxy_appdaemon
+        name: Appdaemon
+      - entity: binary_sensor.wud_container_dockersocketproxy_consul
+        name: Consul
+      - entity: binary_sensor.wud_container_dockersocketproxy_docker_socket_proxy
+        name: Docker Socket Proxy
+      - entity: binary_sensor.wud_container_dockersocketproxy_emqx
+        name: EMQX
+      - entity: binary_sensor.wud_container_dockersocketproxy_grafana
+        name: Grafana
+      - entity: binary_sensor.wud_container_dockersocketproxy_grocy
+        name: Grocy
+      - entity: binary_sensor.wud_container_dockersocketproxy_homeassistant
+        name: Home Assistant
+      - entity: binary_sensor.wud_container_dockersocketproxy_homeassistant_db
+        name: Home Assistant Database
+      - entity: binary_sensor.wud_container_dockersocketproxy_homeassistant_influxdb
+        name: InfluxDB
+      - entity: binary_sensor.wud_container_dockersocketproxy_loki
+        name: Loki
+      - entity: binary_sensor.wud_container_dockersocketproxy_nextcloud
+        name: Nextcloud
+      - entity: binary_sensor.wud_container_dockersocketproxy_nextcloud_db
+        name: Nextcloud Database
+      - entity: binary_sensor.wud_container_dockersocketproxy_node_exporter
+        name: Node Exporter
+      - entity: binary_sensor.wud_container_dockersocketproxy_nut_upsd
+        name: NUT UPSd
+      - entity: binary_sensor.wud_container_dockersocketproxy_portainer
+        name: Portainer
+      - entity: binary_sensor.wud_container_dockersocketproxy_prometheus
+        name: Prometheus
+      - entity: binary_sensor.wud_container_dockersocketproxy_promtail
+        name: Promtail
+      - entity: binary_sensor.wud_container_dockersocketproxy_pushgateway
+        name: Pushgateway
+      - entity: binary_sensor.wud_container_dockersocketproxy_thesillyhome
+        name: The Silly Home
+      - entity: binary_sensor.wud_container_dockersocketproxy_traefik
+        name: Traefik
+      - entity: binary_sensor.wud_container_dockersocketproxy_uptimekuma
+        name: Uptime Kuma
+      - entity: binary_sensor.wud_container_dockersocketproxy_whats_up_docker
+        name: What's up Docker

@@ -1,0 +1,24 @@
+---
+# lovelace_gen
+title: Printer
+icon: mdi:printer-outline
+path: printer
+cards:
+  - type: conditional
+    conditions:
+      - entity: sensor.printer
+        state: "Online"
+    card:
+      type: entities
+      title: Brother MFC L2703DW
+      entities:
+        - entity: sensor.mfc_l2700dw_status
+          name: Status
+        - entity: sensor.mfc_l2700dw_black_toner_remaining
+          name: Toner remaining
+        - entity: sensor.mfc_l2700dw_drum_remaining_life
+          name: Drum remaining life
+        - entity: sensor.mfc_l2700dw_page_counter
+          name: Pages printed
+        - entity: sensor.mfc_l2700dw_uptime
+          name: Uptime

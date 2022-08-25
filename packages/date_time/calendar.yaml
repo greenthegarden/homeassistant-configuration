@@ -1,0 +1,27 @@
+---
+# Package: Date & Time / Calendar
+
+# CalDAV
+# https://www.home-assistant.io/integrations/caldav/
+# Example configuration.yaml entry for nextcloud, calendars will be found automatically
+calendar:
+  - platform: caldav
+    username: philip
+    password: X5mcE-k4R9t-C6g9X-QfHZ7-7BmoB
+    url: https://nextcloud/remote.php/dav
+    days: 7
+    verify_ssl: false
+
+  - platform: caldav
+    username: family
+    password: 5EK3Y-9ikgd-gcy5f-J4r8G-QY9bE
+    url: https://nextcloud/remote.php/dav
+    days: 7
+    verify_ssl: false
+
+  - platform: caldav
+    username: homeassistant
+    password: SRdYZ-PMAXL-mTjDE-ByPND-NZf5y
+    url: https://nextcloud/remote.php/dav
+    days: 7
+    verify_ssl: false

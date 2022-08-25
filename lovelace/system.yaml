@@ -1,0 +1,243 @@
+---
+# lovelace_gen
+title: System
+icon: mdi:server
+path: system
+cards:
+  - type: entities
+    title: Host System
+    entities:
+      - entity: sensor.disk_use_percent
+        name: Disk Use
+      - entity: sensor.memory_use_percent
+        name: Memory Use
+      - entity: sensor.cpu_speed
+        name: Processor Use
+
+  # Hassio host server info
+  - type: vertical-stack
+    cards:
+      - type: custom:vertical-stack-in-card
+        title: Hassio Server
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: vertical-stack
+                cards:
+                  - type: picture
+                    image: /local/images/hassio.svg.png
+                    style: |-
+                      ha-card {
+                        margin: 10px;
+                        box-shadow: none;
+                      }
+
+              - type: vertical-stack
+                cards:
+                  - type: custom:bar-card
+                    entity: sensor.ha_installed_version
+                    name: Hassio Versie
+                    max: 1
+                    style: |-
+                      .card-content {
+                        padding-left: 5px;
+                        padding-bottom: 0px;
+                      }
+                      bar-card-currentbar, bar-card-backgroundbar {
+                        border-radius: 5px;
+                      }
+                      ha-card {
+                        box-shadow: none;
+                      }
+                  - type: custom:bar-card
+                    entity: sensor.ha_restart_time
+                    name: Restart Time
+                    max: 1
+                    style: |-
+                      .card-content {
+                        padding-left: 5px;
+                        padding-bottom: 0px;
+                      }
+                      bar-card-currentbar, bar-card-backgroundbar {
+                        border-radius: 5px;
+                      }
+                      ha-card {
+                        box-shadow: none;
+                      }
+
+          - type: custom:bar-card
+            positions:
+              indicator: inside
+            columns: 2
+            entities:
+              - entity: sensor.disk_use_percent
+                name: Disk Use
+              - entity: sensor.memory_use_percent
+                name: RAM
+            style: |
+              .card-content {
+                padding: 5px;
+                margin-right: 10px;
+                margin-left: 10px;
+              }
+              bar-card-currentbar, bar-card-backgroundbar {
+                border-radius: 5px;
+              }
+
+          - type: custom:bar-card
+            positions:
+              indicator: inside
+            columns: 2
+            entities:
+              - entity: sensor.processor_use_percent
+                name: CPU
+              - entity: sensor.cpu_temperature
+                name: Temp
+                icon: mdi:thermometer
+            style: |
+              .card-content {
+                padding: 5px;
+                margin-right: 10px;
+                margin-left: 10px;
+              }
+              bar-card-currentbar, bar-card-backgroundbar {
+                border-radius: 5px;
+              }
+
+          - type: custom:bar-card
+            positions:
+              indicator: inside
+            columns: 2
+            entities:
+              - entity: sensor.swap_use_percent
+                name: SWAP
+              - entity: sensor.db_size
+                name: DB
+                max: 3000
+            style: |
+              .card-content {
+                padding: 5px;
+                margin-right: 10px;
+                margin-left: 10px;
+              }
+              bar-card-currentbar, bar-card-backgroundbar {
+                border-radius: 5px;
+              }
+
+          - type: custom:bar-card
+            positions:
+              indicator: inside
+            columns: 2
+            entities:
+              - entity: sensor.home_assistant_log
+                name: Log size
+              - entity: sensor.ha_uptime
+                name: Uptime
+            style: |
+              .card-content {
+                padding: 5px;
+                margin-right: 10px;
+                margin-left: 10px;
+              }
+              bar-card-currentbar, bar-card-backgroundbar {
+                border-radius: 5px;
+              }
+
+          - type: custom:bar-card
+            entity: sensor.disk_free
+            positions:
+              name: inside
+              indicator: inside
+            max: 500
+            direction: right-reverse
+            style: |
+              .card-content {
+                padding: 5px;
+                margin-right: 10px;
+                margin-left: 10px;
+                margin-bottom: 10px;
+              }
+              bar-card-currentbar, bar-card-backgroundbar {
+                border-radius: 5px;
+              }
+  #     # Toont de batterij percentages van de Z-wave devices
+  #     - type: custom:vertical-stack-in-card
+  #       title: Batterij Status
+  #       cards:
+  #         - type: custom:auto-entities
+  #           card:
+  #             type: custom:bar-card
+  #             unit_of_measurement: "%"
+  #             severity:
+  #               - color: '#bf4040'
+  #                 from: 0
+  #                 to: 50
+  #               - color: '#bf9540'
+  #                 from: 50
+  #                 to: 75
+  #               - color: '#40bf40'
+  #                 from: 75
+  #                 to: 100
+  #             positions:
+  #               icon: 'off'
+  #               name: inside
+  #             saturation: 50%
+  #             columns: 1
+  #             height: 30px
+  #             style: |
+  #               bar-card-currentbar, bar-card-backgroundbar {
+  #                 border-radius: 5px;
+  #               }
+  #               bar-card-value {
+  #                 font-size: 15px;
+  #                 font-weight: bold;
+  #                 margin-right: 50px;
+  #               }
+  #               bar-card-name {
+  #                 font-size: 14px;
+  #                 #font-weight: bold;
+  #                 margin-left: 20px;
+  #               }
+  #           filter:
+  #             include:
+  #               - entity_id: "*_battery_level"
+  #             exclude:
+  #               - entity_id: "*_humidity"
+  #               - entity_id: "*_pressure"
+  #               # - entity_id: "*_battery"
+  #               - domain: device_tracker
+  #           sort:
+  #             method: state
+  #             numeric: true
+  #     - type: glance
+  #       entities:
+  #         - name: Foscam
+  #           entity: binary_sensor.foscam
+  #         - name: Slaapkamer
+  #           entity: binary_sensor.google_mini_slaapkamer
+  #         - name: Woonkamer
+  #           entity: binary_sensor.google_mini_woonkamer
+  #         - name: HP Printer
+  #           entity: binary_sensor.hp_printer
+  #         - name: Synology NAS
+  #           entity: binary_sensor.synology_nas
+  #         - name: Router
+  #           entity: binary_sensor.tp_link_router
+  #         - name: Switch
+  #           entity: binary_sensor.tp_link_switch
+  #       columns: 4
+  #       show_state: false
+
+  # Show alerts that can appear
+  - type: entities
+    title: Alerts
+    show_header_toggle: false
+    entities:
+      - binary_sensor.cpu_load_high
+      - binary_sensor.cpu_temperature_high
+
+  - type: entities
+    title: Host Resource Alert Inputs
+    entities:
+      - input_number.host_resource_utilisation_delay_seconds
+      - input_number.host_resource_utilisation_trigger

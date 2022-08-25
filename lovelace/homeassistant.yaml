@@ -1,0 +1,447 @@
+---
+################################## System Information ##################################
+# id: system_information
+title: Home Assistant
+icon: mdi:home-assistant
+path: homeassistant
+cards:
+  # Show information about Home Assistant
+  - type: entities
+    title: Home Assistant Version
+    entities:
+      - entity: sensor.current_version
+      - entity: sensor.home_assistant_website
+        name: Website Version
+      - entity: binary_sensor.home_assistant_website_update_available
+        name: Website Version Update Available
+      - entity: sensor.docker_hub
+        name: Docker Hub Version
+      - entity: binary_sensor.docker_hub_update_available
+        name: Docker Hub Update Available
+      - entity: sensor.potential_breaking_changes
+        name: Breaking Changes
+      - entity: sensor.mariadb_size
+        name: Database Size
+
+  - type: custom:bar-card
+    positions:
+      indicator: inside
+    columns: 2
+    entities:
+      - entity: sensor.home_assistant_log
+        name: Log size
+      - entity: sensor.ha_uptime
+        name: Uptime
+    style: |
+      .card-content {
+        padding: 5px;
+        margin-right: 10px;
+        margin-left: 10px;
+      }
+      bar-card-currentbar, bar-card-backgroundbar {
+        border-radius: 5px;
+      }
+
+  - type: entities
+    title: Home Assistant Info
+    show_header_toggle: false
+    entities:
+      - sensor.last_boot
+      - binary_sensor.home_assistant_home
+      - type: divider
+      # Hassio
+      - entity: sensor.hassio_stable_versie
+        name: Hassio version
+        icon: mdi:home-assistant
+        type: custom:multiple-entity-row
+        show_state: false
+        entities:
+          - entity: sensor.hassio_beta_versie
+            name: Beta
+          - entity: sensor.hassio_stable_versie
+            name: Stable
+      - sensor.python_version
+      - type: divider
+      - sensor.automation_on
+      # - sensor.hacs
+      - type: custom:vertical-stack-in-card
+        style: |
+          ha-card {
+            box-shadow: none;
+          }
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: custom:bar-card
+                name: Cameras
+                entity: sensor.camera_count
+                positions:
+                  name: inside
+                  icon: "off"
+                  value: inside
+                  indicator: inside
+                max: 10
+                height: 35
+                severity:
+                  - color: "#bf4040"
+                    from: 0
+                    to: 1
+                  - color: "#1db954"
+                    from: 1
+                    to: 7
+                  - color: "#bf9540"
+                    from: 8
+                    to: 10
+                style: |
+                  .card-content {
+                    padding: 5px;
+                    margin-right: 5px;
+                  }
+                  bar-card-currentbar, bar-card-backgroundbar {
+                    border-radius: 5px;
+                  }
+                  bar-card-value {
+                    font-size: 15px;
+                    font-weight: bold;
+                    margin-right: 20px;
+                  }
+
+              - type: custom:bar-card
+                name: Lights
+                entity: sensor.lights_count
+                positions:
+                  name: inside
+                  icon: "off"
+                  value: inside
+                  indicator: inside
+                max: 40
+                height: 35
+                severity:
+                  - color: "#bf4040"
+                    from: 0
+                    to: 1
+                  - color: "#1db954"
+                    from: 1
+                    to: 30
+                  - color: "#bf9540"
+                    from: 30
+                    to: 40
+                style: |
+                  .card-content {
+                    padding: 5px;
+                    margin-right: 5px;
+                  }
+                  bar-card-currentbar, bar-card-backgroundbar {
+                    border-radius: 5px;
+                  }
+                  bar-card-value {
+                    font-size: 15px;
+                    font-weight: bold;
+                    margin-right: 20px;
+                  }
+
+              - type: custom:bar-card
+                name: Trackers
+                entity: sensor.tracker_count
+                positions:
+                  name: inside
+                  icon: "off"
+                  value: inside
+                  indicator: inside
+                max: 100
+                height: 35
+                severity:
+                  - color: "#bf4040"
+                    from: 0
+                    to: 1
+                  - color: "#1db954"
+                    from: 1
+                    to: 87
+                  - color: "#bf9540"
+                    from: 87
+                    to: 100
+                style: |
+                  .card-content {
+                    padding: 5px;
+                    margin-right: 5px;
+                  }
+                  bar-card-currentbar, bar-card-backgroundbar {
+                    border-radius: 5px;
+                  }
+                  bar-card-value {
+                    font-size: 15px;
+                    font-weight: bold;
+                    margin-right: 20px;
+                  }
+
+          - type: horizontal-stack
+            cards:
+              - type: custom:bar-card
+                name: Automations
+                entity: sensor.automation_count
+                positions:
+                  name: inside
+                  icon: "off"
+                  value: inside
+                  indicator: inside
+                max: 400
+                height: 35
+                severity:
+                  - color: "#bf4040"
+                    from: 0
+                    to: 1
+                  - color: "#1db954"
+                    from: 1
+                    to: 300
+                  - color: "#bf9540"
+                    from: 300
+                    to: 400
+                style: |
+                  .card-content {
+                    padding: 5px;
+                    margin-right: 5px;
+                  }
+                  bar-card-currentbar, bar-card-backgroundbar {
+                    border-radius: 5px;
+                  }
+                  bar-card-value {
+                    font-size: 15px;
+                    font-weight: bold;
+                    margin-right: 20px;
+                  }
+
+              - type: custom:bar-card
+                name: Binary Sensors
+                entity: sensor.binary_sensor_count
+                positions:
+                  name: inside
+                  icon: "off"
+                  value: inside
+                  indicator: inside
+                max: 200
+                height: 35
+                severity:
+                  - color: "#bf4040"
+                    from: 0
+                    to: 1
+                  - color: "#1db954"
+                    from: 1
+                    to: 150
+                  - color: "#bf9540"
+                    from: 150
+                    to: 200
+                style: |
+                  .card-content {
+                    padding: 5px;
+                    margin-right: 5px;
+                  }
+                  bar-card-currentbar, bar-card-backgroundbar {
+                    border-radius: 5px;
+                  }
+                  bar-card-value {
+                    font-size: 15px;
+                    font-weight: bold;
+                    margin-right: 20px;
+                  }
+
+          - type: horizontal-stack
+            cards:
+              - type: custom:bar-card
+                name: Media Players
+                entity: sensor.media_player_count
+                positions:
+                  name: inside
+                  icon: "off"
+                  value: inside
+                  indicator: inside
+                max: 30
+                height: 35
+                severity:
+                  - color: "#bf4040"
+                    from: 0
+                    to: 1
+                  - color: "#1db954"
+                    from: 1
+                    to: 16
+                  - color: "#bf9540"
+                    from: 16
+                    to: 30
+                style: |
+                  .card-content {
+                    padding: 5px;
+                    margin-right: 5px;
+                  }
+                  bar-card-currentbar, bar-card-backgroundbar {
+                    border-radius: 5px;
+                  }
+                  bar-card-value {
+                    font-size: 15px;
+                    font-weight: bold;
+                    margin-right: 20px;
+                  }
+
+              - type: custom:bar-card
+                name: Scripts
+                entity: sensor.script_count
+                positions:
+                  name: inside
+                  icon: "off"
+                  value: inside
+                  indicator: inside
+                max: 40
+                height: 35
+                severity:
+                  - color: "#bf4040"
+                    from: 0
+                    to: 1
+                  - color: "#1db954"
+                    from: 1
+                    to: 34
+                  - color: "#bf9540"
+                    from: 34
+                    to: 40
+                style: |
+                  .card-content {
+                    padding: 5px;
+                    margin-right: 5px;
+                  }
+                  bar-card-currentbar, bar-card-backgroundbar {
+                    border-radius: 5px;
+                  }
+                  bar-card-value {
+                    font-size: 15px;
+                    font-weight: bold;
+                    margin-right: 20px;
+                  }
+
+          - type: horizontal-stack
+            cards:
+              - type: custom:bar-card
+                name: Sensors
+                entity: sensor.sensor_count
+                positions:
+                  name: inside
+                  icon: "off"
+                  value: inside
+                  indicator: inside
+                max: 800
+                height: 35
+                severity:
+                  - color: "#bf4040"
+                    from: 0
+                    to: 1
+                  - color: "#1db954"
+                    from: 1
+                    to: 700
+                  - color: "#bf9540"
+                    from: 700
+                    to: 800
+                style: |
+                  .card-content {
+                    padding: 5px;
+                    margin-right: 5px;
+                  }
+                  bar-card-currentbar, bar-card-backgroundbar {
+                    border-radius: 5px;
+                  }
+                  bar-card-value {
+                    font-size: 15px;
+                    font-weight: bold;
+                    margin-right: 20px;
+                  }
+
+              - type: custom:bar-card
+                name: Switches
+                entity: sensor.switch_count
+                positions:
+                  name: inside
+                  icon: "off"
+                  value: inside
+                  indicator: inside
+                max: 70
+                height: 35
+                severity:
+                  - color: "#bf4040"
+                    from: 0
+                    to: 1
+                  - color: "#1db954"
+                    from: 1
+                    to: 65
+                  - color: "#bf9540"
+                    from: 65
+                    to: 70
+                style: |
+                  .card-content {
+                    padding: 5px;
+                    margin-right: 5px;
+                  }
+                  bar-card-currentbar, bar-card-backgroundbar {
+                    border-radius: 5px;
+                  }
+                  bar-card-value {
+                    font-size: 15px;
+                    font-weight: bold;
+                    margin-right: 20px;
+                  }
+  # Show maintenance dashboard
+  - type: vertical-stack
+    cards:
+      - type: custom:vertical-stack-in-card
+        cards:
+          - type: entities
+            title: Maintenance
+            show_header_toggle: false
+            entities:
+              - input_boolean.maintenance_mode
+              - type: divider
+          # Buttons
+          - type: horizontal-stack
+            cards:
+              - type: custom:button-card
+                entity: script.hassio_reboot
+                color_type: icon
+                name: Hassio Reboot
+              - type: custom:button-card
+                entity: script.host_reboot
+                color_type: card
+                name: Host Reboot
+                lock: true
+              - type: custom:button-card
+                entity: script.host_shutdown
+                color_type: card
+                lock: true
+                name: Host Shutdown
+              - type: custom:button-card
+                entity: script.backup_now
+                color_type: icon
+                name: Snapshot
+          - type: entities
+            show_header_toggle: false
+            entities:
+              - type: divider
+              # Github
+              - sensor.github_config_stars
+              - sensor.github_commit_message
+              - type: weblink
+                name: Github - Home Assistant config
+                url: https://github.com/greenthegarden/home-assistant-configuration-lovelace
+                icon: mdi:git
+              - type: divider
+              # Github
+              - sensor.github_config_stars
+              - sensor.github_commit_message
+              - type: weblink
+                name: Github - Home infrastructure
+                url: https://github.com/greenthegarden/my-iot-environment
+                icon: mdi:git
+              - type: divider
+              - type: weblink
+                name: Router - Unifi
+                url: !secret ubiquity_unity_controller_host
+      # Show alerts that can appear
+      - type: entities
+        title: Alerts
+        show_header_toggle: false
+        entities:
+          - binary_sensor.cpu_load_high
+          - binary_sensor.cpu_temperature_high

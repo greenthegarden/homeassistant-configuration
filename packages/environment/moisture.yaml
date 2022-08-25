@@ -1,0 +1,208 @@
+---
+input_number:
+  moisture_sensor_1_calibration_0:
+    name: Air (0%RH)
+    min: 0
+    max: 4095
+    initial: 3340
+    step: 1
+    mode: box
+
+  moisture_sensor_1_calibration_100:
+    name: Relay
+    min: 0
+    max: 4095
+    initial: 990
+    step: 1
+    mode: box
+
+  moisture_sensor_2_calibration_0:
+    name: Air (0%RH)
+    min: 0
+    max: 4095
+    initial: 3356
+    step: 1
+    mode: box
+
+  moisture_sensor_2_calibration_100:
+    name: Relay
+    min: 0
+    max: 4095
+    initial: 1000
+    step: 1
+    mode: box
+
+# https://www.home-assistant.io/integrations/input_select/
+input_select:
+  moisture_soil_1:
+    name: Soil moisture level 1
+    options:
+      - Dry
+      - Moist
+      - Wet
+    initial: Moist
+    icon: mdi:sprout-outline
+
+  moisture_soil_2:
+    name: Soil moisture level 2
+    options:
+      - Dry
+      - Moist
+      - Wet
+    initial: Moist
+    icon: mdi:sprout-outline
+
+# sensor:
+# MQTT Sensor
+# https://www.home-assistant.io/integrations/sensor.mqtt/
+
+# Moisture sensors
+
+# Topic: duo/moisture/<index>
+# Uses sensor: https://wiki.seeedstudio.com/Grove-Laser_PM2.5_Sensor-HM3301/
+
+# # TODO: Fix topics
+# - platform: mqtt
+#   name: Duo moisture moisture sensor 1
+#   state_class: measurement
+#   state_topic: "duo/moisture//0"
+#   value_template: "{{ value_json.measurement | int(0) }}"
+
+# - platform: mqtt
+#   name: Duo moisture moisture sensor 2
+#   state_class: measurement
+#   state_topic: "duo/moisture//1"
+#   value_template: "{{ value_json.measurement | int(0) }}"
+
+# # SHT01 sensor
+
+# # Topic: duo/moisture/sht10
+
+# - platform: mqtt
+#   name: Duo moisture SHT10 temperature
+#   device_class: temperature
+#   state_class: measurement
+#   state_topic: "duo/moisture/sht10"
+#   unit_of_measurement: "°C"
+#   value_template: "{{ value_json.temperature | int(0) }}"
+
+# - platform: mqtt
+#   name: Duo moisture SHT10 humidity
+#   device_class: humidity
+#   state_class: measurement
+#   state_topic: "duo/moisture/sht10"
+#   unit_of_measurement: "%"
+#   value_template: "{{ value_json.humidity | int(0) }}"
+
+# Templates
+# https://www.home-assistant.io/integrations/template/
+template:
+  - sensor:
+      - name: "Moisture 1 percent"
+        unit_of_measurement: "%"
+        state: >
+          {% set measurement = states('sensor.soil_moisture_1') | int(0) %}
+          {% set zero = states('input_number.moisture_sensor_1_calibration_0') | int(0) %}
+          {% set hundred = states('input_number.moisture_sensor_1_calibration_100') | int(0) %}
+
+          {{ ((zero - measurement) / (zero - hundred)) * 100.0 | int(0) }}
+
+      - name: "Moisture 2 percent"
+        unit_of_measurement: "%"
+        state: >
+          {% set measurement = states('sensor.soil_moisture_2') | int(0) %}
+          {% set zero = states('input_number.moisture_sensor_2_calibration_0') | int(0) %}
+          {% set hundred = states('input_number.moisture_sensor_2_calibration_100') | int(0) %}
+
+          {{ ((zero - measurement) / (zero - hundred)) * 100.0 | int(0) }}
+
+# Timers
+# https://www.home-assistant.io/integrations/timer/
+timer:
+  # Duo moisture system reports every 15 seconds
+  duo_moisture_healthcheck_timer:
+    duration: "00:02:00"
+    restore: true
+    restore_grace_period: "00:12:00"
+
+# Automations
+automation:
+  - alias: Soil conditions sensor 1
+    trigger:
+      - platform: state
+        entity_id: sensor.soil_moisture_1
+        id: moisture_sensor_1_reading
+    condition: []
+    action:
+      - service: input_select.select_option
+        data_template:
+          entity_id: input_select.moisture_soil_1
+          option: >
+            {% if states('sensor.moisture_1_percent') | int(0) < 30 %}
+              Dry
+            {% elif states('sensor.moisture_1_percent') | int(0) < 70 %}
+              Moist
+            {% else %}
+              Wet
+            {% endif %}
+
+  - alias: Soil conditions sensor 2
+    trigger:
+      - platform: state
+        entity_id: sensor.soil_moisture_2
+        id: moisture_sensor_2_reading
+    condition: []
+    action:
+      - service: input_select.select_option
+        data_template:
+          entity_id: input_select.moisture_soil_2
+          option: >
+            {% if states('sensor.moisture_2_percent') | int(0) < 30 %}
+              Dry
+            {% elif states('sensor.moisture_2_percent') | int(0) < 70 %}
+              Moist
+            {% else %}
+              Wet
+            {% endif %}
+
+  - alias: Soil condition notification
+    trigger:
+      - platform: state
+        entity_id:
+          - input_select.moisture_soil_1
+          - input_select.moisture_soil_2
+        to: "Dry"
+    condition: []
+    action:
+      - service: notify.mobile_app_nokia_5_3
+        data_template:
+          message: >
+            "Soil around sensor x is dry"
+
+  #######################################################################
+  # healthchecks
+
+  - alias: Duo moisture sensor healthcheck start
+    id: duo_moisture_sensor_healthcheck_start
+    trigger:
+      - platform: homeassistant
+        event: start
+      - platform: mqtt
+        id: duo_moisture_sensor_report
+        topic: duo/moisture/#
+    condition: []
+    action:
+      - service: timer.start
+        entity_id: timer.duo_moisture_healthcheck_timer
+
+  - alias: Duo moisture sensor healthcheck expired
+    id: duo_moisture_sensor_healthcheck_expired
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.duo_moisture_healthcheck_timer
+    action:
+      - service: notify.mobile_app_nokia_5_3
+        data:
+          message: Duo moisture sensor silent

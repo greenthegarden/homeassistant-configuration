@@ -1,0 +1,37 @@
+---
+# lovelace_gen
+title: Home
+icon: mdi:home-outline
+path: area_home
+cards:
+  - type: vertical-stack
+    cards:
+      - type: entities
+        title: Indoor Conditions
+        entities:
+          - entity: sensor.indoor_thermal_perception
+          - entity: sensor.indoor_dew_point
+          - entity: sensor.indoor_temperature
+            name: Temperature
+          - entity: sensor.indoor_humidity
+            name: Humidity
+          # - entity: sensor.enviro_3_bme280_pressure
+          #   name: Pressure
+          - entity: sensor.mold_indicator
+            name: Mold Indicator
+            icon: mdi:virus
+      - type: entities
+        # title: Indoor Air Quality
+        entities:
+          - entity: input_boolean.windows_open
+      - type: entities
+        # title: Indoor Air Quality
+        entities:
+          - entity: input_boolean.heater_on
+
+  - type: entities
+    title: Bin collection
+    entities:
+      - entity: sensor.general_waste
+      - entity: sensor.green_waste
+      - entity: sensor.recycling

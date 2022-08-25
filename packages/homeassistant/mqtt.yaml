@@ -1,0 +1,25 @@
+---
+# Package: HomeAssistant / MQTT
+
+# get list of clients connected to broker
+sensor:
+  - platform: rest
+    name: MQTT Broker Clients
+    resource: http://emqx:18083/api/v4/clients/
+    method: GET
+    verify_ssl: false
+    timeout: 10
+    authentication: basic
+    username: "admin"
+    password: "public"
+    scan_interval: 60
+    value_template: |
+      {% for client in value_json.data %}
+        {{ client.clientid }}
+      {% endfor %}
+    # value_template: "{{ value_json.data[0].clientid }}"
+    # json_attributes_path: "$.data[0]"
+    # json_attributes:
+    #   - clientid
+    #   - ip_address
+    # value_template: "{{ value_json['items'] }}" #[0].clientid() }}"

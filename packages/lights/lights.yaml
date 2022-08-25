@@ -1,0 +1,56 @@
+---
+# Package: Lights / Lights
+
+# Binary Sensors
+
+# binary_sensor:
+
+# Sensors
+
+# sensor:
+
+# Automations
+
+automation:
+  - alias: Turn porch light on when returning home
+    id: porch_light_on_with_timer
+    description: "Turn porch light on when returning home"
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.people_home
+        from: "off"
+        to: "on"
+    condition:
+      # an hour after sunset to midnight
+      - condition: sun
+        after: sunset
+        after_offset: "+01:00:00"
+    action:
+      # IKEA porch light device from .storage/core.device_registry
+      - device_id: !secret ikea_tradfri_light_porch_device_id
+        domain: light
+        entity_id: light.light
+        type: turn_on
+      - service: timer.start
+        data:
+          entity_id: timer.front_porch_light
+
+  - alias: Turn porch light off after front_porch_light duration
+    id: porch_light_off_timer
+    trigger:
+      platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.front_porch_light
+    action:
+      - device_id: !secret ikea_tradfri_light_porch_device_id
+        domain: light
+        entity_id: light.light
+        type: turn_off
+
+# Timers
+# https://www.home-assistant.io/integrations/timer/
+
+timer:
+  front_porch_light:
+    duration: "00:01:00"

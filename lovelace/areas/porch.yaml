@@ -1,0 +1,9 @@
+---
+# lovelace_gen
+title: Porch
+icon: mdi:coach-lamp
+path: area_porch
+cards:
+  - type: light
+    name: Porch Light
+    entity: light.light

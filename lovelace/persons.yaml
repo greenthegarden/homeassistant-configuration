@@ -1,0 +1,100 @@
+---
+# lovelace_gen
+title: Persons
+icon: mdi:account-multiple
+path: persons
+cards:
+  - type: vertical-stack
+    cards:
+      - type: entities
+        title: Philip
+        entities:
+          # - entity: person.philip
+          #   name: Whereabouts
+          - entity: sensor.philip_home_away
+            name: Home or away
+          - entity: sensor.skin_type_1_safe_exposure_time
+            name: UV safe exposure time
+          - entity: input_boolean.philip_bed
+            name: In bed
+      - type: entities
+        title: Devices
+        entities:
+          - entity: sensor.philip_phone
+            name: Phone
+          - entity: sensor.philip_laptop
+            name: Laptop
+      - type: entities
+        title: Nokia 5.3
+        entities:
+          - entity: sensor.nokia_5_3_battery_level
+            name: Battery Level
+          - entity: sensor.nokia_5_3_battery_state
+            name: Battery State
+          - entity: sensor.nokia_5_3_charger_type
+            name: Charger Type
+          - entity: binary_sensor.nokia_5_3_is_charging
+            name: Is charging
+      - type: vertical-stack
+        cards:
+          #     - type: markdown
+          #       content: Stocks
+          # - type: entities
+          #   entities:
+          # - entity: input_boolean.check_asx_info
+          #   name: Update prices
+          - type: entities
+            title: Endeavour Group
+            entities:
+              - entity: sensor.asx_sensor_edv
+                name: Price
+              - entity: input_number.shares_edv
+                name: Number
+              - entity: sensor.shares_value_edv
+                name: Value
+          - type: entities
+            title: Telstra
+            entities:
+              - entity: sensor.asx_sensor_tls
+                name: Price
+              - entity: input_number.shares_tls
+                name: Number
+              - entity: sensor.shares_value_tls
+                name: Value
+          - type: entities
+            title: Woolworths
+            entities:
+              - entity: sensor.asx_sensor_wow
+                name: Price
+              - entity: input_number.shares_wow
+                name: Number
+              - entity: sensor.shares_value_wow
+                name: Value
+
+  - type: vertical-stack
+    cards:
+      - type: entities
+        title: Thanh
+        entities:
+          - entity: sensor.thanh_home_away
+            name: Home or away
+          - entity: sensor.skin_type_5_safe_exposure_time
+            name: UV safe exposure time
+          - entity: input_boolean.thanh_bed
+            name: In bed
+      - type: entities
+        title: Devices
+        entities:
+          - entity: sensor.thanh_phone
+            name: Phone
+          - entity: sensor.thanh_ipad
+            name: iPad
+          - entity: sensor.thanh_desktop
+            name: Desktop
+      - type: entities
+        title: iPad
+        entities:
+          - entity: sensor.philips_ipad_battery_level
+            name: Battery Level
+          - entity: sensor.philips_ipad_battery_state
+            name: Battery State

@@ -1,0 +1,110 @@
+---
+# lovelace_gen
+title: Network
+icon: mdi:lan
+path: network
+cards:
+  - type: entities
+    title: Network
+    entities:
+      - entity: sensor.myip
+        name: WAN IP
+      - entity: sensor.local_ip
+        name: Host IP
+
+  # TODO: use entity-filter card
+  - type: entities
+    title: Devices
+    entities:
+      - entity: sensor.castology
+      - entity: sensor.chromecast
+      - entity: sensor.dns
+      - entity: sensor.emonpi
+      - entity: sensor.ikea_gateway
+      - entity: sensor.storology
+      - entity: sensor.gateway_rtl_433
+      - entity: sensor.printer
+      - entity: sensor.uhoo
+
+  - type: entities
+    title: Ubiquity Gateway
+    entities:
+      - entity: sensor.unifi_gateway_wlan
+      - entity: sensor.unifi_gateway_firmware_upgradable
+      - entity: sensor.unifi_gateway_alerts
+      - entity: sensor.unifi_gateway_www
+      # - entity: sensor.unifi_gateway_alerts
+      #   name: Country
+      #   attribute: usgipGeo.country_name
+      # - entity: sensor.unifi_gateway_alerts
+      #   name: IP
+      #   attribute: usgip
+
+  # - type: vertical-stack
+  #   cards:
+  #     - type: entities
+  #       title: Speed Test
+  #       entities:
+  #         - entity: sensor.speedtest_ping
+  #           name: Ping
+  #         - entity: sensor.speedtest_download
+  #           name: Download
+  #         - entity: sensor.speedtest_upload
+  #           name: Upload
+  #     - type: history-graph
+  #       title: WAN Speed
+  #       entities:
+  #         - entity: sensor.speedtest_download
+  #           name: Download
+  #         - entity: sensor.speedtest_upload
+  #           name: Upload
+
+  # Show information about the internet connection
+  - type: vertical-stack
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - sensor.speedtest_ping
+            height: 20
+            line_width: 2
+            font_size: 70
+            hours_to_show: 168
+            points_per_hour: 0.3
+            show:
+              # extrema: true
+              fill: true
+              graph: bar
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - sensor.speedtest_download
+            height: 50
+            line_width: 2
+            font_size: 70
+            hours_to_show: 168
+            points_per_hour: 0.3
+            show:
+              extrema: true
+              fill: true
+            color_thresholds:
+              - value: 150
+                color: "#bf4040"
+
+          - type: custom:mini-graph-card
+            entities:
+              - sensor.speedtest_upload
+            height: 50
+            line_width: 2
+            font_size: 70
+            hours_to_show: 168
+            points_per_hour: 0.3
+            show:
+              extrema: true
+              fill: true
+            color_thresholds:
+              - value: 13
+                color: "#bf4040"

@@ -1,0 +1,33 @@
+---
+# lovelace_gen
+title: Back Bedroom
+icon: mdi:bed-outline
+path: area_bedroom_back
+cards:
+  - type: vertical-stack
+    cards:
+      - type: entities
+        entities:
+          - entity: sensor.weathersense_indoor_2_thermal_perception
+            name: Thermal Comfort
+          - entity: sensor.weathersense_indoor_2_dew_point
+          - entity: sensor.weathersense_indoor_2_temperature
+            name: Temperature
+          - entity: sensor.weathersense_indoor_2_humidity
+            name: Humidity
+          - entity: binary_sensor.weathersense_indoor_2_battery_low
+            name: Battery Low
+          - entity: sensor.weathersense_indoor_2_channel
+            name: Weathersense ID
+      - type: history-graph
+        title: Temperature
+        hours_to_show: 24
+        entities:
+          - entity: sensor.weathersense_indoor_2_temperature
+            name: Temperature
+      - type: history-graph
+        title: Humidity
+        hours_to_show: 24
+        entities:
+          - entity: sensor.weathersense_indoor_2_humidity
+            name: Humidity

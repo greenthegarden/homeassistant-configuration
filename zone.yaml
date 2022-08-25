@@ -1,0 +1,42 @@
+---
+# Zones
+# Specify certain regions
+# https://www.home-assistant.io/integrations/zone
+
+# This will override the default home zone
+- name: Home
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  radius: 100
+  icon: mdi:home
+
+- name: City
+  latitude: -34.922903
+  longitude: 138.601875
+  radius: 2000
+  icon: mdi:home-city
+
+- name: Emilia
+  latitude: -34.885618
+  longitude: 138.657415
+  radius: 100
+  icon: mdi:human-greeting
+
+# - name: Opensky
+#   latitude: !secret home_latitude
+#   longitude: !secret home_longitude
+#   radius: !secret opensky_radius_km
+#   icon: mdi:airplane
+
+- name: Parents of Philip
+  latitude: -35.132610
+  longitude: 138.480433
+  radius: 100
+  icon: mdi:account-multiple
+
+- name: Work
+  latitude: !secret work_latitude
+  longitude: !secret work_longitude
+  radius: 100
+  icon: mdi:account-hard-hat
+  passive: true

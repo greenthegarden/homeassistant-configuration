@@ -1,0 +1,343 @@
+---
+# Package: System / System
+
+# Customize
+# https://www.home-assistant.io/docs/configuration/customizing-devices/
+# Add an entry for each entity that you want to overwrite.
+
+homeassistant:
+  customize:
+    sensor.speedtest_download:
+      icon: mdi:download
+    sensor.speedtest_upload:
+      icon: mdi:upload
+    sensor.speedtest_ping:
+      icon: mdi:speedometer
+
+input_boolean:
+  input_boolean:
+  maintenance_mode:
+    name: Maintenance Mode
+    icon: mdi:auto-fix
+
+# Input Number
+# https://www.home-assistant.io/integrations/input_number/
+
+input_number:
+  host_resource_utilisation_delay_seconds:
+    name: Delay
+    min: 1
+    max: 120
+    step: 1
+    initial: 30
+    mode: slider
+    unit_of_measurement: seconds
+    icon: mdi:timer
+
+  host_resource_utilisation_trigger:
+    name: Utilisation Trigger
+    min: 0
+    max: 100
+    step: 5
+    initial: 70
+    mode: slider
+    unit_of_measurement: "%"
+    icon: mdi:network-strength-2-alert
+
+# Sensors
+
+sensor:
+  # System Monitor
+  # Monitor disk usage, memory usage, CPU usage, and running processes
+  # https://www.home-assistant.io/integrations/systemmonitor/
+  - platform: systemmonitor
+    resources:
+      - type: disk_free
+        arg: /
+      - type: disk_use_percent
+        arg: /
+      - type: ipv4_address
+        arg: eth0
+      - type: last_boot
+      - type: load_1m
+      - type: load_5m
+      - type: load_15m
+      - type: memory_use_percent
+      - type: memory_free
+      - type: processor_use
+      - type: swap_use_percent
+
+  # Does not work with Docker container
+  # - platform: command_line
+  #   name: CPU Temperature
+  #   command: "/bin/cat /sys/class/thermal/thermal_zone2/temp"
+  #   unit_of_measurement: "°C"
+  #   value_template: '{{ value | multiply(0.001) | round(1) }}'
+
+  # - platform: filesize
+  #   file_paths:
+  #     # - !secret filesize_homeassistant_db
+  #     - !secret filesize_homeassistant_log
+  #     - !secret filesize_ozw_log
+  #     - !secret filesize_configuration
+
+  ##### When will the SSL expiry
+  # - platform: cert_expiry
+  #   host: !secret cert_expiry_host
+
+  ##### Latest python3 version
+  - platform: command_line
+    name: Python Version
+    command: python3 --version
+    scan_interval: 86400
+
+  ##### Restart time
+  - platform: command_line
+    name: HA Restart Time
+    command: "/bin/cat /config/home-assistant.log | /bin/grep 'Home Assistant initialized in' | /usr/bin/awk '{print(0) $10}' | /bin/sed 's/[^0-9.]//g'"
+    scan_interval: 60
+    unit_of_measurement: "sec"
+
+  # sensor.unifigateway
+  # https://github.com/custom-components/sensor.unifigateway
+  - platform: unifigateway
+    username: !secret ubiquity_unity_controller_username
+    password: !secret ubiquity_unity_controller_password
+    host: !secret ubiquity_unity_controller_host
+    port: 443
+    version: "UDMP-unifiOS"
+    verify_ssl: false
+    monitored_conditions:
+      - www
+      - wlan
+      - alerts
+      - firmware
+
+# Template
+# https://www.home-assistant.io/integrations/template
+template:
+  - binary_sensor:
+      - name: "CPU Load High"
+        state: >
+          {{ states('sensor.processor_use_percent') | float(0.0) > 80.0 }}
+
+      - name: "CPU Temperature High"
+        state: >
+          {{ states('sensor.cpu_temperature') | float(0.0) > 70.0 }}
+
+  # Source: https://github.com/klaasnicolaas/Smarthome-homeassistant-config/blob/master/components/sensors/uptime.yaml
+  - sensor:
+      - name: "HA Uptime"
+        state: >-
+          {% if states('sensor.time_online') == '0.0' %}
+            Just restarted...
+          {% else %}
+            {% macro phrase(value, name) %}
+            {%- set value = value | int(0) %}
+            {%- set end = 's' if value > 1 else '' %}
+            {{- '{} {}{}'.format(value, name, end) if value | int(0) > 0 else '' }}
+            {%- endmacro %}
+            {% set weeks = (states('sensor.time_online') | int(0) / 7) | int(0) %}
+            {% set days = (states('sensor.time_online') | int(0)) - (weeks * 7) %}
+            {% set hours = (states('sensor.time_online') | float(0.0) - states('sensor.time_online') | int(0)) * 24 %}
+            {% set minutes = (hours - hours | int(0)) * 60 %}
+            {{ [ phrase(weeks, 'week'), phrase(days, 'day'), phrase(hours, 'hr'), phrase(minutes, 'min') ] | select('!=','') | list | join(', ') }}
+          {% endif %}
+
+################################################
+## Alert
+################################################
+
+alert:
+  cpu_load_high:
+    name: CPU high
+    entity_id: binary_sensor.cpu_load_high
+    state: "on"
+    repeat: 5 # minutes
+    can_acknowledge: true
+    skip_first: false
+    notifiers:
+      - mobile_app_nokia_5_3
+
+  cpu_temperature_high:
+    name: CPU temperature high
+    entity_id: binary_sensor.cpu_temperature_high
+    state: "on"
+    repeat: 120 # minutes
+    can_acknowledge: true
+    skip_first: false
+    notifiers:
+      - mobile_app_nokia_5_3
+
+  # db_large:
+  # name: Database Large
+  # entity_id: binary_sensor.db_large
+  # state: 'on'
+  # repeat: # minutes
+  # - 15
+  # - 30
+  # - 60
+  # - 120
+  # can_acknowledge: true
+  # skip_first: false
+  # notifiers:
+  # - mobile_app_nokia_5_3
+
+  maintenance_mode_alert:
+    name: Maintenace mode
+    done_message: Maintenance Mode de-activated
+    entity_id: input_boolean.maintenance_mode
+    repeat:
+      - 60
+    skip_first: true
+    notifiers:
+      - mobile_app_nokia_5_3
+
+################################################
+## Script
+################################################
+
+script:
+  hassio_reboot:
+    alias: Hassio Reboot
+    sequence:
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.maintenance_mode
+      - delay: 00:00:02
+      - service: homeassistant.restart
+
+  host_reboot:
+    alias: Host Reboot
+    sequence:
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.maintenance_mode
+      - delay: 00:00:02
+      - service: hassio.host_reboot
+
+  backup_now:
+    alias: New Snapshot
+    sequence:
+      - delay: 00:00:02
+      - service: automation.trigger
+        entity_id: automation.system_make_weekly_hassio_backup
+
+  host_shutdown:
+    alias: Host Shutdown
+    sequence:
+      - delay: 00:00:02
+      - service: hassio.host_shutdown
+
+# Automations
+
+automation:
+  - alias: Home Assistant starts
+    id: home_assistant_started
+    initial_state: on
+    trigger:
+      - platform: homeassistant
+        event: start
+    action:
+      - service: notify.mobile_app_nokia_5_3
+        data:
+          message: >
+            "Home Assistant started"
+
+  - alias: Switch on remote access when leave home
+    id: home_assistant_remote_access_on
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.philip_home
+        from: "on"
+        to: "off"
+    action:
+      - service: cloud.remote_connect
+      - service: notify.mobile_app_nokia_5_3
+        data:
+          message: >
+            "Remote connect on"
+
+  - alias: Switch off remote access when at home
+    id: home_assistant_remote_access_off
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.philip_home
+        from: "off"
+        to: "on"
+    action:
+      - service: cloud.remote_disconnect
+      - service: notify.mobile_app_nokia_5_3
+        data:
+          message: >
+            "Remote disconnected"
+
+  - alias: New Home Assistant version available
+    id: home_assistant_new_version_available
+    trigger:
+      platform: state
+      entity_id: binary_sensor.updater
+      from: "off"
+      to: "on"
+    action:
+      service: notify.mobile_app_nokia_5_3
+      data_template:
+        message: "Version {{ state_attr('binary_sensor.updater', 'newest_version') }} of Home Assistant is now available"
+
+  - alias: Notify when external IP changes
+    id: external_ip_changed
+    initial_state: on
+    trigger:
+      platform: state
+      entity_id: sensor.myip
+      # platform: event
+      # entity_id: sensor.myip
+      # event_type: state_changed
+    action:
+      service: notify.mobile_app_nokia_5_3
+      data_template:
+        message: "New external IP address is {{ states('sensor.myip') }}"
+
+  - alias: Host memory utilisation too high
+    id: host_memory_utilisation_too_high
+    trigger:
+      platform: template
+      value_template: >
+        {{ states('sensor.memory_use_percent') | int(0) > states('input_number.host_resource_utilisation_trigger') | int(0) }}
+      for:
+        seconds: "{{ states('input_number.host_resource_utilisation_delay_seconds') | int(0) }}"
+      # platform: numeric_state
+      # entity_id: sensor.memory_use_percent
+      # above: 50
+      # for:
+      #   seconds: "{{ states('input_number.host_resource_utilisation_delay_seconds') | int(0) }}"
+    action:
+      service: notify.mobile_app_nokia_5_3
+      data_template:
+        message: "Host memory utilisation too high at {{ states('sensor.memory_use_percent') }}%"
+
+  - alias: Host processor utilisation too high
+    id: host_processor_utilisation_too_high
+    trigger:
+      platform: template
+      value_template: >
+        {{ states('sensor.processor_use') | int(0) > states('input_number.host_resource_utilisation_trigger') | int(0) }}
+      for:
+        seconds: "{{ states('input_number.host_resource_utilisation_delay_seconds') | int(0) }}"
+    # trigger:
+    #   platform: numeric_state
+    #   entity_id: sensor.processor_use
+    #   above: 50
+    action:
+      service: notify.mobile_app_nokia_5_3
+      data_template:
+        message: "Host processor utilisation too high at {{ states('sensor.processor_use') }}%"
+
+  - alias: Host disk utilisation too high
+    id: host_disk_utilisation_too_high
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.disk_use_percent
+      above: 50
+    action:
+      service: notify.mobile_app_nokia_5_3
+      data_template:
+        message: "Host disk usage too high at {{ states('sensor.disk_use_percent') }}%"

@@ -1,0 +1,18 @@
+---
+# Logger
+#
+# Define the level of logging activities
+#
+# https://www.home-assistant.io/components/logger/
+# https://www.home-assistant.io/integrations/logger/
+#
+# Logger levels: info, warning, debug
+#
+logger:
+  default: info
+  logs:
+    homeassistant.bootstrap: info
+    homeassistant.components.mqtt: debug
+    homeassistant.components.shell_command: fatal
+    # custom_components.bureau_of_meteorology: debug
+    # custom_components.opennem: debug

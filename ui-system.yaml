@@ -1,0 +1,19 @@
+---
+# lovelace_gen
+
+# Lovelace User Interface
+# https://www.home-assistant.io/lovelace/
+
+title: System
+# background:
+views:
+  - !include lovelace/homeassistant.yaml
+  - !include lovelace/system.yaml
+  - !include lovelace/network.yaml
+  - !include lovelace/docker.yaml
+  - !include lovelace/mqtt.yaml
+  - !include lovelace/batteries.yaml
+  - !include lovelace/nexus.yaml
+  - !include lovelace/storology.yaml
+  - !include lovelace/printer.yaml
+  - !include lovelace/system2.yaml

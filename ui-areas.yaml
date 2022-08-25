@@ -1,0 +1,24 @@
+---
+# lovelace_gen
+
+# Lovelace User Interface
+# https://www.home-assistant.io/lovelace/
+
+title: Areas
+# background:
+views:
+  - !include lovelace/areas.yaml
+  - !include lovelace/areas/region.yaml
+  - !include lovelace/areas/home.yaml
+  - !include lovelace/areas/porch.yaml
+  - !include lovelace/areas/fronthall.yaml
+  - !include lovelace/areas/livingroom.yaml
+  - !include lovelace/areas/diningroom.yaml
+  - !include lovelace/areas/familyroom.yaml
+  - !include lovelace/areas/kitchen.yaml
+  - !include lovelace/areas/networkcabinet.yaml
+  - !include lovelace/areas/utilityroom.yaml
+  - !include lovelace/areas/bedroomback.yaml
+  - !include lovelace/areas/bedroomfrontsmall.yaml
+  - !include lovelace/areas/bedroomfrontbig.yaml
+  - !include lovelace/areas/outsidekitchen.yaml

@@ -1,0 +1,356 @@
+---
+# Package: Environment / Environment
+
+# Global Disaster Alert and Coordination System (GDACS)
+# Information about major droughts, earthquakes, floods,
+# tropical cyclones, tsunamis and volcanic activities worldwide
+# https://www.home-assistant.io/integrations/gdacs/
+# radius in km, default is 500
+# gdacs:
+#   categories:
+#     - Drought
+#     - Earthquake
+#     - Flood
+#     # - Tropical Cyclone
+#     - Tsunami
+#     # - Volcano
+#   radius: 1000
+#   latitude: !secret home_latitude
+#   longitude: !secret home_longitude
+
+# GeoJSON
+# Integrate GeoJSON feeds
+# https://www.home-assistant.io/integrations/geo_json_events/
+# geo_location:
+#   # U.S. Geological Survey Earthquake Hazards (USGS)
+#   # https://www.home-assistant.io/integrations/usgs_earthquakes_feed/
+#   - platform: usgs_earthquakes_feed
+#     feed_type: "past_month_all_earthquakes"
+#     radius: 50
+#     minimum_magnitude: 0.0
+#     latitude: !secret home_latitude
+#     longitude: !secret home_longitude
+
+# Binary Sensors
+binary_sensor:
+  - platform: trend
+
+    sensors:
+      outdoor_temperature_falling:
+        entity_id: sensor.outdoor_temperature
+        device_class: cold
+        friendly_name: "Temperature falling"
+        sample_duration: 7200
+        max_samples: 120
+        min_gradient: -0.0008
+
+      outdoor_temperature_rising:
+        entity_id: sensor.outdoor_temperature
+        device_class: heat
+        friendly_name: "Temperature rising"
+        sample_duration: 7200
+        max_samples: 120
+        min_gradient: 0.0008
+
+# MQTT Sensor
+# https://www.home-assistant.io/integrations/sensor.mqtt/
+
+# SwitchDoc Labs WeatherSense Wireless WeatherRack2
+
+# Topic: weathersense/FT020T
+# Payload:
+# {
+#     "time": "2021-11-14 07:47:33",
+#     "model": "SwitchDoc Labs FT020T AIO",
+#     "device": 12,
+#     "id": 0,
+#     "batterylow": 0,
+#     "avewindspeed": 16,
+#     "gustwindspeed": 20,
+#     "winddirection": 75,
+#     "cumulativerain": 5679,
+#     "temperature": 914,
+#     "humidity": 88,
+#     "light": 11610,
+#     "uv": 17,
+#     "mic": "CRC"
+# }
+
+mqtt:
+  sensor:
+    # the following bool needs fixing, see https://medium.com/opsops/wft-bool-filter-in-ansible-e7e2fd7a148f
+    - name: Weatherstation Battery
+      state_topic: "weathersense/FT020T"
+      # value_template: "{{ value_json.batterylow | bool }}"
+      unique_id: weatherstation_battery
+      value_template: "{{ value_json.batterylow | int(0) }}"
+
+    - name: Weatherstation Windspeed avg
+      state_topic: "weathersense/FT020T"
+      unit_of_measurement: "m/s"
+      unique_id: weatherstation_windspeed_avg
+      value_template: "{{ value_json.avewindspeed | float(0.0) / 10.0 | round(1) }}"
+
+    - name: Weatherstation Windspeed Gust
+      state_topic: "weathersense/FT020T"
+      unit_of_measurement: "m/s"
+      unique_id: weatherstation_windspeed_gust
+      value_template: "{{ value_json.gustwindspeed | float(0.0) / 10.0 | round(1) }}"
+
+    - name: Weatherstation Wind Direction
+      state_topic: "weathersense/FT020T"
+      unit_of_measurement: "°"
+      unique_id: weatherstation_wind_direction
+      value_template: "{{ value_json.winddirection | int(0) }}"
+
+    - name: Weatherstation Cumulative Rain
+      state_topic: "weathersense/FT020T"
+      unit_of_measurement: "mm"
+      unique_id: weatherstation_cumulative_rain
+      value_template: "{{ value_json.cumulativerain | float(0.0) / 10.0 | round(1) }}"
+
+    # - name: Weatherstation Daily Rain
+    #   state_topic: "weathersense/FT020T"
+    #   unit_of_measurement: "mm"
+    #   value_template: "{{ value_json.dailyrainfall }}"
+
+    # - name: Weatherstation Monthly Rain
+    #   state_topic: "weathersense/FT020T"
+    #   unit_of_measurement: "mm"
+    #   value_template: "{{ value_json.monthlyrainfall }}"
+
+    # - name: Weatherstation Annual Rain
+    #   state_topic: "weathersense/FT020T"
+    #   unit_of_measurement: "mm"
+    #   value_template: "{{ value_json.annualrainfall }}"
+
+    - name: Weatherstation Temperature
+      state_topic: "weathersense/FT020T"
+      device_class: temperature
+      state_class: measurement
+      unit_of_measurement: "°C"
+      unique_id: weatherstation_temperature
+      value_template: "{{ ((((( value_json.temperature | float(0.0) ) - 400) / 10.0) - 32) * 5/9) | round(1) }}"
+
+    - name: Weatherstation Humidity
+      state_topic: "weathersense/FT020T"
+      device_class: humidity
+      state_class: measurement
+      unit_of_measurement: "%"
+      unique_id: weatherstation_humidity
+      value_template: "{{ value_json.humidity | int(0) }}"
+
+    - name: Weatherstation Light
+      state_topic: "weathersense/FT020T"
+      device_class: illuminance
+      unit_of_measurement: "klux"
+      unique_id: weatherstation_light
+      value_template: "{{ value_json.light | float(0.0) / 1000.0 | round(1) }}"
+
+    - name: Weatherstation UV
+      state_topic: "weathersense/FT020T"
+      unit_of_measurement: "UV Index"
+      unique_id: weatherstation_uv
+      value_template: "{{ value_json.uv | float(0.0) / 10.0 | round(1) }}"
+
+# Sensors
+
+sensor:
+  - platform: derivative
+    source: sensor.outdoor_temperature
+    name: Outdoor temperature change per hour
+    round: 1
+    unit_time: h # the resulting "unit_of_measurement" will be °C/h if the sensor.temperate has set °C as it's unit
+    time_window: "00:30:00" # we look at the change over the last half hour
+
+  # Average
+  # https://github.com/Limych/ha-average
+  - platform: average
+    name: "Average Outdoor Temperature"
+    entities:
+      - sensor.outdoor_temperature
+
+  # CO2 Signal
+  # CO2 intensity of a specific region
+  # https://www.home-assistant.io/integrations/co2signal/
+  # - platform: co2signal
+  #   token: !secret co2signal_api_key
+  #   latitude: !secret home_latitude
+  #   longitude: !secret home_longitude
+
+  # World Air Quality Index
+  # https://www.home-assistant.io/integrations/waqi/
+  # sensor air_quality:
+  - platform: waqi
+    token: !secret waqi_token
+    locations:
+      - adelaide
+
+# Thermal Comfort
+thermal_comfort:
+  - custom_icons: true
+    sensor:
+      - name: Indoor
+        temperature_sensor: sensor.indoor_temperature
+        humidity_sensor: sensor.indoor_humidity
+      - name: Outdoor
+        temperature_sensor: sensor.outdoor_temperature
+        humidity_sensor: sensor.outdoor_humidity
+
+# Template
+# https://www.home-assistant.io/integrations/template
+template:
+  - binary_sensor:
+      - name: "Poor Air Quality"
+        state: "{{ states('sensor.waqi_adelaide_cbd') | int(0) > 100 }}"
+      - name: "UV High"
+        state: "{{ states('sensor.weatherstation_uv') | float(0.0) > 5.0 }}"
+      - name: "Weatherstation Battery Low"
+        state: "{{ states('sensor.weatherstation_battery') | int(0) == 1 }}"
+
+  - sensor:
+      - name: "Outdoor Temperature"
+        device_class: temperature
+        unit_of_measurement: "°C"
+        state_class: measurement
+        state: "{{ states('sensor.weatherstation_temperature') | float(0.0) }}"
+      # {{ states('sensor.adelaide_temp') | float }}
+      - name: "Outdoor Humidity"
+        device_class: humidity
+        unit_of_measurement: "%"
+        state_class: measurement
+        state: "{{ states('sensor.weatherstation_humidity') | float(0.0) }}"
+        #{{ states('sensor.adelaide_humidity') | float }}
+        # Based on https://community.home-assistant.io/t/template-sensor-wind-direction/297574/17
+      - name: "Wind Direction"
+        state: >
+          {%- if states('sensor.weatherstation_windspeed_avg') | float(0.0) < 0.1 -%}
+          CALM
+          {%- else -%}
+          {% set direction = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW','N'] %}
+          {% set degree = states('sensor.weatherstation_wind_direction')|float %}
+          {{ direction[((degree+11.25)/22.5)|int] }}
+          {%- endif -%}
+
+# Timers
+# https://www.home-assistant.io/integrations/timer/
+
+timer:
+  # Weatherstation status every 2 minutes
+  weatherstation_healthcheck_timer:
+    duration: "00:10:00"
+    restore: true
+    restore_grace_period: "00:15:00"
+
+# Automations
+
+automation:
+  - alias: Update OpenUV every 30 minutes during the daytime
+    id: openuv_update_data_day
+    trigger:
+      platform: time_pattern
+      minutes: /30
+    condition:
+      condition: and
+      conditions:
+        - condition: sun
+          after: sunrise
+        - condition: sun
+          before: sunset
+    action:
+      service: openuv.update_data
+
+  - alias:
+      Update OpenUV every 20 minutes while the sun is at least 10 degrees above
+      the horizon
+    id: openuv_update_data_sun_high
+    trigger:
+      platform: time_pattern
+      minutes: /20
+    condition:
+      condition: numeric_state
+      entity_id: sun.sun
+      value_template: "{{ state.attributes.elevation }}"
+      above: 10
+    action:
+      service: openuv.update_uv_index_data
+
+  - alias: Update OpenUV protection window once a day
+    id: openuv_update_protection_window
+    trigger:
+      platform: time
+      at: 02:12:00
+    action:
+      service: openuv.update_protection_data
+
+  - alias: UV High Alert
+    id: alert_uv_high
+    trigger:
+      platform: state
+      entity_id: binary_sensor.uv_high
+      from: "off"
+      to: "on"
+    condition:
+      condition: template
+      value_template: >
+        {{ as_timestamp(state_attr('automation.uv_high_alert','last_triggered')) | timestamp_custom('%-d') != as_timestamp(now()) | timestamp_custom('%-d') }}
+    action:
+      service: notify.mobile_app_nokia_5_3
+      data:
+        message: >
+          "{{ trigger.to_state.attributes.friendly_name }}"
+
+  #######################################################################
+  # healthchecks
+
+  - alias: Weatherstation healthcheck start
+    id: weatherstation_healthcheck_start
+    trigger:
+      - platform: homeassistant
+        event: start
+      - platform: mqtt
+        id: mqtt_weathersense_report
+        topic: weathersense/FT020T/#
+    condition: []
+    action:
+      - service: timer.start
+        entity_id: timer.weatherstation_healthcheck_timer
+
+  - alias: Weatherstation healthcheck expired
+    id: weatherstation_healthcheck_expired
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.weatherstation_healthcheck_timer
+    action:
+      - service: notify.mobile_app_nokia_5_3
+        data:
+          message: Weatherstation silent
+
+  # - alias: Cold weather Automations
+  #   trigger:
+  #   - platform: template
+  #     value_template: '{{ is_state(''sensor.season'', ''autumn'') }}'
+  #   - platform: template
+  #     value_template: '{{ is_state(''sensor.season'', ''winter'') }}'
+  #   action:
+  #   - service: homeassistant.turn_on
+  #     entity_id: automation.temperature_outside_higher_than_inside
+  #   - service: homeassistant.turn_off
+  #     entity_id: automation.temperature_outside_higher_than_inside
+
+# Utility Meter
+# provides functionality to track consumptions of various utilities (e.g., energy, gas, water, heating).
+# cycles: quarter-hourly, hourly, daily, weekly, monthly, bimonthly, quarterly and yearly
+# https://www.home-assistant.io/integrations/utility_meter/
+utility_meter:
+  rainfall_daily:
+    source: sensor.weatherstation_cumulative_rain
+    cycle: daily
+  rainfall_monthly:
+    source: sensor.weatherstation_cumulative_rain
+    cycle: monthly
+  rainfall_annual:
+    source: sensor.weatherstation_cumulative_rain
+    cycle: yearly

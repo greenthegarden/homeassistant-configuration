@@ -1,0 +1,190 @@
+---
+# Package: Power / Emoncms
+
+# Customize
+
+homeassistant:
+  customize:
+    # EmonCMS
+    sensor.emoncms_import:
+      icon: mdi:transmission-tower
+    sensor.emoncms_solar:
+      icon: mdi:solar-power
+    sensor.emoncms_use:
+      icon: mdi:power-socket-au
+    sensor.emoncms2_vrms:
+      icon: mdi:current-ac
+
+# Sensors
+
+sensor:
+  # EmonCMS
+  # Creates sensors for the feeds available in your local or cloud based version of Emoncms.
+  # https://www.home-assistant.io/integrations/emoncms/
+  # Power measurements
+  - platform: emoncms
+    api_key: !secret emoncms_api_key
+    url: !secret emoncms_api_url
+    scan_interval: 30
+    id: 1
+    unit_of_measurement: "W"
+    include_only_feed_id:
+      - 1
+      - 2
+      - 8
+    # sensor_names:
+    #   1: sensor.emoncms_import
+    #   2: sensor.emoncms_solar
+    #   8: sensor.emoncms_use
+  # Voltage measurements
+  - platform: emoncms
+    api_key: !secret emoncms_api_key
+    url: !secret emoncms_api_url
+    id: 2
+    scan_interval: 60
+    unit_of_measurement: "V"
+    include_only_feed_id:
+      - 4
+    # sensor_names:
+    #   4: sensor.emoncms2_vrms
+  # Energy measurements
+  - platform: emoncms
+    api_key: !secret emoncms_api_key
+    url: !secret emoncms_api_url
+    id: 3
+    scan_interval: 60
+    unit_of_measurement: "kWh"
+    include_only_feed_id:
+      - 6
+      - 7
+      - 9
+    # sensor_names:
+    #   6: sensor.emoncms3_import_kwh
+    #   7: sensor.emoncms3_solar_kwh
+    #   9: sensor.emoncms3_use_kwh
+
+  # Average
+  # https://github.com/Limych/ha-average
+  - platform: average
+    name: Voltage Average
+    duration:
+      hours: 1
+    entities:
+      - sensor.emoncms2_vrms
+
+# Template
+# https://www.home-assistant.io/integrations/template
+template:
+  - sensor:
+      - name: "Solar power generation"
+        unique_id: solar_power_generation
+        device_class: power
+        unit_of_measurement: "W"
+        state_class: measurement
+        state: >-
+          {%- if states('sensor.emoncms_solar') | int(0) < 0 -%}
+            0
+          {%- else -%}
+            {{ states('sensor.emoncms_solar') | int(0) }}
+          {%- endif -%}
+      - name: "Grid power import/export"
+        unique_id: grid_power_import_export
+        device_class: power
+        unit_of_measurement: "W"
+        state_class: measurement
+        state: >-
+          {{ states('sensor.emoncms_import') | int(0) }}
+      - name: "Grid power import"
+        unique_id: grid_power_import
+        device_class: power
+        unit_of_measurement: "W"
+        state_class: measurement
+        state: >-
+          {%- if states('sensor.emoncms_import') | int(0) < 0 -%}
+            0
+          {%- else -%}
+            {{ states('sensor.emoncms_import') | int(0) }}
+          {%- endif -%}
+      - name: "Home power usage"
+        unique_id: home_power_usage
+        device_class: power
+        unit_of_measurement: "W"
+        state_class: measurement
+        state: >-
+          {%- if states('sensor.emoncms_solar') | int(0) >= 0 -%}
+            {{ states('sensor.emoncms_use') | int(0) }}
+          {%- else -%}
+            {{ states('sensor.emoncms_import') | int(0) }}
+          {%- endif -%}
+      - name: "Grid power export"
+        unique_id: grid_power_export
+        device_class: power
+        unit_of_measurement: "W"
+        state_class: measurement
+        state: >-
+          {%- if states('sensor.solar_power_generation') | int(0) > states('sensor.emoncms_use') | int(0) -%}
+            {{ states('sensor.solar_power_generation') | int(0) - states('sensor.emoncms_use') | int(0) }}
+          {%- else -%}
+            0
+          {%- endif -%}
+      - name: "Solar energy generation"
+        unique_id: solar_energy_generation
+        device_class: energy
+        unit_of_measurement: "kWh"
+        state_class: measurement
+        state: >-
+          {{ states('sensor.emoncms3_solar_kwh') | int(0) }}
+      - name: "Grid energy import"
+        unique_id: grid_energy_import
+        device_class: energy
+        unit_of_measurement: "kWh"
+        state_class: measurement
+        state: >-
+          {{ states('sensor.emoncms3_import_kwh') | int(0) }}
+      - name: "Home energy usage"
+        unique_id: home_energy_usage
+        device_class: energy
+        unit_of_measurement: "kWh"
+        state_class: measurement
+        state: >-
+          {{ states('sensor.emoncms3_use_kwh') | int(0) }}
+      # - name: "Grid energy export"
+      #   unique_id: grid_energy_export
+      #   device_class: energy
+      #   unit_of_measurement: "kWh"
+      #   state_class: measurement
+      #   state: >-
+      #     {{ states('sensor.solar_energy_generation') | int - states('sensor.emoncms_use') | int }}
+
+# Utility Meter
+# provides functionality to track consumptions of various utilities (e.g., energy, gas, water, heating).
+# cycles: quarter-hourly, hourly, daily, weekly, monthly, bimonthly, quarterly and yearly
+# https://www.home-assistant.io/integrations/utility_meter/
+utility_meter:
+  solar_energy_generation_daily:
+    source: sensor.solar_energy_generation
+    cycle: daily
+  solar_energy_generation_monthly:
+    source: sensor.solar_energy_generation
+    cycle: monthly
+  solar_energy_generation_annually:
+    source: sensor.solar_energy_generation
+    cycle: yearly
+  grid_energy_import_daily:
+    source: sensor.grid_energy_import
+    cycle: daily
+  grid_energy_import_monthly:
+    source: sensor.grid_energy_import
+    cycle: monthly
+  grid_energy_import_annually:
+    source: sensor.grid_energy_import
+    cycle: yearly
+  home_energy_usage_daily:
+    source: sensor.home_energy_usage
+    cycle: daily
+  home_energy_usage_monthly:
+    source: sensor.home_energy_usage
+    cycle: monthly
+  home_energy_usage_annually:
+    source: sensor.home_energy_usage
+    cycle: yearly
