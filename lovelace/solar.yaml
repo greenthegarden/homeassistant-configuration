@@ -1,0 +1,129 @@
+---
+# lovelace_gen
+title: Solar
+icon: mdi:battery-high
+path: solar
+cards:
+  - type: history-graph
+    hours_to_show: 24
+    entities:
+      - entity: sensor.solar_system_350w_power
+        name: 350W - Measured
+      - entity: sensor.power_production_now
+        name: 350W - Estimated
+      - entity: sensor.power_production_now_3
+        name: 500W - Estimated
+      - entity: sensor.solar_power_generation
+        name: 1kW - Measured
+      - entity: sensor.power_production_now_2
+        name: 1kW - Estimated
+    title: Solar Power
+  - type: vertical-stack
+    cards:
+      - type: entities
+        entities:
+          - entity: sensor.thumper_80ah_voltage
+            name: Battery Voltage
+          - entity: sensor.solar_350watt_current
+            name: Solar Current
+          - entity: sensor.solar_system_350w_power
+            name: Solar Power
+          - entity: sensor.duo_solar_monitor_state
+            name: Duo State
+        title: 350Watt System
+      - type: history-graph
+        hours_to_show: 24
+        entities:
+          - entity: sensor.solar_system_350w_power
+            name: Measured Solar Power
+          - entity: sensor.power_production_now
+            name: Estimated Solar Power
+        title: Solar Power
+      - type: entities
+        entities:
+          - entity: sensor.energy_next_hour
+            name: Estimated energy production - next hour
+          - entity: sensor.energy_current_hour
+            name: Estimated energy production - this hour
+          - entity: sensor.energy_production_today
+            name: Estimated energy production - today
+          - entity: sensor.energy_production_tomorrow
+            name: Estimated energy production - tomorrow
+          - entity: sensor.power_production_now
+            name: Estimated power production - now
+          - entity: sensor.power_highest_peak_time_today
+            name: Highest power peak time - today
+          - entity: sensor.power_highest_peak_time_tomorrow
+            name: Highest power peak time - tomorrow
+        title: Solar production forecast
+  - type: vertical-stack
+    cards:
+      - type: entities
+        entities:
+          - sensor.solar_voltage_2
+        title: 500Watt System
+      - type: entities
+        entities:
+          - entity: sensor.energy_next_hour_3
+            name: Estimated energy production - next hour
+          - entity: sensor.energy_current_hour_3
+            name: Estimated energy production - this hour
+          - entity: sensor.energy_production_today_3
+            name: Estimated energy production - today
+          - entity: sensor.energy_production_tomorrow_3
+            name: Estimated energy production - tomorrow
+          - entity: sensor.power_production_now_3
+            name: Estimated power production - now
+          - entity: sensor.power_highest_peak_time_today_3
+            name: Highest power peak time - today
+          - entity: sensor.power_highest_peak_time_tomorrow_3
+            name: Highest power peak time - tomorrow
+        title: Solar production forecast
+      - type: history-graph
+        hours_to_show: 24
+        entities:
+          # - entity: sensor.solar_system_350w_power
+          #   name: Measured Solar Power
+          - entity: sensor.power_production_now_3
+            name: Estimated Solar Power
+        title: Power
+  - type: vertical-stack
+    cards:
+      - type: entities
+        title: 1kW System
+        entities:
+          - entity: sensor.grid_power_import
+            name: Import
+          - entity: sensor.grid_power_export
+            name: Export
+          - entity: sensor.solar_power_generation
+            name: Solar
+          - entity: sensor.home_power_usage
+            name: Use
+          - entity: sensor.emoncms2_vrms
+            name: Voltage
+      - type: history-graph
+        hours_to_show: 24
+        entities:
+          - entity: sensor.solar_power_generation
+            name: Measured Solar Power
+          - entity: sensor.power_production_now_2
+            name: Estimated Solar Power
+        title: Solar Power
+      - type: entities
+        entities:
+          - entity: sensor.energy_next_hour_2
+            name: Estimated energy production - next hour
+          - entity: sensor.energy_current_hour_2
+            name: Estimated energy production - this hour
+          - entity: sensor.energy_production_today_2
+            name: Estimated energy production - today
+          - entity: sensor.energy_production_tomorrow_2
+            name: Estimated energy production - tomorrow
+          - entity: sensor.power_production_now_2
+            name: Estimated power production - now
+          - entity: sensor.power_highest_peak_time_today_2
+            name: Highest power peak time - today
+          - entity: sensor.power_highest_peak_time_tomorrow_2
+            name: Highest power peak time - tomorrow
+        title: Solar production forecast

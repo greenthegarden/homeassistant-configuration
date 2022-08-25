@@ -26,7 +26,7 @@ cards:
         name: Highest power peak time - tomorrow
     title: Solar production forecast
   - type: history-graph
-    hours_to_show: 48
+    hours_to_show: 24
     entities:
       # - entity: sensor.solar_system_350w_power
       #   name: Measured Solar Power

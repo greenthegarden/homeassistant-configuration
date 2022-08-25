@@ -11,6 +11,7 @@ views:
   - !include lovelace/philip.yaml
   - !include lovelace/thanh.yaml
   - !include lovelace/environment.yaml
+  - !include lovelace/solar.yaml
   - !include lovelace/power.yaml
   - !include lovelace/services.yaml
   - !include lovelace/docs.yaml

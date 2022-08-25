@@ -1,7 +1,7 @@
 ---
 # lovelace_gen
 title: Nexus 7
-icon: mdi:tablet-android
+icon: mdi:tablet
 path: nexus
 cards:
   - type: entities
