@@ -54,7 +54,7 @@ homeassistant:
       # trusted_users:
       #   192.168.1.24: 4cd6c52e90d84b0a96bda6f9c4b648c4  # User ID
 
-automation: !include automations.yaml
+# automation: !include automations.yaml
 
 # External configuration items
 # https://www.home-assistant.io/docs/configuration/splitting_configuration/
