@@ -78,3 +78,9 @@ cards:
         name: Load
       - entity: sensor.ups_input_voltage
         name: Input Voltage
+
+  - type: entities
+    title: Solar Batteries
+    entities:
+      - entity: sensor.thumper_80ah_voltage
+      # - entity: sensor.
