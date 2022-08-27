@@ -16,6 +16,13 @@ cards:
     entities:
       - sensor.mqtt_broker_clients
 
+  - type: markdown
+    content: |
+      MQTT clients
+      {% for c in sensor.mqtt_broker_clients %}
+        - {{ c }}
+      {%- endfor %}
+
   - type: custom:auto-entities
     card:
       type: entities
