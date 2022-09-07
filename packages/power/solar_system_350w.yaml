@@ -15,11 +15,11 @@ template:
   - binary_sensor:
       - name: thumper_80ah_voltage_charging
         state: >
-          {{ states('sensor.processor_use_percent') | float(0.0) > 0.0 }}
+          {{ states('sensor.thumper_80ah_voltage_change_per_minute') | float(0.0) > 0.0 }}
 
       - name: thumper_80ah_voltage_discharging
         state: >
-          {{ states('sensor.processor_use_percent') | float(0.0) < 0.0 }}
+          {{ states('sensor.thumper_80ah_voltage_change_per_minute') | float(0.0) < 0.0 }}
 
 binary_sensor:
   # use to trigger a timer when voltage drops by 1 volt / minute
@@ -49,10 +49,9 @@ automation:
   - alias: Thumper 80Ah Voltage Low
     id: thumper_80ah_voltage_low
     trigger:
-      - platform: state
+      - platform: numeric_state
         entity_id: sensor.thumper_80ah_voltage
         below: 11.5
-        id: thumper_80ah_voltage_low
     condition: []
     action:
       - service: notify.mobile_app_nokia_5_3
@@ -73,8 +72,8 @@ automation:
           entity_id: timer.rice_cooker
 
   # When timer is stopped, the time run out, another message is sent
-  - alias: "Rice cooker timer start"
-    id: rice_cooker_timer_start
+  - alias: "Rice cooker timer stop"
+    id: rice_cooker_timer_stop
     trigger:
       - platform: event
         event_type: timer.finished
