@@ -11,3 +11,60 @@ template:
           {% endif %}
         state_class: measurement
         unit_of_measurement: "W"
+
+binary_sensor:
+  # use to trigger a timer when voltage drops by 1 volt / minute
+  - platform: trend
+    sensors:
+      thumper_80ah_voltage_falling:
+        entity_id: sensor.thumper_80ah_voltage
+        # sample_duration:
+        # invert: true  # decending
+        max_samples: 2
+        min_gradient: 0.0167
+        device_class: voltage
+
+timer:
+  rice_cooker:
+    duration: "00:15:00"
+
+automation:
+  - alias: Thumper 80Ah Voltage Low
+    id: thumper_80ah_voltage_low
+    trigger:
+      - platform: state
+        entity_id: sensor.thumper_80ah_voltage
+        below: 11.5
+        id: thumper_80ah_voltage_low
+    condition: []
+    action:
+      - service: notify.mobile_app_nokia_5_3
+        data_template:
+          message: >
+            "Battery level is low"
+
+  - alias: "Rice cooker timer start"
+    id: rice_cooker_timer_start
+    # Timer is started when the switch pumprun is set to on.
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.thumper_80ah_voltage_falling
+        to: "on"
+    action:
+      - service: timer.start
+        target:
+          entity_id: timer.rice_cooker
+
+  # When timer is stopped, the time run out, another message is sent
+  - alias: "Rice cooker timer start"
+    id: rice_cooker_timer_start
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.rice_cooker
+    action:
+      - service: notify.mobile_app_nokia_5_3
+        data_template:
+          message: >
+            "Rice cooker needs checking"

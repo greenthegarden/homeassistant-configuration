@@ -35,6 +35,7 @@ async def create_utility_meters(
     hass: HomeAssistant,
     energy_sensor: SensorEntity,
     sensor_config: dict,
+    net_consumption: bool = False,
 ) -> list[UtilityMeterSensor]:
     """Create the utility meters"""
 
@@ -82,6 +83,7 @@ async def create_utility_meters(
                 sensor_config,
                 meter_type,
                 unique_id,
+                net_consumption=net_consumption,
             )
             tariff_sensors.append(utility_meter)
             utility_meters.append(utility_meter)
@@ -133,6 +135,7 @@ async def create_utility_meter(
     unique_id: str = None,
     tariff: str = None,
     tariff_entity: str = None,
+    net_consumption: bool = False,
 ) -> VirtualUtilityMeter:
     """Create a utility meter entity, one per tariff"""
 
@@ -150,7 +153,7 @@ async def create_utility_meter(
         'name': name,
         'meter_type': meter_type,
         'meter_offset': sensor_config.get(CONF_UTILITY_METER_OFFSET),
-        'net_consumption': False,
+        'net_consumption': net_consumption,
         'tariff': tariff,
         'tariff_entity': tariff_entity,
     }
