@@ -31,7 +31,7 @@ binary_sensor:
         # invert: true  # decending
         max_samples: 2
         min_gradient: 0.0167
-        device_class: voltage
+        # device_class: voltage
 
 sensor:
   - platform: derivative
