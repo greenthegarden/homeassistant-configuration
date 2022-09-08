@@ -7,7 +7,7 @@ template:
           {% set voltage = 12.0 | float(0.0) %}
           {% set current = (states('sensor.solar_350watt_current') | float(0.0)) / 1000.0 %}
           {% if is_number(voltage) and is_number(current) %}
-          {{ (voltage * current) | round(1, default=0) }}
+          {{ (voltage * current) | round(1, default=0.0) }}
           {% endif %}
         state_class: measurement
         unit_of_measurement: "W"
@@ -25,21 +25,22 @@ binary_sensor:
   # use to trigger a timer when voltage drops by 1 volt / minute
   - platform: trend
     sensors:
-      thumper_80ah_voltage_load:
+      thumper_80ah_voltage_trend:
         entity_id: sensor.thumper_80ah_voltage
-        # sample_duration:
-        # invert: true  # decending
-        max_samples: 2
-        min_gradient: 0.0167
-        # device_class: voltage
+        device_class: battery_charging
+        friendly_name: Thumper 80Ah charging
+        # invert: false
+        # max_samples: 2
+        # min_gradient: 0
+        # sample_duration: 0
 
 sensor:
   - platform: derivative
     source: sensor.thumper_80ah_voltage
     name: "Thumper 80Ah Voltage change per minute"
-    round: 1
-    unit_time: min
-    time_window: "00:00:05"
+    # round: 1
+    # unit_time: min
+    # time_window: "00:00:05"
 
 timer:
   rice_cooker:
@@ -57,7 +58,7 @@ automation:
       - service: notify.mobile_app_nokia_5_3
         data_template:
           message: >
-            "Battery level is low"
+            " Thumper 80Ah battery voltage low"
 
   - alias: "Rice cooker timer start"
     id: rice_cooker_timer_start
@@ -70,6 +71,10 @@ automation:
       - service: timer.start
         target:
           entity_id: timer.rice_cooker
+      - service: notify.mobile_app_nokia_5_3
+        data_template:
+          message: >
+            "Rice cooker started"
 
   # When timer is stopped, the time run out, another message is sent
   - alias: "Rice cooker timer stop"

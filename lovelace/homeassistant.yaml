@@ -18,8 +18,6 @@ cards:
         name: Docker Hub Version
       - entity: binary_sensor.docker_hub_update_available
         name: Docker Hub Update Available
-      - entity: sensor.potential_breaking_changes
-        name: Breaking Changes
       - entity: sensor.mariadb_size
         name: Database Size
 

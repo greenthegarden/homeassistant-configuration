@@ -55,20 +55,6 @@ cards:
                       ha-card {
                         box-shadow: none;
                       }
-                  - type: custom:bar-card
-                    entity: sensor.potential_breaking_changes
-                    name: Breaking Changes
-                    max: 20
-                    style: |-
-                      .card-content {
-                        padding-left: 5px;
-                      }
-                      bar-card-currentbar, bar-card-backgroundbar {
-                        border-radius: 5px;
-                      }
-                      ha-card {
-                        box-shadow: none;
-                      }
 
           - type: custom:bar-card
             positions:
