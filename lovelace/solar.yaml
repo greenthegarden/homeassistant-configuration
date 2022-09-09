@@ -41,6 +41,8 @@ cards:
             secondary_info: last-updated
           # - entity: sensor.duo_solar_monitor_state
           #   name: Duo State
+          - entity: sensor.solar_system_350w_energy
+            name: Solar Energy
           - type: section
             label: Forecast
           # - entity: sensor.energy_next_hour
@@ -110,12 +112,10 @@ cards:
           # - entity: sensor.grid_power_export
           #   name: Export
           - entity: sensor.solar_power_generation
-            name: Solar
+            name: Solar Power
             secondary_info: last-updated
-          # - entity: sensor.home_power_usage
-          #   name: Use
-          # - entity: sensor.emoncms2_vrms
-          #   name: Voltage
+          - entity: sensor.emoncms3_solar_kwh
+            name: Solar Energy
           - type: section
             label: Forecast
           # - entity: sensor.energy_next_hour_2
