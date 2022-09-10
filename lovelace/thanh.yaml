@@ -4,7 +4,7 @@ title: Thanh
 icon: mdi:face-woman
 path: thanh
 visible:
-  - user: a8a4038a056e468b933ab70408050fd5
+  - user: 3eaae8b9eb9b45b1bf2702969fc4eb70
 theme: happy
 cards:
   - type: vertical-stack

@@ -36,12 +36,12 @@ cards:
           #   name: Battery Voltage
           # - entity: sensor.solar_350watt_current
           #   name: Solar Current
-          - entity: sensor.solar_system_350w_power
+          - entity: sensor.350w_solar_system_power
             name: Solar Power
             secondary_info: last-updated
           # - entity: sensor.duo_solar_monitor_state
           #   name: Duo State
-          - entity: sensor.solar_system_350w_energy
+          - entity: sensor.350w_solar_system_energy
             name: Solar Energy
           - type: section
             label: Forecast
