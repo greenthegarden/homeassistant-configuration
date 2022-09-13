@@ -42,8 +42,9 @@ sensor:
   - platform: derivative
     source: sensor.thumper_80ah_voltage
     name: "Thumper 80Ah Voltage change per minute"
-    # round: 1
-    # unit_time: min
+    round: 2
+    unit_time: min
+    # unit:
     # time_window: "00:00:05"
 
   - platform: integration
