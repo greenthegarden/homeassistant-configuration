@@ -20,35 +20,37 @@ cards:
         entities:
           - entity: sensor.thumper_80ah_voltage
             name: Battery Voltage
-  - type: entities
-    entities:
-      - entity: sensor.solar_350watt_current
-        name: Solar Current
-      - entity: sensor.solar_system_350w_power
-        name: Solar Power
-    title: Power System
-  - type: history-graph
-    hours_to_show: 24
-    entities:
-      - entity: sensor.350w_solar_system_power
-        name: Measured Solar Power
-      - entity: sensor.power_production_now
-        name: Estimated Solar Power
-    title: Solar Power
-  - type: entities
-    entities:
-      - entity: sensor.energy_next_hour
-        name: Estimated energy production - next hour
-      - entity: sensor.energy_current_hour
-        name: Estimated energy production - this hour
-      - entity: sensor.energy_production_today
-        name: Estimated energy production - today
-      - entity: sensor.energy_production_tomorrow
-        name: Estimated energy production - tomorrow
-      - entity: sensor.power_production_now
-        name: Estimated power production - now
-      - entity: sensor.power_highest_peak_time_today
-        name: Highest power peak time - today
-      - entity: sensor.power_highest_peak_time_tomorrow
-        name: Highest power peak time - tomorrow
-    title: Solar production forecast
+  - type: vertical-stack
+    cards:
+      - type: entities
+        entities:
+          - entity: sensor.solar_350watt_current
+            name: Solar Current
+          - entity: sensor.350w_solar_system_power
+            name: Solar Power
+        title: Solar Production
+      - type: history-graph
+        hours_to_show: 24
+        entities:
+          - entity: sensor.350w_solar_system_power
+            name: Measured Solar Power
+          - entity: sensor.power_production_now
+            name: Estimated Solar Power
+        # title: Solar Power
+      - type: entities
+        entities:
+          - entity: sensor.energy_next_hour
+            name: Estimated energy production - next hour
+          - entity: sensor.energy_current_hour
+            name: Estimated energy production - this hour
+          - entity: sensor.energy_production_today
+            name: Estimated energy production - today
+          - entity: sensor.energy_production_tomorrow
+            name: Estimated energy production - tomorrow
+          - entity: sensor.power_production_now
+            name: Estimated power production - now
+          - entity: sensor.power_highest_peak_time_today
+            name: Highest power peak time - today
+          - entity: sensor.power_highest_peak_time_tomorrow
+            name: Highest power peak time - tomorrow
+        title: Solar Production Forecast
