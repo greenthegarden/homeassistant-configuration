@@ -101,3 +101,10 @@ automation:
         data_template:
           message: >
             "Rice cooker needs checking"
+
+utility_meter:
+  energy:
+    name: 350W Solar Daily Energy
+    unique_id: solar_system_350w_energy_daily
+    source: sensor.350w_solar_system_energy
+    cycle: daily

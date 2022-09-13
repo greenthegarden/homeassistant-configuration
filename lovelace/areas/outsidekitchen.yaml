@@ -15,11 +15,19 @@ cards:
         entities:
           - entity: sensor.thumper_80ah_voltage
             name: Battery Voltage
+            secondary_info: last-updated
+          - entity: sensor.thumper_80ah_voltage_change_per_minute
+            name: Battery rate of change
       - type: history-graph
         hours_to_show: 24
         entities:
           - entity: sensor.thumper_80ah_voltage
             name: Battery Voltage
+      - type: history-graph
+        hours_to_show: 24
+        entities:
+          - entity: sensor.thumper_80ah_voltage_change_per_minute
+            name: Battery rate of change
   - type: vertical-stack
     cards:
       - type: entities
@@ -28,6 +36,8 @@ cards:
             name: Solar Current
           - entity: sensor.350w_solar_system_power
             name: Solar Power
+          - entity: sensor.350w_solar_daily_energy
+            name: Solar Energy
         title: Solar Production
       - type: history-graph
         hours_to_show: 24

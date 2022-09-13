@@ -41,8 +41,8 @@ cards:
             secondary_info: last-updated
           # - entity: sensor.duo_solar_monitor_state
           #   name: Duo State
-          - entity: sensor.350w_solar_system_energy
-            name: Solar Energy
+          - entity: sensor.350w_solar_daily_energy
+            name: Solar Daily Energy
           - type: section
             label: Forecast
           # - entity: sensor.energy_next_hour
@@ -114,8 +114,8 @@ cards:
           - entity: sensor.solar_power_generation
             name: Solar Power
             secondary_info: last-updated
-          - entity: sensor.emoncms3_solar_kwh
-            name: Solar Energy
+          - entity: sensor.solar_energy_generation_daily
+            name: Solar Daily Energy
           - type: section
             label: Forecast
           # - entity: sensor.energy_next_hour_2
