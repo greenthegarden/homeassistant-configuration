@@ -47,7 +47,7 @@ sensor:
     # time_window: "00:00:05"
 
   - platform: integration
-    source: sensor.solar_system_350w_power
+    source: sensor.350w_solar_system_power
     name: 350W Solar System Energy
     # Riemann sum method to be used.
     # Available methods are trapezoidal, left and right

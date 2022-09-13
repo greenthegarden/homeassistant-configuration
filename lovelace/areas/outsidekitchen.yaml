@@ -4,21 +4,33 @@ title: Outside Kitchen
 icon: mdi:pot-steam-outline
 path: area_outside_kitchen
 cards:
+  - type: vertical-stack
+    cards:
+      - type: entities
+        entities:
+          - entity: sensor.duo_solar_monitor_state
+            name: Duo State
+            secondary_info: last-updated
+      - type: entities
+        entities:
+          - entity: sensor.thumper_80ah_voltage
+            name: Battery Voltage
+      - type: history-graph
+        hours_to_show: 24
+        entities:
+          - entity: sensor.thumper_80ah_voltage
+            name: Battery Voltage
   - type: entities
     entities:
-      - entity: sensor.thumper_80ah_voltage
-        name: Battery Voltage
       - entity: sensor.solar_350watt_current
         name: Solar Current
       - entity: sensor.solar_system_350w_power
         name: Solar Power
-      - entity: sensor.duo_solar_monitor_state
-        name: Duo State
     title: Power System
   - type: history-graph
     hours_to_show: 24
     entities:
-      - entity: sensor.solar_system_350w_power
+      - entity: sensor.350w_solar_system_power
         name: Measured Solar Power
       - entity: sensor.power_production_now
         name: Estimated Solar Power

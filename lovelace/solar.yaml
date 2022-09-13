@@ -23,7 +23,7 @@ cards:
       - type: history-graph
         hours_to_show: 24
         entities:
-          - entity: sensor.solar_system_350w_power
+          - entity: sensor.350w_solar_system_power
             name: Measured Solar Power
           - entity: sensor.power_production_now
             name: Estimated Solar Power
