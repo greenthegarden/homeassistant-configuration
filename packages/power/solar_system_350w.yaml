@@ -44,7 +44,7 @@ sensor:
     name: "Thumper 80Ah Voltage change per minute"
     round: 2
     unit_time: min
-    unit: V
+    unit: V/m
     # time_window: "00:00:05"
 
   - platform: integration
