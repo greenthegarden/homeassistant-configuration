@@ -14,16 +14,14 @@ template:
         state_class: measurement
         unit_of_measurement: "W"
 
-  - binary_sensor:
-      - name: Thumper 80Ah Battery Charging
-        unique_id: thumper_80ah_voltage_charging
+  - sensor:
+      - name: Thumper 80Ah Battery Voltage Gradient
+        unique_id: thumper_80ah_voltage_gradient
         state: >
-          {{ states('sensor.thumper_80ah_voltage_change_per_minute') | float(0.0) > 0.0 }}
-
-      - name: Thumper 80Ah Battery Discharging
-        unique_id: thumper_80ah_voltage_discharging
-        state: >
-          {{ states('sensor.thumper_80ah_voltage_change_per_minute') | float(0.0) < 0.0 }}
+          {% if states.binary_sensor.thumper_80ah_voltage_trend %}
+            {{ state_attr('binary_sensor.thumper_80ah_voltage_trend', 'gradient') }}
+          {% endif %}
+        unit_of_measurement: "V/m"
 
 binary_sensor:
   # use to trigger a timer when voltage drops by 1 volt / minute
@@ -41,10 +39,10 @@ binary_sensor:
 sensor:
   - platform: derivative
     source: sensor.thumper_80ah_voltage
-    name: "Thumper 80Ah Voltage change per minute"
+    name: "Thumper 80Ah Voltage derivative"
     round: 2
     unit_time: min
-    unit: V/m
+    # unit: V/m
     # time_window: "00:00:05"
 
   - platform: integration
