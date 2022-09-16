@@ -39,7 +39,7 @@ binary_sensor:
 sensor:
   - platform: derivative
     source: sensor.thumper_80ah_voltage
-    name: "Thumper 80Ah Voltage derivative"
+    name: Thumper 80Ah Voltage derivative
     round: 2
     unit_time: min
     # unit: V/m
