@@ -22,13 +22,13 @@ cards:
         title: F016TH
       - type: entities
         entities:
-          - sensor.enviro_1_temperature
-          - sensor.enviro_1_humidity
-          - sensor.enviro_1_pressure
-          - sensor.enviro_1_light
-          - sensor.enviro_1_oxidised
-          - sensor.enviro_1_reduced
-          - sensor.enviro_1_nh3
+          - sensor.enviroplus_1_humidity
+          - sensor.enviroplus_1_light
+          - sensor.enviroplus_1_oxidised
+          - sensor.enviroplus_1_pressure
+          - sensor.enviroplus_1_reduced
+          - sensor.enviroplus_1_temperature
+          - sensor.enviroplus_1_nh3
         title: Enviro+
       - type: history-graph
         title: Temperature
@@ -36,7 +36,7 @@ cards:
         entities:
           - entity: sensor.weathersense_indoor_2_temperature
             name: F016TH
-          - entity: sensor.enviro_1_temperature
+          - entity: sensor.enviroplus_1_temperature
             name: Enviro+
       - type: history-graph
         title: Humidity
@@ -44,5 +44,5 @@ cards:
         entities:
           - entity: sensor.weathersense_indoor_2_humidity
             name: F016TH
-          - entity: sensor.enviro_1_humidity
+          - entity: sensor.enviroplus_1_humidity
             name: Enviro+

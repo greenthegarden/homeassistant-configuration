@@ -9,5 +9,5 @@
   "name": "Hue White Ambiance GU10 w/ BT",
   "standby_power": 0.3,
   "supported_modes": ["lut"],
-  "aliases": []
+  "aliases": ["929001953301"]
 }

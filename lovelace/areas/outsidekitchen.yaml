@@ -16,8 +16,6 @@ cards:
           - entity: sensor.thumper_80ah_voltage
             name: Battery Voltage
             secondary_info: last-updated
-          - entity: sensor.thumper_80ah_voltage_change_per_minute
-            name: Battery rate of change
       - type: history-graph
         hours_to_show: 24
         entities:

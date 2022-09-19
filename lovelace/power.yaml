@@ -72,16 +72,16 @@ cards:
             name: Voltage
           - entity: sensor.voltage_average
 
-  - type: vertical-stack
-    cards:
-      - type: entities
-        title: 12v solar
-        entities:
-          - entity: sensor.solar_current
-      - type: history-graph
-        hours_to_show: 24
-        entities:
-          - entity: sensor.solar_current
+  # - type: vertical-stack
+  #   cards:
+  #     - type: entities
+  #       title: 12v solar
+  #       entities:
+  #         - entity: sensor.solar_current
+  #     - type: history-graph
+  #       hours_to_show: 24
+  #       entities:
+  #         - entity: sensor.solar_current
 
   - type: vertical-stack
     cards:
