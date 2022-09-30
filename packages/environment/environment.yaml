@@ -223,7 +223,7 @@ template:
         device_class: humidity
         state: >
           {% set state = states('sensor.weatherstation_humidity') | float(0.0) %}
-          {% if is_number(state) and state > 0.0 and state < 50.0 %}
+          {% if is_number(state) and state > 0.0 and state < 100.0 %}
             {{ state }}
           {% endif %}
         state_class: measurement
