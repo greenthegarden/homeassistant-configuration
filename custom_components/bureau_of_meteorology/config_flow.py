@@ -156,6 +156,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         monitored = {
             'temp': 'Temperature',
             'temp_feels_like': 'Temperature Feels Like',
+            'temp_max_observed': 'Temperature Max',
+            'temp_min_observed': 'Temperature Min',
             'rain_since_9am': 'Rain Since 9am',
             'humidity': 'Humidity',
             'wind_speed_kilometre': 'Wind Speed Kilometre',
@@ -459,6 +461,8 @@ class BomOptionsFlow(config_entries.OptionsFlow):
         monitored = {
             'temp': 'Temperature',
             'temp_feels_like': 'Temperature Feels Like',
+            'max_temp': 'Temperature Max',
+            'min_temp': 'Temperature Min',
             'rain_since_9am': 'Rain Since 9am',
             'humidity': 'Humidity',
             'wind_speed_kilometre': 'Wind Speed Kilometre',

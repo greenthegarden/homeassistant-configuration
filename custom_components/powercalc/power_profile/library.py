@@ -29,7 +29,7 @@ class ProfileLibrary:
             )
             if os.path.exists(dir)
         ]
-        self._profiles: dict[str, list[PowerProfile]] = dict()
+        self._profiles: dict[str, list[PowerProfile]] = {}
 
     def factory(hass: HomeAssistant) -> ProfileLibrary:
         """
@@ -64,10 +64,6 @@ class ProfileLibrary:
                 continue
             models.extend(os.listdir(manufacturer_dir))
         return sorted(models)
-
-    async def get_subprofile_listing(self, profile: PowerProfile) -> list[str]:
-        """Get listing op possible sub profiles"""
-        return sorted(list(next(os.walk(profile.get_model_directory()))[1]))
 
     async def get_profile(
         self, model_info: ModelInfo, custom_directory: str | None = None

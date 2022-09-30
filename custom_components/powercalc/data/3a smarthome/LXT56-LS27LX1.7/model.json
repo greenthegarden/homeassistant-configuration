@@ -1,13 +1,13 @@
 {
   "measure_description": "Measured with utils/measure script",
-  "measure_device": "Shelly Plug",
+  "measure_device": "TP-Link Tapo P110",
   "measure_method": "script",
   "measure_settings": {
     "SAMPLE_COUNT": 2,
     "SLEEP_TIME": 3,
-    "VERSION": "master"
+    "VERSION": "v0.25.5:docker"
   },
-  "name": "LightZone DP15 LED-Pendelleuchte",
-  "standby_power": 0.83,
+  "name": "Smart Nue ZigBee 12W RGBW downlight",
+  "standby_power": 0.72,
   "supported_modes": ["lut"]
 }
