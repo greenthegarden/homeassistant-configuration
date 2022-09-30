@@ -37,6 +37,8 @@ cards:
           - entity: sensor.enviroplus_1_nh3
             name: NH3 Gases
         title: Enviro+
+  - type: vertical-stack
+    cards:
       - type: history-graph
         title: Temperature
         hours_to_show: 24

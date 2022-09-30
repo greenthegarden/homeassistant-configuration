@@ -20,15 +20,23 @@ template:
   - sensor:
       - name: "Indoor Temperature"
         device_class: temperature
-        unit_of_measurement: "°C"
+        state: >
+          {% set state = states('sensor.indoor_temperature_average') | float(0.0)  %}
+          {% if is_number(state) and state > 0.0 and state < 50.0 %}
+            {{ state }}
+          {% endif %}
         state_class: measurement
-        state: "{{ states('sensor.indoor_temperature_average') | float(0.0) }}"
+        unit_of_measurement: "°C"
 
       - name: "Indoor Humidity"
         device_class: humidity
-        unit_of_measurement: "%"
+        state: >
+          {% set state = states('sensor.indoor_humidity_average') | float(0.0) %}
+          {% if is_number(state) and state > 0.0 and state < 100.0 %}
+            {{ state }}
+          {% endif %}
         state_class: measurement
-        state: "{{ states('sensor.indoor_humidity_average') | float(0.0) }}"
+        unit_of_measurement: "%"
 
 # Binary Sensors
 

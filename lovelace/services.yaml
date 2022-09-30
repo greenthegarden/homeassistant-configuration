@@ -14,11 +14,11 @@ cards:
         icon: mdi:wifi
       - type: weblink
         name: AdBlock
-        url: http://192.168.1.2
+        url: http://dns/
         icon: mdi:wifi
       - type: weblink
         name: Nextcloud
-        url: http://192.168.1.186:8888
+        url: http://nextcloud.home-assistant.localdomain
         icon: mdi:file-cloud
       - type: weblink
         name: Storology
@@ -34,7 +34,7 @@ cards:
         icon: mdi:printer-wireless
       - type: weblink
         name: EmonPi
-        url: http://192.168.1.172/emoncms/app/view
+        url: http://emonpi/
         icon: mdi:power-socket-au
       - type: weblink
         name: RF Gateway
@@ -42,7 +42,7 @@ cards:
         icon: mdi:antenna
       - type: weblink
         name: Grocy
-        url: http://192.168.1.186:9283
+        url: http://grocy.home-assistant.localdomain
         icon: mdi:cart-outline
 
   - type: entities
@@ -51,28 +51,28 @@ cards:
     entities:
       - type: weblink
         name: Node Exporter
-        url: http://192.168.1.186:9100
+        url: http://node-exporter.home-assistant.localdomain/
       - type: weblink
         name: Prometheus
-        url: http://192.168.1.186:9090
+        url: http://prometheus.home-assistant.localdomain/
       - type: weblink
         name: InfluxDB
-        url: http://192.168.1.186:8086
+        url: http://influxdb.home-assistant.localdomain/
       - type: weblink
         name: Grafana
-        url: http://192.168.1.186:3000
+        url: http://grafana.home-assistant.localdomain/
       - type: weblink
         name: What's Up Docker
-        url: http://192.168.1.186:3003
+        url: http://whats-up-docker.home-assistant.localdomain/
       - type: weblink
         name: Uptime Kuma
-        url: http://192.168.1.186:3001
+        url: http://uptimekuma.home-assistant.localdomain/
       - type: weblink
         name: MQTT Broker
-        url: http://192.168.1.186:18083
-      - type: weblink
-        name: AppDaemon
-        url: http://192.168.1.186:5050
+        url: http://emqx.home-assistant.localdomain/
+      # - type: weblink
+      #   name: AppDaemon
+      #   url: http://192.168.1.186:5050
       - type: weblink
         name: Portainer
-        url: https://192.168.1.186:9443
+        url: https://portainer.home-assistant.localdomain/

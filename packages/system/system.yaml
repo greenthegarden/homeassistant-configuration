@@ -39,7 +39,7 @@ input_number:
     min: 0
     max: 100
     step: 5
-    initial: 70
+    initial: 80
     mode: slider
     unit_of_measurement: "%"
     icon: mdi:network-strength-2-alert
