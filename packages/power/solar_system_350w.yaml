@@ -9,7 +9,7 @@ template:
           {% set voltage = 12.0 | float(0.0) %}
           {% set current = (states('sensor.solar_350watt_current') | float(0.0)) / 1000.0 %}
           {% if is_number(voltage) and is_number(current) %}
-          {{ (power_factor * current * voltage) | round(1, default=0.0) }}
+            {{ (power_factor * current * voltage) | round(1, default=0.0) }}
           {% endif %}
         state_class: measurement
         unit_of_measurement: "W"

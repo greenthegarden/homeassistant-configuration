@@ -50,6 +50,9 @@ cards:
     show_header_toggle: false
     entities:
       - type: weblink
+        name: Traefik
+        url: http://traefik.home-assistant.localdomain/
+      - type: weblink
         name: Node Exporter
         url: http://node-exporter.home-assistant.localdomain/
       - type: weblink
@@ -57,7 +60,7 @@ cards:
         url: http://prometheus.home-assistant.localdomain/
       - type: weblink
         name: InfluxDB
-        url: http://influxdb.home-assistant.localdomain/
+        url: http://homeassistant-influxdb.home-assistant.localdomain/
       - type: weblink
         name: Grafana
         url: http://grafana.home-assistant.localdomain/
@@ -75,4 +78,4 @@ cards:
       #   url: http://192.168.1.186:5050
       - type: weblink
         name: Portainer
-        url: https://portainer.home-assistant.localdomain/
+        url: http://portainer.home-assistant.localdomain/

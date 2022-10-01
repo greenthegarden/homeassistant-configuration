@@ -45,42 +45,49 @@ cards:
           - entity: binary_sensor.nokia_5_3_is_charging
             name: Is charging
 
-      # - type: vertical-stack
-      #   cards:
-      #     #     - type: markdown
-      #     #       content: Stocks
-      #     # - type: entities
-      #     #   entities:
-      #     # - entity: input_boolean.check_asx_info
-      #     #   name: Update prices
-  - type: entities
-    title: Shares
-    entities:
-      - type: section
-        label: Endeavour Group
-      - entity: sensor.asx_sensor_edv
-        name: Price
-      - entity: input_number.shares_edv
-        name: Number
-      - entity: sensor.shares_value_edv
-        name: Value
-        icon: mdi:currency-usd
-      - type: section
-        label: Telstra
-      - entity: sensor.asx_sensor_tls
-        name: Price
-      - entity: input_number.shares_tls
-        name: Number
-      - entity: sensor.shares_value_tls
-        name: Value
-        icon: mdi:currency-usd
-      - type: section
-        label: Woolworths
-      - entity: sensor.asx_sensor_wow
-        name: Price
-      - entity: input_number.shares_wow
-        name: Number
-      - entity: sensor.shares_value_wow
-        name: Value
-        icon: mdi:currency-usd
-      - entity: sensor.asx_data_last_updated
+  - type: vertical-stack
+    cards:
+      - type: history-graph
+        hours_to_show: 24
+        entities:
+          - entity: sensor.shares_value_edv
+            name: Endeavour Group
+          - entity: sensor.shares_value_tls
+            name: Telstra
+          - entity: sensor.shares_value_wow
+            name: Woolworths
+      - type: entities
+        title: Shares
+        entities:
+          - type: section
+            label: Total Value
+          - entity: sensor.shares_value_total
+            name: Total
+          - type: section
+            label: Endeavour Group
+          - entity: sensor.share_value_edv
+            name: Price
+          - entity: input_number.shares_edv
+            name: Number
+          - entity: sensor.shares_value_edv
+            name: Value
+            icon: mdi:currency-usd
+          - type: section
+            label: Telstra
+          - entity: sensor.share_value_tls
+            name: Price
+          - entity: input_number.shares_tls
+            name: Number
+          - entity: sensor.shares_value_tls
+            name: Value
+            icon: mdi:currency-usd
+          - type: section
+            label: Woolworths
+          - entity: sensor.asx_sensor_wow
+            name: Price
+          - entity: input_number.shares_wow
+            name: Number
+          - entity: sensor.shares_value_wow
+            name: Value
+            icon: mdi:currency-usd
+          - entity: sensor.asx_data_last_updated
