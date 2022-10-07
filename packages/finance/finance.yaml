@@ -33,68 +33,75 @@ template:
   - sensor:
       # Convert values to monetary
       - name: "Share value EDV"
+        unique_id: share_value_edv
         device_class: monetary
         state: >
-          {% set share_value = states('sensor.asx_sensor_edv') | int(0) %}
-          {% if is_number(share_value) and share_value > 0 %}
+          {% set share_value = states('sensor.asx_sensor_edv') | float(0.0) %}
+          {% if is_number(share_value) and share_value > 0.0 %}
             {{ share_value }}
           {% endif %}
         unit_of_measurement: "$"
 
       - name: "Shares value EDV"
+        unique_id: shares_value_edv
         device_class: monetary
         state: >
           {% set share_number = states('input_number.shares_edv') | int(0) %}
-          {% set share_value = states('sensor.share_value_edv') | int(0) %}
-          {% if (is_number(share_number) and share_number > 0) and (is_number(share_value) and share_value > 0) %}
+          {% set share_value = states('sensor.share_value_edv') | float(0.0) %}
+          {% if (is_number(share_number) and share_number > 0) and (is_number(share_value) and share_value > 0.0) %}
             {{ share_number * share_value }}
           {% endif %}
         unit_of_measurement: "$"
 
       - name: "Share value TLS"
+        unique_id: share_value_tls
         device_class: monetary
         state: >
-          {% set share_value = states('sensor.asx_sensor_tls') | int(0) %}
-          {% if is_number(share_value) and share_value > 0 %}
+          {% set share_value = states('sensor.asx_sensor_tls') | float(0.0) %}
+          {% if is_number(share_value) and share_value > 0.0 %}
             {{ share_value }}
           {% endif %}
         unit_of_measurement: "$"
 
       - name: "Shares value TLS"
+        unique_id: shares_value_edv
         device_class: monetary
         state: >
           {% set share_number = states('input_number.shares_tls') | int(0) %}
-          {% set share_value = states('sensor.share_value_tls') | int(0) %}
-          {% if (is_number(share_number) and share_number > 0) and (is_number(share_value) and share_value > 0) %}
+          {% set share_value = states('sensor.share_value_tls') | float(0.0) %}
+          {% if (is_number(share_number) and share_number > 0) and (is_number(share_value) and share_value > 0.0) %}
             {{ share_number * share_value }}
           {% endif %}
         unit_of_measurement: "$"
 
       - name: "Share value WOW"
+        unique_id: share_value_wow
         device_class: monetary
         state: >
-          {% set share_value = states('sensor.asx_sensor_wow') | int(0) %}
-          {% if is_number(share_value) and share_value > 0 %}
+          {% set share_value = states('sensor.asx_sensor_wow') | float(0.0) %}
+          {% if is_number(share_value) and share_value > 0.0 %}
             {{ share_value }}
           {% endif %}
         unit_of_measurement: "$"
 
       - name: "Shares value WOW"
+        unique_id: shares_value_wow
         device_class: monetary
         state: >
           {% set share_number = states('input_number.shares_wow') | int(0) %}
-          {% set share_value = states('sensor.share_value_wow') | int(0) %}
-          {% if (is_number(share_number) and share_number > 0) and (is_number(share_value) and share_value > 0) %}
+          {% set share_value = states('sensor.share_value_wow') | float(0.0) %}
+          {% if (is_number(share_number) and share_number > 0) and (is_number(share_value) and share_value > 0.0) %}
             {{ share_number * share_value }}
           {% endif %}
         unit_of_measurement: "$"
 
       - name: "Shares value total"
+        unique_id: shares_value_total
         device_class: monetary
         state: >
-          {% set shares_value_edv = states('sensor.shares_value_edv') | int(0) %}
-          {% set shares_value_tls = states('sensor.shares_value_tls') | int(0) %}
-          {% set shares_value_wow = states('sensor.shares_value_wow') | int(0) %}
+          {% set shares_value_edv = states('sensor.shares_value_edv') | float(0.0) %}
+          {% set shares_value_tls = states('sensor.shares_value_tls') | float(0.0) %}
+          {% set shares_value_wow = states('sensor.shares_value_wow') | float(0.0) %}
             {{ shares_value_edv + shares_value_tls + shares_value_wow }}
           {% endif %}
         unit_of_measurement: "$"
