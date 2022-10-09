@@ -102,6 +102,7 @@ template:
           {% set shares_value_edv = states('sensor.shares_value_edv') | float(0.0) %}
           {% set shares_value_tls = states('sensor.shares_value_tls') | float(0.0) %}
           {% set shares_value_wow = states('sensor.shares_value_wow') | float(0.0) %}
+          {% if is_number(shares_value_edv) and is_number(shares_value_tls) and is_number(shares_value_wow) %}
             {{ shares_value_edv + shares_value_tls + shares_value_wow }}
           {% endif %}
         unit_of_measurement: "$"
