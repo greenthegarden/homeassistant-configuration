@@ -322,7 +322,8 @@ automation:
     condition: []
     action:
       - service: timer.start
-        entity_id: timer.weatherstation_healthcheck_timer
+        target:
+          entity_id: timer.weatherstation_healthcheck_timer
 
   - alias: Weatherstation healthcheck expired
     id: weatherstation_healthcheck_expired

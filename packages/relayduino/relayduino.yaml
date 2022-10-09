@@ -303,7 +303,8 @@ automation:
           topic: relayduino/control/relay
           payload: "{{ states('sensor.relayduino_relay_running') | int(0) }},0"
       - service: timer.start
-        entity_id: timer.relayduino_response_timer
+        target:
+          entity_id: timer.relayduino_response_timer
       - condition: state
         entity_id: input_boolean.relayduino_use_main_relay
         state: "on"
@@ -332,7 +333,8 @@ automation:
             {{ states('input_number.relayduino_relay_next') | int(0) }},
             {{ states('input_number.relayduino_relay_duration_next') | int(0) }}
       - service: timer.start
-        entity_id: timer.relayduino_response_timer
+        target:
+          entity_id: timer.relayduino_response_timer
       - condition: state
         entity_id: input_boolean.relayduino_use_main_relay
         state: "on"
@@ -402,7 +404,8 @@ automation:
     condition: []
     action:
       - service: timer.start
-        entity_id: timer.relayduino_healthcheck_timer
+        target:
+          entity_id: timer.relayduino_healthcheck_timer
 
   # - alias: Relayduino healthcheck reset
   #   id: relayduino_healthcheck_reset
@@ -436,7 +439,8 @@ automation:
     condition: []
     action:
       - service: timer.cancel
-        entity_id: timer.relayduino_response_timer
+        target:
+          entity_id: timer.relayduino_response_timer
 
   - alias: Relayduino response expired
     id: relayduino_response_expired

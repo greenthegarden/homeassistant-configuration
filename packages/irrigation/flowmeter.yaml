@@ -34,7 +34,8 @@ automation:
     condition: []
     action:
       - service: timer.start
-        entity_id: timer.flowmeter_healthcheck_timer
+        target:
+          entity_id: timer.flowmeter_healthcheck_timer
 
   - alias: Flowmeter healthcheck expired
     id: flowmeter_healthcheck_expired

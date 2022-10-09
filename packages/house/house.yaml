@@ -328,7 +328,8 @@ automation:
     condition: []
     action:
       - service: timer.start
-        entity_id: timer.weathersense_1_healthcheck_timer
+        target:
+          entity_id: timer.weathersense_1_healthcheck_timer
 
   # - alias: Weatherstation 1 healthcheck reset
   #   id: weatherstation_1_healthcheck_reset
@@ -364,7 +365,8 @@ automation:
     condition: []
     action:
       - service: timer.start
-        entity_id: timer.weathersense_2_healthcheck_timer
+        target:
+          entity_id: timer.weathersense_2_healthcheck_timer
 
   # - alias: Weatherstation 2 healthcheck reset
   #   id: weatherstation_2_healthcheck_reset

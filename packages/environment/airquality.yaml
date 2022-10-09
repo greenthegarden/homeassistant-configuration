@@ -175,7 +175,8 @@ automation:
     condition: []
     action:
       - service: timer.start
-        entity_id: timer.weathersense_aq_healthcheck_timer
+        target:
+          entity_id: timer.weathersense_aq_healthcheck_timer
 
   - alias: Weathersense AQ healthcheck expired
     id: weathersense_aq_healthcheck_expired
