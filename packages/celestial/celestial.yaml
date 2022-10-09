@@ -24,11 +24,11 @@ binary_sensor:
 sensor:
   # Moon phases
   # https://www.home-assistant.io/integrations/moon/
-  - platform: moon
+  # Configured via UI
 
   # Season
   # https://www.home-assistant.io/integrations/season/
-  - platform: season
+  # Configured via UI
 
   # Sun2
   # https://github.com/pnbruckner/ha-sun2
