@@ -5,7 +5,7 @@
   "documentation": "https://github.com/vigonotion/hass-simpleicons",
   "dependencies": ["http", "frontend"],
   "codeowners": [],
-  "requirements": ["simpleicons==6.16.0"],
+  "requirements": ["simpleicons==7.14.0"],
   "config_flow": true,
   "version": "0.0.0"
 }
