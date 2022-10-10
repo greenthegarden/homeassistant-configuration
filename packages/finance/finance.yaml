@@ -19,6 +19,7 @@ input_number:
     max: 1000
     step: 1
     mode: box
+
   shares_wow:
     name: WOW shares
     initial: !secret shares_number_wow
@@ -64,7 +65,7 @@ template:
         unit_of_measurement: "$"
 
       - name: "Shares value TLS"
-        unique_id: shares_value_edv
+        unique_id: shares_value_tls
         device_class: monetary
         state: >
           {% set share_number = states('input_number.shares_tls') | int(0) %}
