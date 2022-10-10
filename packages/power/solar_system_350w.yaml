@@ -23,19 +23,6 @@ template:
           {% endif %}
         unit_of_measurement: "V/m"
 
-binary_sensor:
-  # use to trigger a timer when voltage drops by 1 volt / minute
-  - platform: trend
-    sensors:
-      thumper_80ah_voltage_trend:
-        entity_id: sensor.thumper_80ah_voltage
-        device_class: battery_charging
-        friendly_name: Thumper 80Ah Charging
-        # invert: false
-        # max_samples: 2
-        # min_gradient: 0
-        # sample_duration: 0
-
 sensor:
   - platform: derivative
     source: sensor.thumper_80ah_voltage
@@ -53,10 +40,6 @@ sensor:
     method: trapezoidal
     round: 2
 
-timer:
-  rice_cooker:
-    duration: "00:15:00"
-
 automation:
   - alias: Thumper 80Ah Voltage Low
     id: thumper_80ah_voltage_low
@@ -69,37 +52,28 @@ automation:
       - service: notify.mobile_app_nokia_5_3
         data_template:
           message: >
-            " Thumper 80Ah battery voltage low"
+            "Thumper 80Ah battery voltage low"
 
-  - alias: "Rice cooker timer start"
+  - alias: "Thumper 80Ah battery load"
     id: rice_cooker_timer_start
-    # Timer is started when the switch pumprun is set to on.
     trigger:
-      - platform: state
-        entity_id: binary_sensor.thumper_80ah_voltage_falling
-        to: "on"
-    action:
-      - service: timer.start
-        target:
-          entity_id: timer.rice_cooker
-      - service: notify.mobile_app_nokia_5_3
-        data_template:
-          message: >
-            "Rice cooker started"
-
-  # When timer is stopped, the time run out, another message is sent
-  - alias: "Rice cooker timer stop"
-    id: rice_cooker_timer_stop
-    trigger:
-      - platform: event
-        event_type: timer.finished
-        event_data:
-          entity_id: timer.rice_cooker
+      - platform: numeric_state
+        entity_id: binary_sensor.thumper_80ah_voltage_derivative
+        below: -0.5
     action:
       - service: notify.mobile_app_nokia_5_3
         data_template:
           message: >
-            "Rice cooker needs checking"
+            "Thumper 80Ah battery load"
+      - delay:
+          hours: 0
+          minutes: 15
+          seconds: 0
+          milliseconds: 0
+      - service: notify.mobile_app_nokia_5_3
+        data_template:
+          message: >
+            "Thumper 80Ah battery needs checking"
 
 utility_meter:
   energy:
