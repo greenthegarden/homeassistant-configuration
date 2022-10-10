@@ -83,7 +83,7 @@ cards:
             icon: mdi:currency-usd
           - type: section
             label: Woolworths
-          - entity: sensor.asx_sensor_wow
+          - entity: sensor.share_value_wow
             name: Price
           - entity: input_number.shares_wow
             name: Number
