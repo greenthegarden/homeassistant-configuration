@@ -24,11 +24,6 @@ cards:
       - type: history-graph
         hours_to_show: 24
         entities:
-          - entity: sensor.thumper_80ah_battery_voltage_gradient
-            name: Battery Voltage Gradient
-      - type: history-graph
-        hours_to_show: 24
-        entities:
           - entity: sensor.thumper_80ah_voltage_derivative
             name: Battery Voltage Derivative
   - type: vertical-stack
