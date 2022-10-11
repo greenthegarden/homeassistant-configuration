@@ -241,17 +241,6 @@ template:
           {%- endif -%}
 
 #######################################################################
-# Timers
-# https://www.home-assistant.io/integrations/timer/
-
-timer:
-  # Weatherstation status every 2 minutes
-  weatherstation_healthcheck_timer:
-    duration: "00:10:00"
-    restore: true
-    restore_grace_period: "00:15:00"
-
-#######################################################################
 # Automations
 
 # Source: https://www.home-assistant.io/integrations/openuv
@@ -311,31 +300,27 @@ automation:
   #######################################################################
   # healthchecks
 
-  - alias: Weatherstation healthcheck start
-    id: weatherstation_healthcheck_start
+  - alias: Weatherstation no update notification
+    id: weatherstation_no_update
+    description: ""
+    mode: single
     trigger:
       - platform: homeassistant
         event: start
       - platform: mqtt
-        id: mqtt_weathersense_report
         topic: weathersense/FT020T/#
+        id: health_weatherstation
     condition: []
     action:
-      - service: timer.start
-        target:
-          entity_id: timer.weatherstation_healthcheck_timer
-
-  - alias: Weatherstation healthcheck expired
-    id: weatherstation_healthcheck_expired
-    trigger:
-      - platform: event
-        event_type: timer.finished
-        event_data:
-          entity_id: timer.weatherstation_healthcheck_timer
-    action:
+      - delay:
+          hours: 0
+          minutes: 10
+          seconds: 0
+          milliseconds: 0
       - service: notify.mobile_app_nokia_5_3
         data:
-          message: Weatherstation silent
+          message: >
+            "Weatherstation offline"
 
   # - alias: Cold weather Automations
   #   trigger:

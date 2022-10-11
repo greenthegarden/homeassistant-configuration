@@ -247,39 +247,19 @@ input_number:
 # Timers
 # https://www.home-assistant.io/integrations/timer/
 
-timer:
-  # Weathersense status every 5 minutes
-  weathersense_1_healthcheck_timer:
-    duration: "00:10:00"
-    restore: true
-    restore_grace_period: "00:15:00"
+# timer:
+#   # Weathersense status every 5 minutes
+#   weathersense_1_healthcheck_timer:
+#     duration: "00:10:00"
+#     restore: true
+#     restore_grace_period: "00:15:00"
 
-  weathersense_2_healthcheck_timer:
-    duration: "00:10:00"
-    restore: true
-    restore_grace_period: "00:15:00"
+#   weathersense_2_healthcheck_timer:
+#     duration: "00:10:00"
+#     restore: true
+#     restore_grace_period: "00:15:00"
 
 automation:
-  - alias: Grow tend - Alarm when no reading was received
-    id: weathersense_1_no_update
-    description: ""
-    trigger:
-      - platform: state
-        entity_id: sensor.weathersense_indoor_1_channel
-        to: unavailable
-        id: weathersense_indoor_1_offline
-      - platform: state
-        entity_id: sensor.weathersense_indoor_2_channel
-        to: unavailable
-        id: weathersense_indoor_2_offline
-    condition: []
-    action:
-      service: notify.mobile_app_nokia_5_3
-      data:
-        message: >
-          "Weathersense 1 offline"
-    mode: single
-
   - alias: Indoor Temperature alert
     id: alert_indoor_temperature
     trigger:
@@ -345,19 +325,49 @@ automation:
   #######################################################################
   # healthchecks
 
-  - alias: Weathersense 1 healthcheck start
-    id: weathersense_1_healthcheck_start
+  - alias: Weathersense no update notification
+    id: weathersense_no_update
+    description: ""
+    mode: single
     trigger:
       - platform: homeassistant
         event: start
       - platform: mqtt
         topic: weathersense/F016TH/1/#
-        id: mqtt_weathersense_report
+        id: health_weathersense_1
+      - platform: mqtt
+        topic: weathersense/F016TH/2/#
+        id: health_weathersense_2
     condition: []
     action:
-      - service: timer.start
-        target:
-          entity_id: timer.weathersense_1_healthcheck_timer
+      - delay:
+          hours: 0
+          minutes: 10
+          seconds: 0
+          milliseconds: 0
+      - service: notify.mobile_app_nokia_5_3
+        data:
+          message: >
+            {% if {{ trigger.entity_id }} == "health_weathersense_1" %}
+              {{ "Weathersense 1 offline" }}
+            {% elif {{ trigger.entity_id }} == "health_weathersense_2" %}
+              {{ "Weathersense 2 offline" }}
+            {% endif %}
+
+  # - alias: Weathersense 1 healthcheck start
+  #   id: weathersense_1_healthcheck_start
+  #   trigger:
+  #     - platform: homeassistant
+  #       event: start
+  #     - platform: mqtt
+  #       topic: weathersense/F016TH/1/#
+  #       id: mqtt_weathersense_report
+  #   condition: []
+  #   action:
+  #     - delay:
+  #     - service: timer.start
+  #       target:
+  #         entity_id: timer.weathersense_1_healthcheck_timer
 
   # - alias: Weatherstation 1 healthcheck reset
   #   id: weatherstation_1_healthcheck_reset
@@ -370,31 +380,31 @@ automation:
   #     - service: timer.start
   #       entity_id: timer.weathersense_1_healthcheck_timer
 
-  - alias: Weatherstation 1 healthcheck expired
-    id: weatherstation_1_healthcheck_expired
-    trigger:
-      - platform: event
-        event_type: timer.finished
-        event_data:
-          entity_id: timer.weathersense_1_healthcheck_timer
-    action:
-      - service: notify.mobile_app_nokia_5_3
-        data:
-          message: Weatherstation 1 silent
+  # - alias: Weatherstation 1 healthcheck expired
+  #   id: weatherstation_1_healthcheck_expired
+  #   trigger:
+  #     - platform: event
+  #       event_type: timer.finished
+  #       event_data:
+  #         entity_id: timer.weathersense_1_healthcheck_timer
+  #   action:
+  #     - service: notify.mobile_app_nokia_5_3
+  #       data:
+  #         message: Weatherstation 1 silent
 
-  - alias: Weathersense 2 healthcheck start
-    id: weathersense_2_healthcheck_start
-    trigger:
-      - platform: homeassistant
-        event: start
-      - platform: mqtt
-        topic: weathersense/F016TH/2/#
-        id: mqtt_weathersense_report
-    condition: []
-    action:
-      - service: timer.start
-        target:
-          entity_id: timer.weathersense_2_healthcheck_timer
+  # - alias: Weathersense 2 healthcheck start
+  #   id: weathersense_2_healthcheck_start
+  #   trigger:
+  #     - platform: homeassistant
+  #       event: start
+  #     - platform: mqtt
+  #       topic: weathersense/F016TH/2/#
+  #       id: mqtt_weathersense_report
+  #   condition: []
+  #   action:
+  #     - service: timer.start
+  #       target:
+  #         entity_id: timer.weathersense_2_healthcheck_timer
 
   # - alias: Weatherstation 2 healthcheck reset
   #   id: weatherstation_2_healthcheck_reset
@@ -407,14 +417,14 @@ automation:
   #     - service: timer.start
   #       entity_id: timer.weathersense_2_healthcheck_timer
 
-  - alias: Weatherstation 2 healthcheck expired
-    id: weatherstation_2_healthcheck_expired
-    trigger:
-      - platform: event
-        event_type: timer.finished
-        event_data:
-          entity_id: timer.weathersense_2_healthcheck_timer
-    action:
-      - service: notify.mobile_app_nokia_5_3
-        data:
-          message: Weatherstation 2 silent
+  # - alias: Weatherstation 2 healthcheck expired
+  #   id: weatherstation_2_healthcheck_expired
+  #   trigger:
+  #     - platform: event
+  #       event_type: timer.finished
+  #       event_data:
+  #         entity_id: timer.weathersense_2_healthcheck_timer
+  #   action:
+  #     - service: notify.mobile_app_nokia_5_3
+  #       data:
+  #         message: Weatherstation 2 silent
