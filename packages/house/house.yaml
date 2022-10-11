@@ -119,18 +119,21 @@ mqtt:
 
     - name: WeatherSense Indoor 1 Channel
       state_topic: "weathersense/F016TH/1"
+      expire_after: 600
       icon: mdi:identifier
       unique_id: weathersense_indoor_1_channel
       value_template: "{{ value_json.channel }}"
 
     - name: WeatherSense Indoor 1 Battery
       state_topic: "weathersense/F016TH/1"
+      expire_after: 600
       unique_id: weathersense_indoor_1_battery
       value_template: "{{ value_json.battery }}"
 
     - name: WeatherSense Indoor 1 Temperature
       state_topic: "weathersense/F016TH/1"
       device_class: temperature
+      expire_after: 600
       unique_id: weathersense_indoor_1_temperature
       unit_of_measurement: "°C"
       value_template: "{{ ((( value_json.temperature_F | float(0.0) ) - 32) * 5/9) | round(1) }}"
@@ -138,24 +141,28 @@ mqtt:
     - name: WeatherSense Indoor 1 Humidity
       state_topic: "weathersense/F016TH/1"
       device_class: humidity
+      expire_after: 600
       unique_id: weathersense_indoor_1_humidity
       unit_of_measurement: "%"
       value_template: "{{ value_json.humidity }}"
 
     - name: WeatherSense Indoor 2 Channel
       state_topic: "weathersense/F016TH/2"
+      expire_after: 600
       icon: mdi:identifier
       unique_id: weathersense_indoor_2_channel
       value_template: "{{ value_json.channel }}"
 
     - name: WeatherSense Indoor 2 Battery
       state_topic: "weathersense/F016TH/2"
+      expire_after: 600
       unique_id: weathersense_indoor_2_battery
       value_template: "{{ value_json.battery }}"
 
     - name: WeatherSense Indoor 2 Temperature
       state_topic: "weathersense/F016TH/2"
       device_class: temperature
+      expire_after: 600
       unique_id: weathersense_indoor_2_temperature
       unit_of_measurement: "°C"
       value_template: "{{ ((( value_json.temperature_F | float(0.0) ) - 32) * 5/9) | round(1) }}"
@@ -163,6 +170,7 @@ mqtt:
     - name: WeatherSense Indoor 2 Humidity
       state_topic: "weathersense/F016TH/2"
       device_class: humidity
+      expire_after: 600
       unique_id: weathersense_indoor_2_humidity
       unit_of_measurement: "%"
       value_template: "{{ value_json.humidity }}"
@@ -252,6 +260,26 @@ timer:
     restore_grace_period: "00:15:00"
 
 automation:
+  - alias: Grow tend - Alarm when no reading was received
+    id: weathersense_1_no_update
+    description: ""
+    trigger:
+      - platform: state
+        entity_id: sensor.weathersense_indoor_1_channel
+        to: unavailable
+        id: weathersense_indoor_1_offline
+      - platform: state
+        entity_id: sensor.weathersense_indoor_2_channel
+        to: unavailable
+        id: weathersense_indoor_2_offline
+    condition: []
+    action:
+      service: notify.mobile_app_nokia_5_3
+      data:
+        message: >
+          "Weathersense 1 offline"
+    mode: single
+
   - alias: Indoor Temperature alert
     id: alert_indoor_temperature
     trigger:
