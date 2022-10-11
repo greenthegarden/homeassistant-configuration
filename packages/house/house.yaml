@@ -349,9 +349,9 @@ automation:
         data:
           message: >
             {% if {{ trigger.entity_id }} == "health_weathersense_1" %}
-              {{ "Weathersense 1 offline" }}
+              "Weathersense 1 offline"
             {% elif {{ trigger.entity_id }} == "health_weathersense_2" %}
-              {{ "Weathersense 2 offline" }}
+              "Weathersense 2 offline"
             {% endif %}
 
   # - alias: Weathersense 1 healthcheck start
