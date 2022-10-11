@@ -325,34 +325,34 @@ automation:
   #######################################################################
   # healthchecks
 
-  - alias: Weathersense no update notification
-    id: weathersense_no_update
-    description: ""
-    mode: single
-    trigger:
-      - platform: homeassistant
-        event: start
-      - platform: mqtt
-        topic: weathersense/F016TH/1/#
-        id: health_weathersense_1
-      - platform: mqtt
-        topic: weathersense/F016TH/2/#
-        id: health_weathersense_2
-    condition: []
-    action:
-      - delay:
-          hours: 0
-          minutes: 10
-          seconds: 0
-          milliseconds: 0
-      - service: notify.mobile_app_nokia_5_3
-        data:
-          message: >
-            {% if {{ trigger.entity_id }} == "health_weathersense_1" %}
-              "Weathersense 1 offline"
-            {% elif {{ trigger.entity_id }} == "health_weathersense_2" %}
-              "Weathersense 2 offline"
-            {% endif %}
+  # - alias: Weathersense no update notification
+  #   id: weathersense_no_update
+  #   description: ""
+  #   mode: single
+  #   trigger:
+  #     - platform: homeassistant
+  #       event: start
+  #     - platform: mqtt
+  #       topic: weathersense/F016TH/1/#
+  #       id: health_weathersense_1
+  #     - platform: mqtt
+  #       topic: weathersense/F016TH/2/#
+  #       id: health_weathersense_2
+  #   condition: []
+  #   action:
+  #     - delay:
+  #         hours: 0
+  #         minutes: 10
+  #         seconds: 0
+  #         milliseconds: 0
+  #     - service: notify.mobile_app_nokia_5_3
+  #       data:
+  #         message: >
+  #           {% if {{ trigger.entity_id }} == "health_weathersense_1" %}
+  #             Weathersense 1 offline
+  #           {% elif {{ trigger.entity_id }} == "health_weathersense_2" %}
+  #             Weathersense 2 offline
+  #           {% endif %}
 
   # - alias: Weathersense 1 healthcheck start
   #   id: weathersense_1_healthcheck_start

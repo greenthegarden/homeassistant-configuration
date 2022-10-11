@@ -109,21 +109,6 @@ mqtt:
       unique_id: weatherstation_cumulative_rain
       value_template: "{{ value_json.cumulativerain | float(0.0) / 10.0 | round(1) }}"
 
-    # - name: Weatherstation Daily Rain
-    #   state_topic: "weathersense/FT020T"
-    #   unit_of_measurement: "mm"
-    #   value_template: "{{ value_json.dailyrainfall }}"
-
-    # - name: Weatherstation Monthly Rain
-    #   state_topic: "weathersense/FT020T"
-    #   unit_of_measurement: "mm"
-    #   value_template: "{{ value_json.monthlyrainfall }}"
-
-    # - name: Weatherstation Annual Rain
-    #   state_topic: "weathersense/FT020T"
-    #   unit_of_measurement: "mm"
-    #   value_template: "{{ value_json.annualrainfall }}"
-
     - name: Weatherstation Temperature
       state_topic: "weathersense/FT020T"
       device_class: temperature
@@ -300,27 +285,27 @@ automation:
   #######################################################################
   # healthchecks
 
-  - alias: Weatherstation no update notification
-    id: weatherstation_no_update
-    description: ""
-    mode: single
-    trigger:
-      - platform: homeassistant
-        event: start
-      - platform: mqtt
-        topic: weathersense/FT020T/#
-        id: health_weatherstation
-    condition: []
-    action:
-      - delay:
-          hours: 0
-          minutes: 10
-          seconds: 0
-          milliseconds: 0
-      - service: notify.mobile_app_nokia_5_3
-        data:
-          message: >
-            "Weatherstation offline"
+  # - alias: Weatherstation no update notification
+  #   id: weatherstation_no_update
+  #   description: ""
+  #   mode: single
+  #   trigger:
+  #     - platform: homeassistant
+  #       event: start
+  #     - platform: mqtt
+  #       topic: weathersense/FT020T/#
+  #       id: health_weatherstation
+  #   condition: []
+  #   action:
+  #     - delay:
+  #         hours: 0
+  #         minutes: 10
+  #         seconds: 0
+  #         milliseconds: 0
+  #     - service: notify.mobile_app_nokia_5_3
+  #       data:
+  #         message: >
+  #           "Weatherstation offline"
 
   # - alias: Cold weather Automations
   #   trigger:
