@@ -19,7 +19,7 @@ cards:
             name: Battery Low
           - entity: sensor.weathersense_indoor_2_channel
             name: Weathersense ID
-        title: F016TH
+        title: Weathersense
       - type: entities
         entities:
           - entity: sensor.enviroplus_1_temperature
@@ -41,7 +41,7 @@ cards:
     cards:
       - type: history-graph
         title: Temperature
-        hours_to_show: 24
+        hours_to_show: 48
         entities:
           - entity: sensor.weathersense_indoor_2_temperature
             name: F016TH
@@ -49,9 +49,19 @@ cards:
             name: Enviro+
       - type: history-graph
         title: Humidity
-        hours_to_show: 24
+        hours_to_show: 48
         entities:
           - entity: sensor.weathersense_indoor_2_humidity
             name: F016TH
           - entity: sensor.enviroplus_1_humidity
             name: Enviro+
+  - type: history-graph
+    title: Gases
+    hours_to_show: 48
+    entities:
+      - entity: sensor.sensor.enviroplus_1_oxidised
+        name: Oxidised
+      - entity: sensor.enviroplus_1_reduced
+        name: Reduced
+      - entity: sensor.enviroplus_1_nh3
+        name: NH3
