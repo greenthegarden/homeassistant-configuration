@@ -58,7 +58,7 @@ automation:
     id: rice_cooker_timer_start
     trigger:
       - platform: numeric_state
-        entity_id: binary_sensor.thumper_80ah_voltage_derivative
+        entity_id: sensor.thumper_80ah_voltage_derivative
         below: -0.5
     action:
       - service: notify.mobile_app_nokia_5_3
