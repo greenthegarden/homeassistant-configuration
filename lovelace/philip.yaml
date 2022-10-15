@@ -48,7 +48,7 @@ cards:
   - type: vertical-stack
     cards:
       - type: history-graph
-        hours_to_show: 24
+        hours_to_show: 240
         entities:
           - entity: sensor.shares_value_edv
             name: Endeavour Group
