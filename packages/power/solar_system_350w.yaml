@@ -14,14 +14,23 @@ template:
         state_class: measurement
         unit_of_measurement: "W"
 
-  - sensor:
-      - name: Thumper 80Ah Battery Voltage Gradient
-        unique_id: thumper_80ah_voltage_gradient
+  # - sensor:
+  #     - name: Thumper 80Ah Battery Voltage Gradient
+  #       unique_id: thumper_80ah_voltage_gradient
+  #       state: >
+  #         {% if states.binary_sensor.thumper_80ah_voltage_trend %}
+  #           {{ state_attr('binary_sensor.thumper_80ah_voltage_trend', 'gradient') }}
+  #         {% endif %}
+  #       unit_of_measurement: "V/m"
+
+  # https://community.home-assistant.io/t/binary-sensor-template-format/455585/3
+  - binary_sensor:
+      - name: Thumper 80Ah battery loaded
         state: >
-          {% if states.binary_sensor.thumper_80ah_voltage_trend %}
-            {{ state_attr('binary_sensor.thumper_80ah_voltage_trend', 'gradient') }}
+          {% set battery_derivative = sensor.thumper_80ah_voltage_derivative %}
+          {% if battery_derivative < -0.5 %}
+            thumper_80ah_battery_loaded == on
           {% endif %}
-        unit_of_measurement: "V/m"
 
 sensor:
   - platform: derivative
