@@ -33,6 +33,7 @@ from .const import (
     CONF_CREATE_ENERGY_SENSOR,
     CONF_CREATE_UTILITY_METERS,
     CONF_DAILY_FIXED_ENERGY,
+    CONF_ENERGY_INTEGRATION_METHOD,
     CONF_FIXED,
     CONF_GAMMA_CURVE,
     CONF_GROUP,
@@ -40,12 +41,14 @@ from .const import (
     CONF_GROUP_MEMBER_SENSORS,
     CONF_GROUP_POWER_ENTITIES,
     CONF_HIDE_MEMBERS,
+    CONF_IGNORE_UNAVAILABLE_STATE,
     CONF_LINEAR,
     CONF_MANUFACTURER,
     CONF_MAX_POWER,
     CONF_MIN_POWER,
     CONF_MODE,
     CONF_MODEL,
+    CONF_MULTIPLY_FACTOR,
     CONF_ON_TIME,
     CONF_POWER,
     CONF_POWER_TEMPLATE,
@@ -59,6 +62,8 @@ from .const import (
     CONF_VALUE_TEMPLATE,
     CONF_WLED,
     DOMAIN,
+    ENERGY_INTEGRATION_METHOD_LEFT,
+    ENERGY_INTEGRATION_METHODS,
     CalculationStrategy,
     SensorType,
 )
@@ -91,7 +96,6 @@ SCHEMA_DAILY_ENERGY_OPTIONS = vol.Schema(
         vol.Optional(CONF_ON_TIME): selector.DurationSelector(
             selector.DurationSelectorConfig(enable_day=False)
         ),
-        # vol.Optional(CONF_START_TIME): selector.TimeSelector(),
         vol.Optional(
             CONF_UPDATE_FREQUENCY, default=DEFAULT_DAILY_UPDATE_FREQUENCY
         ): selector.NumberSelector(
@@ -163,7 +167,19 @@ SCHEMA_POWER_LUT_AUTODISCOVERED = vol.Schema(
 )
 
 SCHEMA_POWER_ADVANCED = vol.Schema(
-    {vol.Optional(CONF_CALCULATION_ENABLED_CONDITION): selector.TemplateSelector()}
+    {
+        vol.Optional(CONF_CALCULATION_ENABLED_CONDITION): selector.TemplateSelector(),
+        vol.Optional(CONF_IGNORE_UNAVAILABLE_STATE): selector.BooleanSelector(),
+        vol.Optional(CONF_MULTIPLY_FACTOR): vol.Coerce(float),
+        vol.Optional(
+            CONF_ENERGY_INTEGRATION_METHOD, default=ENERGY_INTEGRATION_METHOD_LEFT
+        ): selector.SelectSelector(
+            selector.SelectSelectorConfig(
+                options=ENERGY_INTEGRATION_METHODS,
+                mode=selector.SelectSelectorMode.DROPDOWN,
+            )
+        ),
+    }
 )
 
 SCHEMA_GROUP = vol.Schema(
@@ -559,21 +575,21 @@ class OptionsFlowHandler(OptionsFlow):
             self.current_config.update(generic_options)
 
             strategy = self.current_config.get(CONF_MODE)
+            if strategy:
+                strategy_options = _build_strategy_config(
+                    strategy, self.source_entity_id, user_input
+                )
 
-            strategy_options = _build_strategy_config(
-                strategy, self.source_entity_id, user_input
-            )
+                if strategy != CalculationStrategy.LUT:
+                    self.current_config.update({strategy: strategy_options})
 
-            if strategy != CalculationStrategy.LUT:
-                self.current_config.update({strategy: strategy_options})
-
-            strategy_object = await _create_strategy_object(
-                self.hass, strategy, self.current_config, self.source_entity
-            )
-            try:
-                await strategy_object.validate_config()
-            except StrategyConfigurationError as error:
-                return {'base': error.get_config_flow_translate_key()}
+                strategy_object = await _create_strategy_object(
+                    self.hass, strategy, self.current_config, self.source_entity
+                )
+                try:
+                    await strategy_object.validate_config()
+                except StrategyConfigurationError as error:
+                    return {'base': error.get_config_flow_translate_key()}
 
         if self.sensor_type == SensorType.GROUP:
             self.current_config.update(user_input)
@@ -590,7 +606,10 @@ class OptionsFlowHandler(OptionsFlow):
         data_schema = {}
         if self.sensor_type == SensorType.VIRTUAL_POWER:
             strategy: str = self.current_config.get(CONF_MODE)
-            strategy_schema = _get_strategy_schema(strategy, self.source_entity_id)
+            if strategy:
+                strategy_schema = _get_strategy_schema(strategy, self.source_entity_id)
+            else:
+                strategy_schema = vol.Schema({})
             data_schema = SCHEMA_POWER_OPTIONS.extend(strategy_schema.schema).extend(
                 SCHEMA_POWER_ADVANCED.schema
             )

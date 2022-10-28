@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import annotations
+
 from decimal import Decimal
 
 from homeassistant.core import State

@@ -66,7 +66,7 @@ from ..const import (
 )
 from ..errors import ModelNotSupported, StrategyConfigurationError, UnsupportedMode
 from ..power_profile.model_discovery import get_power_profile
-from ..power_profile.power_profile import PowerProfile
+from ..power_profile.power_profile import PowerProfile, SubProfileSelector
 from ..strategy.factory import PowerCalculatorStrategyFactory
 from ..strategy.strategy_interface import PowerCalculationStrategyInterface
 from .abstract import (
@@ -190,17 +190,18 @@ async def create_virtual_power_sensor(
         entity_id=entity_id,
         entity_category=entity_category,
         name=name,
-        source_entity=source_entity.entity_id,
-        source_domain=source_entity.domain,
+        source_entity=source_entity,
         unique_id=unique_id,
         standby_power=standby_power,
         standby_power_on=standby_power_on,
         update_frequency=sensor_config.get(CONF_FORCE_UPDATE_FREQUENCY),
         multiply_factor=sensor_config.get(CONF_MULTIPLY_FACTOR),
         multiply_factor_standby=sensor_config.get(CONF_MULTIPLY_FACTOR_STANDBY),
-        ignore_unavailable_state=sensor_config.get(CONF_IGNORE_UNAVAILABLE_STATE),
+        ignore_unavailable_state=sensor_config.get(CONF_IGNORE_UNAVAILABLE_STATE)
+        or False,
         rounding_digits=sensor_config.get(CONF_POWER_SENSOR_PRECISION),
         sensor_config=sensor_config,
+        power_profile=power_profile,
     )
 
 
@@ -280,8 +281,7 @@ class VirtualPowerSensor(SensorEntity, BaseEntity, PowerSensor):
         entity_id: str,
         entity_category: str,
         name: str,
-        source_entity: str,
-        source_domain: str,
+        source_entity: SourceEntity,
         unique_id: str,
         standby_power: Decimal,
         standby_power_on: Decimal,
@@ -291,12 +291,12 @@ class VirtualPowerSensor(SensorEntity, BaseEntity, PowerSensor):
         ignore_unavailable_state: bool,
         rounding_digits: int,
         sensor_config: dict,
+        power_profile: PowerProfile | None,
     ):
         """Initialize the sensor."""
         self._power_calculator = power_calculator
         self._calculation_mode = calculation_strategy
         self._source_entity = source_entity
-        self._source_domain = source_domain
         self._attr_name = name
         self._power = None
         self._standby_power = standby_power
@@ -317,9 +317,11 @@ class VirtualPowerSensor(SensorEntity, BaseEntity, PowerSensor):
         self._attr_extra_state_attributes = {
             ATTR_CALCULATION_MODE: calculation_strategy,
             ATTR_INTEGRATION: DOMAIN,
-            ATTR_SOURCE_ENTITY: source_entity,
-            ATTR_SOURCE_DOMAIN: source_domain,
+            ATTR_SOURCE_ENTITY: source_entity.entity_id,
+            ATTR_SOURCE_DOMAIN: source_entity.domain,
         }
+        self._power_profile = power_profile
+        self._sub_profile_selector: SubProfileSelector | None = None
 
     async def async_added_to_hass(self):
         """Register callbacks."""
@@ -329,11 +331,11 @@ class VirtualPowerSensor(SensorEntity, BaseEntity, PowerSensor):
             """Handle for state changes for dependent sensors."""
             new_state = event.data.get('new_state')
 
-            await self._update_power_sensor(self._source_entity, new_state)
+            await self._update_power_sensor(self._source_entity.entity_id, new_state)
 
         async def template_change_listener(*args):
-            state = self.hass.states.get(self._source_entity)
-            await self._update_power_sensor(self._source_entity, state)
+            state = self.hass.states.get(self._source_entity.entity_id)
+            await self._update_power_sensor(self._source_entity.entity_id, state)
 
         async def initial_update(event):
             for entity_id in self._track_entities:
@@ -348,7 +350,14 @@ class VirtualPowerSensor(SensorEntity, BaseEntity, PowerSensor):
             entity for entity in entities_to_track if isinstance(entity, str)
         ]
         if not track_entities:
-            track_entities = [self._source_entity]
+            track_entities = [self._source_entity.entity_id]
+
+        if self._power_profile:
+            self._sub_profile_selector = SubProfileSelector(
+                self.hass, self._power_profile, self._source_entity
+            )
+            track_entities.extend(self._sub_profile_selector.get_tracking_entities())
+
         self._track_entities = track_entities
 
         async_track_state_change_event(
@@ -397,6 +406,7 @@ class VirtualPowerSensor(SensorEntity, BaseEntity, PowerSensor):
             self.async_write_ha_state()
             return False
 
+        self._switch_sub_profile_dynamically(state)
         self._power = await self.calculate_power(state)
 
         if self._power is not None:
@@ -435,11 +445,15 @@ class VirtualPowerSensor(SensorEntity, BaseEntity, PowerSensor):
     async def calculate_power(self, state: State) -> Decimal | None:
         """Calculate power consumption using configured strategy."""
 
-        is_calculation_enabled = await self.is_calculation_enabled()
-        if state.state in OFF_STATES or not is_calculation_enabled:
-            return await self.calculate_standby_power(state)
+        entity_state = state
+        if state.entity_id != self._source_entity.entity_id:
+            entity_state = self.hass.states.get(self._source_entity.entity_id)
 
-        power = await self._power_calculator.calculate(state)
+        is_calculation_enabled = await self.is_calculation_enabled()
+        if entity_state.state in OFF_STATES or not is_calculation_enabled:
+            return await self.calculate_standby_power(entity_state)
+
+        power = await self._power_calculator.calculate(entity_state)
         if power is None:
             return None
 
@@ -459,6 +473,20 @@ class VirtualPowerSensor(SensorEntity, BaseEntity, PowerSensor):
                 f"{state.entity_id}: Could not convert value '{power}' to decimal"
             )
             return None
+
+    def _switch_sub_profile_dynamically(self, state: State) -> None:
+        """
+        Dynamically select a different sub profile depending on the entity state or attributes
+        Uses SubProfileSelect class which contains all the matching logic
+        """
+        if not self._power_profile or not self._power_profile.sub_profile_select:
+            return
+
+        self._power_profile.select_sub_profile(
+            self._sub_profile_selector.select_sub_profile(state)
+        )
+        self._standby_power = self._power_profile.standby_power
+        self._standby_power_on = self._power_profile.standby_power_on
 
     async def calculate_standby_power(self, state: State) -> Decimal:
         """Calculate the power of the device in OFF state"""
@@ -501,7 +529,7 @@ class VirtualPowerSensor(SensorEntity, BaseEntity, PowerSensor):
     @property
     def source_entity(self) -> str:
         """The source entity this power sensor calculates power for."""
-        return self._source_entity
+        return self._source_entity.entity_id
 
     @property
     def native_value(self) -> StateType:
