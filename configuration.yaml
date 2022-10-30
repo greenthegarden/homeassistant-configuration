@@ -65,6 +65,8 @@ homeassistant:
 # https://www.home-assistant.io/integrations/api
 api:
 
+timer:
+
 # Python Scripts
 # To include python scripts
 # https://www.home-assistant.io/integrations/python_script/
