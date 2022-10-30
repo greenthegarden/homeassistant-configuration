@@ -101,6 +101,7 @@ from .const import (
     CONF_SLEEP_POWER,
     CONF_STANDBY_POWER,
     CONF_TEMPLATE,
+    CONF_UNAVAILABLE_POWER,
     CONF_UTILITY_METER_OFFSET,
     CONF_UTILITY_METER_TARIFFS,
     CONF_UTILITY_METER_TYPES,
@@ -224,6 +225,7 @@ SENSOR_CONFIG = {
             vol.Required(CONF_DELAY): cv.positive_int,
         }
     ),
+    vol.Optional(CONF_UNAVAILABLE_POWER): vol.Coerce(float),
 }
 
 
