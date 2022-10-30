@@ -1,0 +1,9 @@
+---
+# Schedule
+#
+# The schedule integration provides a way to create a
+# weekly schedule in Home Assistant that can be used to
+# trigger or make decisions in your automations and scripts.
+#
+# https://www.home-assistant.io/integrations/schedule/
+schedule:
