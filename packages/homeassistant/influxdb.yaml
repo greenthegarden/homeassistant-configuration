@@ -1,0 +1,24 @@
+---
+# InfluxDB
+#
+# https://www.home-assistant.io/integrations/influxdb/
+#
+influxdb:
+  api_version: 2
+  ssl: false
+  host: homeassistant-influxdb
+  port: 8086
+  token: homeassistant
+  organization: homeassistant
+  bucket: homeassistant
+  tags:
+    source: ha
+  tags_attributes:
+    - friendly_name
+  default_measurement: units
+  exclude:
+    domains:
+      - persistent_notification
+      - person
+  include:
+    entities: !include_dir_merge_list influxdb

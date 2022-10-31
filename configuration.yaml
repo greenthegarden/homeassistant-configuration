@@ -65,10 +65,28 @@ homeassistant:
 # https://www.home-assistant.io/integrations/api
 api:
 
-# Python Scripts
-# To include python scripts
-# https://www.home-assistant.io/integrations/python_script/
-python_script:
+# Enables configuration UI
+# https://www.home-assistant.io/integrations/config/
+config:
+
+# Default Config
+# Configure a default setup of Home Assistant (frontend, api, etc)
+# https://www.home-assistant.io/integrations/default_config/
+# default_config:
+
+# HTTP
+# Serves all files and data required for the Home Assistant frontend
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# https://www.home-assistant.io/integrations/http/
+# Based on https://community.home-assistant.io/t/solved-howto-home-assistant-vm-behind-traefik-unable-to-connect-to-home-assistant/322776
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 192.168.1.0/24 # Local LAN Subnet
+    - 172.21.0.0/16 # Docker Subnet
+    - 127.0.0.1
+    - ::1
+    - fe80::/64
 
 # lovelace_gen
 # Improve the lovelace yaml parser for Home Assistant.
@@ -80,15 +98,15 @@ lovelace_gen:
 # https://www.home-assistant.io/lovelace
 lovelace: !include lovelace.yaml
 
+# Python Scripts
+# To include python scripts
+# https://www.home-assistant.io/integrations/python_script/
+python_script:
+
 # Zone
 # Zones allow certain regions on earth to be specified
 # https://www.home-assistant.io/integrations/zone/
 zone: !include zone.yaml
-
-# Default Config
-# Configure a default setup of Home Assistant (frontend, api, etc)
-# https://www.home-assistant.io/integrations/default_config/
-default_config:
 
 # Camera
 # https://www.home-assistant.io/integrations/camera/
@@ -103,10 +121,6 @@ default_config:
 #   name: Security Camera
 #   mjpeg_url: http://192.168.1.70:8081
 #   verify_ssl: false
-
-# Enables configuration UI
-# https://www.home-assistant.io/integrations/config/
-config:
 
 # Conversation
 # Allows you to issue voice commands from the frontend in enabled browsers
@@ -128,69 +142,6 @@ config:
 #       track_new_devices: true
 # Replaced by https://www.home-assistant.io/integrations/unifi
 
-# FFmpeg
-# Allows other Home Assistant integrations to process video and audio streams
-# https://www.home-assistant.io/integrations/ffmpeg/
-ffmpeg:
-
-# Home Assistant Frontend
-# Official frontend to control Home Assistant.
-# https://www.home-assistant.io/integrations/frontend/
-frontend:
-  themes:
-    happy:
-      primary-color: pink
-      text-primary-color: purple
-      mdc-theme-primary: plum
-    sad:
-      primary-color: steelblue
-      modes:
-        dark:
-          secondary-text-color: slategray
-    day_and_night:
-      primary-color: coral
-      modes:
-        light:
-          secondary-text-color: olive
-        dark:
-          secondary-text-color: slategray
-
-# HTTP
-# Serves all files and data required for the Home Assistant frontend
-# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
-# https://www.home-assistant.io/integrations/http/
-# Based on https://community.home-assistant.io/t/solved-howto-home-assistant-vm-behind-traefik-unable-to-connect-to-home-assistant/322776
-http:
-  use_x_forwarded_for: true
-  trusted_proxies:
-    - 192.168.1.0/24 # Local LAN Subnet
-    - 172.21.0.0/16 # Docker Subnet
-    - 127.0.0.1
-    - ::1
-    - fe80::/64
-
-# InfluxDB
-# https://www.home-assistant.io/integrations/influxdb/
-influxdb:
-  api_version: 2
-  ssl: false
-  host: homeassistant-influxdb
-  port: 8086
-  token: homeassistant
-  organization: homeassistant
-  bucket: homeassistant
-  tags:
-    source: ha
-  tags_attributes:
-    - friendly_name
-  default_measurement: units
-  exclude:
-    domains:
-      - persistent_notification
-      - person
-  include:
-    entities: !include_dir_merge_list influxdb
-
 # Introduction
 # Show links to resources in log and frontend
 #introduction:
@@ -207,16 +158,6 @@ media_source:
 # Allows Home Assistant mobile apps to easily integrate with Home Assistant
 # https://www.home-assistant.io/integrations/mobile_app/
 mobile_app:
-
-# Prometheus
-# Exposes metrics in format for Prometheus
-# https://www.home-assistant.io/integrations/prometheus/
-prometheus:
-
-# Stream
-# Provides a way to proxy live streams
-# https://www.home-assistant.io/integrations/stream
-stream:
 # Text-to-Speech
 # https://www.home-assistant.io/integrations/#text-to-speech
 # tts:
