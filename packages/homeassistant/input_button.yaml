@@ -1,0 +1,10 @@
+---
+# Input Button
+#
+# The Input Button helper integration allows you to define buttons that can be
+# pressed via the user interface, and can be used to trigger things,
+# like an automation.
+#
+# https://www.home-assistant.io/integrations/input_button/
+#
+input_button:
