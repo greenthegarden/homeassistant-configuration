@@ -34,14 +34,14 @@ cards:
           {{ client }}
         {% endfor %}
 
-  - type: entities
-    title: Sensors
-    entities:
-      - entity: timer.relayduino_healthcheck_timer
-        name: Irrigation
-      - entity: timer.weatherstation_healthcheck_timer
-        name: Weatherstation
-      - entity: timer.weathersense_1_healthcheck_timer
-        name: Weathersense 1
-      - entity: timer.weathersense_2_healthcheck_timer
-        name: Weathersense 2
+  # - type: entities
+  #   title: Sensors
+  #   entities:
+  #     - entity: timer.relayduino_healthcheck_timer
+  #       name: Irrigation
+  #     - entity: timer.weatherstation_healthcheck_timer
+  #       name: Weatherstation
+  #     - entity: timer.weathersense_1_healthcheck_timer
+  #       name: Weathersense 1
+  #     - entity: timer.weathersense_2_healthcheck_timer
+  #       name: Weathersense 2

@@ -310,10 +310,10 @@ cards:
             name: Relay
           - entity: sensor.relayduino_status_alarm
             name: Alarm
-          - entity: timer.relayduino_healthcheck_timer
-            name: Healthcheck
-          - entity: timer.relayduino_response_timer
-            name: Response
+          # - entity: timer.relayduino_healthcheck_timer
+          #   name: Healthcheck
+          # - entity: timer.relayduino_response_timer
+          #   name: Response
       - type: entities
         title: Reset counter
         entities:

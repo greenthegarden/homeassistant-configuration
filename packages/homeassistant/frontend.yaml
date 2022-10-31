@@ -4,6 +4,7 @@
 # Official frontend to control Home Assistant.
 #
 # https://www.home-assistant.io/integrations/frontend/
+#
 frontend:
   themes:
     happy:

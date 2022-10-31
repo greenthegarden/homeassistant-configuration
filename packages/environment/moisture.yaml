@@ -118,12 +118,12 @@ template:
 
 # Timers
 # https://www.home-assistant.io/integrations/timer/
-timer:
-  # Duo moisture system reports every 15 seconds
-  duo_moisture_healthcheck_timer:
-    duration: "00:02:00"
-    restore: true
-    restore_grace_period: "00:12:00"
+# timer:
+#   # Duo moisture system reports every 15 seconds
+#   duo_moisture_healthcheck_timer:
+#     duration: "00:02:00"
+#     restore: true
+#     restore_grace_period: "00:12:00"
 
 # Automations
 automation:
@@ -182,27 +182,27 @@ automation:
   #######################################################################
   # healthchecks
 
-  - alias: Duo moisture sensor healthcheck start
-    id: duo_moisture_sensor_healthcheck_start
-    trigger:
-      - platform: homeassistant
-        event: start
-      - platform: mqtt
-        id: duo_moisture_sensor_report
-        topic: duo/moisture/#
-    condition: []
-    action:
-      - service: timer.start
-        entity_id: timer.duo_moisture_healthcheck_timer
+  # - alias: Duo moisture sensor healthcheck start
+  #   id: duo_moisture_sensor_healthcheck_start
+  #   trigger:
+  #     - platform: homeassistant
+  #       event: start
+  #     - platform: mqtt
+  #       id: duo_moisture_sensor_report
+  #       topic: duo/moisture/#
+  #   condition: []
+  #   action:
+  #     - service: timer.start
+  #       entity_id: timer.duo_moisture_healthcheck_timer
 
-  - alias: Duo moisture sensor healthcheck expired
-    id: duo_moisture_sensor_healthcheck_expired
-    trigger:
-      - platform: event
-        event_type: timer.finished
-        event_data:
-          entity_id: timer.duo_moisture_healthcheck_timer
-    action:
-      - service: notify.mobile_app_nokia_5_3
-        data:
-          message: Duo moisture sensor silent
+  # - alias: Duo moisture sensor healthcheck expired
+  #   id: duo_moisture_sensor_healthcheck_expired
+  #   trigger:
+  #     - platform: event
+  #       event_type: timer.finished
+  #       event_data:
+  #         entity_id: timer.duo_moisture_healthcheck_timer
+  #   action:
+  #     - service: notify.mobile_app_nokia_5_3
+  #       data:
+  #         message: Duo moisture sensor silent

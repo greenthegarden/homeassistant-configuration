@@ -4,4 +4,5 @@
 # Exposes metrics in format for Prometheus
 #
 # https://www.home-assistant.io/integrations/prometheus/
+#
 prometheus:

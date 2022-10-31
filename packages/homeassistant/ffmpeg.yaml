@@ -4,4 +4,5 @@
 # Allows other Home Assistant integrations to process video and audio streams
 #
 # https://www.home-assistant.io/integrations/ffmpeg/
+#
 ffmpeg:

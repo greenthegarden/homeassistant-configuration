@@ -149,43 +149,42 @@ mqtt:
       state_topic: "weathersense/WSAQI"
       unit_of_measurement: "mA"
       value_template: "{{ value_json.solarpanelcurrent | float(0.0) }}"
-
 # Timers
 # https://www.home-assistant.io/integrations/timer/
-timer:
-  # Weatherstation status every 18 minutes
-  weathersense_aq_healthcheck_timer:
-    duration: "00:40:00"
-    restore: true
-    restore_grace_period: "00:45:00"
+# timer:
+#   # Weatherstation status every 18 minutes
+#   weathersense_aq_healthcheck_timer:
+#     duration: "00:40:00"
+#     restore: true
+#     restore_grace_period: "00:45:00"
 
 # Automations
-automation:
-  #######################################################################
-  # healthchecks
+# automation:
+#######################################################################
+# healthchecks
 
-  - alias: Weathersense AQ healthcheck start
-    id: weathersense_aq_healthcheck_start
-    trigger:
-      - platform: homeassistant
-        event: start
-      - platform: mqtt
-        id: mqtt_weathersense_report
-        topic: weathersense/WSAQI/#
-    condition: []
-    action:
-      - service: timer.start
-        target:
-          entity_id: timer.weathersense_aq_healthcheck_timer
+# - alias: Weathersense AQ healthcheck start
+#   id: weathersense_aq_healthcheck_start
+#   trigger:
+#     - platform: homeassistant
+#       event: start
+#     - platform: mqtt
+#       id: mqtt_weathersense_report
+#       topic: weathersense/WSAQI/#
+#   condition: []
+#   action:
+#     - service: timer.start
+#       target:
+#         entity_id: timer.weathersense_aq_healthcheck_timer
 
-  - alias: Weathersense AQ healthcheck expired
-    id: weathersense_aq_healthcheck_expired
-    trigger:
-      - platform: event
-        event_type: timer.finished
-        event_data:
-          entity_id: timer.weathersense_aq_healthcheck_timer
-    action:
-      - service: notify.mobile_app_nokia_5_3
-        data:
-          message: Weathersense AQ silent
+# - alias: Weathersense AQ healthcheck expired
+#   id: weathersense_aq_healthcheck_expired
+#   trigger:
+#     - platform: event
+#       event_type: timer.finished
+#       event_data:
+#         entity_id: timer.weathersense_aq_healthcheck_timer
+#   action:
+#     - service: notify.mobile_app_nokia_5_3
+#       data:
+#         message: Weathersense AQ silent
