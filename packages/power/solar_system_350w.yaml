@@ -44,8 +44,8 @@ template:
   - binary_sensor:
       - name: Thumper 80Ah battery loaded
         state: >
-          {% set battery_derivative = sensor.thumper_80ah_voltage_derivative %}
-          {% if battery_derivative < -0.5 %}
+          {% set battery_derivative = (states('sensor.thumper_80ah_voltage_derivative') | float(0.0)) %}
+          {% if is_number(battery_derivative) and battery_derivative < -0.5 %}
             thumper_80ah_battery_loaded == on
           {% endif %}
 
