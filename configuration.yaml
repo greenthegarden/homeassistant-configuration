@@ -91,17 +91,13 @@ http:
 # lovelace_gen
 # Improve the lovelace yaml parser for Home Assistant.
 # https://github.com/thomasloven/hass-lovelace_gen
+# Note: Needs to be included before definition of lovelace
 lovelace_gen:
 
 # Lovelace
 # Lovelace is the Home Assistant dashboard.
 # https://www.home-assistant.io/lovelace
 lovelace: !include lovelace.yaml
-
-# Python Scripts
-# To include python scripts
-# https://www.home-assistant.io/integrations/python_script/
-python_script:
 
 # Zone
 # Zones allow certain regions on earth to be specified
