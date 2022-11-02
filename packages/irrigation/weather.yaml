@@ -1,5 +1,8 @@
 ---
-
+# Input Number
+#
+# https://www.home-assistant.io/integrations/input_number/
+#
 input_number:
   weather_today_temperature_max:
     name: Today max temperature
@@ -8,6 +11,10 @@ input_number:
     unit_of_measurement: "°C"
     icon: mdi:thermometer
 
+# Automations
+#
+# https://www.home-assistant.io/docs/automation/basics/
+#
 automation:
   # Get today's temperature 30 hour before sunrise
   - alias: Set maximum expected temperature

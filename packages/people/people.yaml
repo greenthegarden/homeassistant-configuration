@@ -1,24 +1,21 @@
 ---
 # Package: People / People
 
-# Binary Sensors
-
-binary_sensor:
-  # Binary Sensors - Template:
-
-  - platform: template
-    sensors:
-      people_home:
-        value_template: >-
+# Template
+#
+# https://www.home-assistant.io/integrations/template
+#
+template:
+  - binary_sensor:
+      - name: "People home"
+        state: >-
           {{ is_state('binary_sensor.philip_home', 'on')
             or is_state('binary_sensor.thanh_home', 'on') }}
 
-# Input Boolean
-
-input_boolean:
-
 # Automations
-
+#
+# https://www.home-assistant.io/docs/automation/basics/
+#
 automation:
   - alias: People at home
     id: people_at_home

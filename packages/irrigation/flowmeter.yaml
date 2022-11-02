@@ -1,15 +1,22 @@
 ---
-# Integration - Riemann sum integral
-# https://www.home-assistant.io/integrations/integration/
+# Sensors
+#
+# https://www.home-assistant.io/integrations/sensor/
+#
 sensor:
+  # Integration - Riemann sum integral
+  #
+  # https://www.home-assistant.io/integrations/integration/
+  #
   - platform: integration
     source: sensor.irrigation_flowrate
     name: water_used
     unit_time: h
     round: 0
 # Timers
+#
 # https://www.home-assistant.io/integrations/timer/
-
+#
 # timer:
 #   # Flowmeter updates every 5 minutes when no flow
 #   flowmeter_healthcheck_timer:
@@ -18,7 +25,9 @@ sensor:
 #     restore_grace_period: "00:15:00"
 
 # Automations
-
+#
+# https://www.home-assistant.io/docs/automation/basics/
+#
 # automation:
 #   #######################################################################
 #   # healthchecks

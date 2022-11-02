@@ -223,7 +223,7 @@ sensor:
 
 # Thermal Comfort
 #
-#
+# https://github.com/dolezsa/thermal_comfort
 #
 thermal_comfort:
   - custom_icons: true
@@ -231,9 +231,21 @@ thermal_comfort:
       - name: "Weathersense Indoor 1"
         temperature_sensor: sensor.weathersense_indoor_1_temperature
         humidity_sensor: sensor.weathersense_indoor_1_humidity
+        sensor_types:
+          - absolute_humidity
+          - heat_index
+          - humidex
+          - humidex_perception
+          - thermal_perception
       - name: "Weathersense Indoor 2"
         temperature_sensor: sensor.weathersense_indoor_2_temperature
         humidity_sensor: sensor.weathersense_indoor_2_humidity
+        sensor_types:
+          - absolute_humidity
+          - heat_index
+          - humidex
+          - humidex_perception
+          - thermal_perception
 
 # Input Boolean
 #

@@ -1,16 +1,10 @@
 ---
 # Package: Lights / Lights
 
-# Binary Sensors
-
-# binary_sensor:
-
-# Sensors
-
-# sensor:
-
 # Automations
-
+#
+# https://www.home-assistant.io/docs/automation/basics/
+#
 automation:
   - alias: Turn porch light on when returning home
     id: porch_light_on_with_timer
@@ -58,9 +52,10 @@ automation:
 #         entity_id: light.light
 #         type: turn_off
 
-# # Timers
-# # https://www.home-assistant.io/integrations/timer/
-
+# Timers
+#
+# https://www.home-assistant.io/integrations/timer/
+#
 # timer:
 #   front_porch_light:
 #     duration: "00:01:00"

@@ -1,7 +1,8 @@
 ---
 # MQTT Sensor
+#
 # https://www.home-assistant.io/integrations/sensor.mqtt/
-
+#
 mqtt:
   sensor:
     # Relayshield devices

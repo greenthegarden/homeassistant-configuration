@@ -33,6 +33,10 @@
 
 # Binary Sensors
 binary_sensor:
+  # Trend
+  #
+  # https://www.home-assistant.io/integrations/trend/
+  #
   - platform: trend
 
     sensors:
@@ -172,15 +176,33 @@ sensor:
       - adelaide
 
 # Thermal Comfort
+#
+# https://github.com/dolezsa/thermal_comfort
+#
 thermal_comfort:
   - custom_icons: true
     sensor:
       - name: Indoor
         temperature_sensor: sensor.indoor_temperature
         humidity_sensor: sensor.indoor_humidity
+        sensor_types:
+          - absolute_humidity
+          - heat_index
+          - humidex
+          - humidex_perception
+          - thermal_perception
       - name: Outdoor
         temperature_sensor: sensor.outdoor_temperature
         humidity_sensor: sensor.outdoor_humidity
+        sensor_types:
+          - absolute_humidity
+          - heat_index
+          - dew_point
+          - humidex
+          - humidex_perception
+          - thermal_perception
+          - frost_point
+          - frost_risk
 
 # Template
 # https://www.home-assistant.io/integrations/template
