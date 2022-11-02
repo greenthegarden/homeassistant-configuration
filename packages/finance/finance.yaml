@@ -1,8 +1,10 @@
 ---
 # Package: Finance / Finance
 
-# Number inputs
-
+# Input Number
+#
+# https://www.home-assistant.io/integrations/input_number/
+#
 input_number:
   shares_edv:
     name: EDV shares
@@ -29,7 +31,9 @@ input_number:
     mode: box
 
 # Template
+#
 # https://www.home-assistant.io/integrations/template
+#
 template:
   - sensor:
       # Convert values to monetary
