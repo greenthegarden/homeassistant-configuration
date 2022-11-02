@@ -40,23 +40,23 @@ template:
 
 # Binary Sensors
 
-binary_sensor:
-  - platform: trend
-    sensors:
-      indoor_temperature_falling:
-        entity_id: sensor.indoor_temperature
-        device_class: cold
-        friendly_name: "Temperature falling"
-        sample_duration: 7200
-        max_samples: 120
-        min_gradient: -0.0008
-      indoor_temperature_rising:
-        entity_id: sensor.indoor_temperature
-        device_class: heat
-        friendly_name: "Temperature rising"
-        sample_duration: 7200
-        max_samples: 120
-        min_gradient: 0.0008
+# binary_sensor:
+#   - platform: trend
+#     sensors:
+#       indoor_temperature_falling:
+#         entity_id: sensor.indoor_temperature
+#         device_class: cold
+#         friendly_name: "Temperature falling"
+#         sample_duration: 7200
+#         max_samples: 120
+#         min_gradient: -0.0008
+#       indoor_temperature_rising:
+#         entity_id: sensor.indoor_temperature
+#         device_class: heat
+#         friendly_name: "Temperature rising"
+#         sample_duration: 7200
+#         max_samples: 120
+#         min_gradient: 0.0008
 
 # MQTT Sensor
 # https://www.home-assistant.io/integrations/sensor.mqtt/

@@ -2,8 +2,11 @@
 # Package: Celestial/Celestial
 
 # Sun
+#
 # Track the sun
+#
 # https://www.home-assistant.io/integrations/sun/
+#
 sun:
 
 # Binary Sensors
@@ -23,15 +26,21 @@ binary_sensor:
 
 sensor:
   # Moon phases
+  #
   # https://www.home-assistant.io/integrations/moon/
+  #
   # Configured via UI
 
   # Season
+  #
   # https://www.home-assistant.io/integrations/season/
+  #
   # Configured via UI
 
   # Sun2
+  #
   # https://github.com/pnbruckner/ha-sun2
+  #
   - platform: sun2
     monitored_conditions:
       - solar_midnight

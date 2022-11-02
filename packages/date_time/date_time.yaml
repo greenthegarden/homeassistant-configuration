@@ -2,22 +2,30 @@
 # Package: Date & Time / Data & Time
 
 # Binary Sensors
-
+#
+# https://www.home-assistant.io/integrations/binary_sensor/
+#
 binary_sensor:
   # Workday
+  #
   # Indicates whether the current day is a workday or not.
+  #
   # https://www.home-assistant.io/integrations/workday/
+  #
   - platform: workday
     country: AU
     province: SA
     workdays: [mon, tue, wed, thu, fri]
 
 # Sensors
-
+#
+# https://www.home-assistant.io/integrations/sensor/
+#
 sensor:
   # Time and Date
+  #
   # https://www.home-assistant.io/integrations/time_date/
-  # sensor time_and_date:
+  #
   - platform: time_date
     display_options:
       - "time"
@@ -30,32 +38,34 @@ sensor:
       - "beat"
 
   # World Times
-  # current time in a different time zone
+  #
+  # Current time in a different time zone
+  #
   # https://www.home-assistant.io/integrations/worldclock/
-  # sensor times_london:
+  #
   - platform: worldclock
     name: Time in London
     time_zone: Europe/London
 
-  # sensor times_perth:
   - platform: worldclock
     name: Time in Perth
     time_zone: Australia/Perth
 
-  # sensor times_auckland:
   - platform: worldclock
     name: Time in Auckland
     time_zone: Pacific/Auckland
 
-  # Sensors - Template:
-
-  # Period of the day
-  # https://community.home-assistant.io/t/automations-with-dusk-dawn-night-and-day-period/48071/3
-  - platform: template
-    sensors:
-      period_of_day:
-        friendly_name: "period of the day"
-        value_template: >-
+# Templates
+#
+# https://www.home-assistant.io/integrations/template/
+#
+template:
+  - sensor:
+      # Period of the day
+      # https://community.home-assistant.io/t/automations-with-dusk-dawn-night-and-day-period/48071/3
+      - name: "Period of day"
+        unique_id: period_of_day
+        state: >-
           {% if (as_timestamp(states.sun.sun.attributes.next_dusk)) - (as_timestamp(states.sun.sun.attributes.next_setting)) < 0 %}
             Dusk
           {% elif (as_timestamp(states.sun.sun.attributes.next_rising)) - (as_timestamp(states.sun.sun.attributes.next_dawn)) < 0 %}
@@ -65,7 +75,7 @@ sensor:
           {% else %}
             Day
           {% endif %}
-        icon_template: >-
+        icon: >-
           {% if (as_timestamp(states.sun.sun.attributes.next_dusk)) - (as_timestamp(states.sun.sun.attributes.next_setting)) < 0 %}
             mdi:weather-sunset-down
           {% elif (as_timestamp(states.sun.sun.attributes.next_rising)) - (as_timestamp(states.sun.sun.attributes.next_dawn)) < 0 %}
@@ -76,14 +86,14 @@ sensor:
             mdi:weather-sunny
           {% endif %}
 
-      time_template:
-        friendly_name: Time
-        value_template: "{{ strptime(states('sensor.time'), '%I:%M %p', default='n/a') }}"
+      - name: Time
+        unique_id: time_format
+        state: "{{ strptime(states('sensor.time'), '%I:%M %p', default='n/a') }}"
 
-      timeutc_template:
-        friendly_name: Time (UTC)
-        value_template: "{{ strptime(states('sensor.time_utc'), '%I:%M %p', default='n/a') }}"
+      - name: Time (UTC)
+        unique_id: time_utc_format
+        state: "{{ strptime(states('sensor.time_utc'), '%I:%M %p', default='n/a') }}"
 
-      date_template:
-        friendly_name: Date
-        value_template: "{{ as_timestamp(states('sensor.date'),default='n/a') | timestamp_custom('%A %d %B %Y', true) }}"
+      - name: Date
+        unique_id: date_format
+        state: "{{ as_timestamp(states('sensor.date'),default='n/a') | timestamp_custom('%A %d %B %Y', true) }}"

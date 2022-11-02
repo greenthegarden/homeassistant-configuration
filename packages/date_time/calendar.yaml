@@ -2,8 +2,12 @@
 # Package: Date & Time / Calendar
 
 # CalDAV
+#
 # https://www.home-assistant.io/integrations/caldav/
-# Example configuration.yaml entry for nextcloud, calendars will be found automatically
+#
+# Example configuration.yaml entry for nextcloud,
+# calendars will be found automatically
+#
 calendar:
   - platform: caldav
     username: philip
