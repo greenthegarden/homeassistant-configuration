@@ -10,7 +10,6 @@ cards:
         title: Indoor Conditions
         entities:
           - entity: sensor.indoor_thermal_perception
-          - entity: sensor.indoor_dew_point
           - entity: sensor.indoor_temperature
             name: Temperature
           - entity: sensor.indoor_humidity

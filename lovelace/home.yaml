@@ -52,7 +52,7 @@ cards:
       - type: entities
         title: Date and Time
         entities:
-          - entity: sensor.date_template
+          - entity: sensor.date_2
           - entity: sensor.time
             name: Time
           - entity: sensor.time_utc
@@ -145,7 +145,6 @@ cards:
         title: Indoor Conditions
         entities:
           - entity: sensor.indoor_thermal_perception
-          - entity: sensor.indoor_dew_point
           - entity: sensor.indoor_temperature
             name: Temperature
           - entity: sensor.indoor_humidity

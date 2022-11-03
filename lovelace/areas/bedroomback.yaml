@@ -10,7 +10,6 @@ cards:
         entities:
           - entity: sensor.weathersense_indoor_2_thermal_perception
             name: Thermal Comfort
-          - entity: sensor.weathersense_indoor_2_dew_point
           - entity: sensor.weathersense_indoor_2_temperature
             name: Temperature
           - entity: sensor.weathersense_indoor_2_humidity
