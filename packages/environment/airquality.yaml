@@ -150,7 +150,9 @@ mqtt:
       unit_of_measurement: "mA"
       value_template: "{{ value_json.solarpanelcurrent | float(0.0) }}"
 # Timers
+#
 # https://www.home-assistant.io/integrations/timer/
+#
 # timer:
 #   # Weatherstation status every 18 minutes
 #   weathersense_aq_healthcheck_timer:

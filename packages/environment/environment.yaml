@@ -145,19 +145,19 @@ mqtt:
 # Sensors
 
 sensor:
-  - platform: derivative
-    source: sensor.outdoor_temperature
-    name: Outdoor temperature change per hour
-    round: 1
-    unit_time: h # the resulting "unit_of_measurement" will be °C/h if the sensor.temperate has set °C as it's unit
-    time_window: "00:30:00" # we look at the change over the last half hour
+  # - platform: derivative
+  #   source: sensor.outdoor_temperature
+  #   name: Outdoor temperature change per hour
+  #   round: 1
+  #   unit_time: h # the resulting "unit_of_measurement" will be °C/h if the sensor.temperate has set °C as it's unit
+  #   time_window: "00:30:00" # we look at the change over the last half hour
 
   # Average
   # https://github.com/Limych/ha-average
-  - platform: average
-    name: "Average Outdoor Temperature"
-    entities:
-      - sensor.outdoor_temperature
+  # - platform: average
+  #   name: "Average Outdoor Temperature"
+  #   entities:
+  #     - sensor.outdoor_temperature
 
   # CO2 Signal
   # CO2 intensity of a specific region
@@ -168,8 +168,9 @@ sensor:
   #   longitude: !secret home_longitude
 
   # World Air Quality Index
+  #
   # https://www.home-assistant.io/integrations/waqi/
-  # sensor air_quality:
+  #
   - platform: waqi
     token: !secret waqi_token
     locations:
@@ -182,7 +183,7 @@ sensor:
 thermal_comfort:
   - custom_icons: true
     sensor:
-      - name: Indoor
+      - name: Indoor Thermal Comfort
         temperature_sensor: sensor.indoor_temperature
         humidity_sensor: sensor.indoor_humidity
         sensor_types:
@@ -191,7 +192,7 @@ thermal_comfort:
           - humidex
           - humidex_perception
           - thermal_perception
-      - name: Outdoor
+      - name: Outdoor Thermal Comfort
         temperature_sensor: sensor.outdoor_temperature
         humidity_sensor: sensor.outdoor_humidity
         sensor_types:
@@ -205,7 +206,9 @@ thermal_comfort:
           - frost_risk
 
 # Template
+#
 # https://www.home-assistant.io/integrations/template
+#
 template:
   - binary_sensor:
       - name: "Poor Air Quality"
@@ -343,9 +346,12 @@ automation:
 
 #######################################################################
 # Utility Meter
+#
 # provides functionality to track consumptions of various utilities (e.g., energy, gas, water, heating).
 # cycles: quarter-hourly, hourly, daily, weekly, monthly, bimonthly, quarterly and yearly
+#
 # https://www.home-assistant.io/integrations/utility_meter/
+#
 utility_meter:
   rainfall_daily:
     source: sensor.weatherstation_cumulative_rain
