@@ -278,15 +278,15 @@ input_number:
 #
 # https://www.home-assistant.io/integrations/timer/
 #
-timer:
-  # Weathersense status every 5 minutes
-  weathersense_1_healthcheck_timer:
-    duration: "00:10:00"
-    restore: true
+# timer:
+#   # Weathersense status every 5 minutes
+#   weathersense_1_healthcheck_timer:
+#     duration: "00:10:00"
+#     restore: true
 
-  weathersense_2_healthcheck_timer:
-    duration: "00:10:00"
-    restore: true
+#   weathersense_2_healthcheck_timer:
+#     duration: "00:10:00"
+#     restore: true
 
 # Automations
 #
