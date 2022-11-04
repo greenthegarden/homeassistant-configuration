@@ -3,8 +3,10 @@
 # https://www.home-assistant.io/docs/configuration/
 
 # Home Assistant
+#
 # https://home-assistant.io/docs/configuration/basic/
 # homeassistant: !include homeassistant.yaml
+#
 homeassistant:
   # Name of the location where Home Assistant is running
   name: Home
@@ -43,7 +45,9 @@ homeassistant:
   packages: !include_dir_named packages
 
   # Authenticated Providers
+  #
   # https://www.home-assistant.io/docs/authentication/providers/
+  #
   auth_providers:
     - type: homeassistant
     - type: trusted_networks
@@ -60,25 +64,36 @@ homeassistant:
 # https://www.home-assistant.io/docs/configuration/splitting_configuration/
 
 # Home Assistant API
+#
 # The api integration exposes a RESTful API and allows one to
 # interact with a Home Assistant instance that is running headless.
+#
 # https://www.home-assistant.io/integrations/api
+#
 api:
 
 # Enables configuration UI
+#
 # https://www.home-assistant.io/integrations/config/
+#
 config:
 
 # Default Config
+#
 # Configure a default setup of Home Assistant (frontend, api, etc)
+#
 # https://www.home-assistant.io/integrations/default_config/
-# default_config:
+#
+default_config:
 
 # HTTP
+#
 # Serves all files and data required for the Home Assistant frontend
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+#
 # https://www.home-assistant.io/integrations/http/
 # Based on https://community.home-assistant.io/t/solved-howto-home-assistant-vm-behind-traefik-unable-to-connect-to-home-assistant/322776
+#
 http:
   use_x_forwarded_for: true
   trusted_proxies:
@@ -89,23 +104,34 @@ http:
     - fe80::/64
 
 # lovelace_gen
+#
 # Improve the lovelace yaml parser for Home Assistant.
-# https://github.com/thomasloven/hass-lovelace_gen
 # Note: Needs to be included before definition of lovelace
+#
+# https://github.com/thomasloven/hass-lovelace_gen
+#
 lovelace_gen:
 
 # Lovelace
+#
 # Lovelace is the Home Assistant dashboard.
+#
 # https://www.home-assistant.io/lovelace
+#
 lovelace: !include lovelace.yaml
 
 # Zone
+#
 # Zones allow certain regions on earth to be specified
+#
 # https://www.home-assistant.io/integrations/zone/
+#
 zone: !include zone.yaml
 
 # Camera
+#
 # https://www.home-assistant.io/integrations/camera/
+#
 # camera:
 #   # https://www.home-assistant.io/integrations/iss/#show-position-on-map-with-camera-platform
 #   - platform: generic
@@ -119,13 +145,18 @@ zone: !include zone.yaml
 #   verify_ssl: false
 
 # Conversation
+#
 # Allows you to issue voice commands from the frontend in enabled browsers
+#
 # https://www.home-assistant.io/integrations/conversation/
+#
 # conversation:
 
 # Device Tracker
+#
 # https://www.home-assistant.io/integrations/device_tracker/
 # https://www.home-assistant.io/integrations/nmap_tracker/
+#
 # device_tracker:
 #   - platform: nmap_tracker
 #     hosts: 192.168.1.0/24
@@ -139,22 +170,32 @@ zone: !include zone.yaml
 # Replaced by https://www.home-assistant.io/integrations/unifi
 
 # Introduction
+#
 # Show links to resources in log and frontend
+#
 #introduction:
 
 # Media Source
+#
 # Allows integrations to expose media for use inside Home Assistant
 # through the Media Browser panel or through supported media players
 # like Google Cast
+#
 # https://www.home-assistant.io/integrations/media_source/
 # https://www.home-assistant.io/more-info/local-media/setup-media
+#
 media_source:
 
 # Mobile App
+#
 # Allows Home Assistant mobile apps to easily integrate with Home Assistant
+#
 # https://www.home-assistant.io/integrations/mobile_app/
+#
 mobile_app:
 # Text-to-Speech
+#
 # https://www.home-assistant.io/integrations/#text-to-speech
+#
 # tts:
 #   - platform: google_translate
