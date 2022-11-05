@@ -5,15 +5,18 @@ icon: mdi:cloud-outline
 path: environment
 cards:
   - type: entities
-    title: Current weather
+    title: Current Conditions
     entities:
-      - entity: sensor.outdoor_thermal_perception
+      - entity: sensor.outdoor_thermal_comfort_thermal_perception
         name: Thermal Comfort
-      - entity: sensor.outdoor_dew_point
-      - entity: sensor.outdoor_frost_point
-      - entity: sensor.outdoor_frost_risk
+      - entity: sensor.outdoor_thermal_comfort_dew_point
+        name: Dew Point
+      - entity: sensor.outdoor_thermal_comfort_frost_point
+        name: Frost Point
+      - entity: sensor.outdoor_thermal_comfort_frost_risk
+        name: Frost Risk
       - entity: sensor.bom_home_temp
-        name: Temp
+        name: Temperature
       - entity: sensor.bom_home_temp_feels_like
         name: Feels like
       - entity: sensor.bom_home_humidity

@@ -9,7 +9,8 @@ cards:
       - type: entities
         title: Indoor Conditions
         entities:
-          - entity: sensor.indoor_thermal_perception
+          - entity: sensor.indoor_thermal_comfort_thermal_perception
+            name: Thermal Comfort
           - entity: sensor.indoor_temperature
             name: Temperature
           - entity: sensor.indoor_humidity
