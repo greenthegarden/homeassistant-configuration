@@ -1,6 +1,7 @@
 ---
 # lovelace_gen
 title: Living Room
+subview: true
 icon: mdi:sofa-outline
 path: area_living_room
 cards:

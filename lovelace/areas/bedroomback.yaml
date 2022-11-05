@@ -1,6 +1,7 @@
 ---
 # lovelace_gen
 title: Back Bedroom
+subview: true
 icon: mdi:bed-outline
 path: area_bedroom_back
 cards:

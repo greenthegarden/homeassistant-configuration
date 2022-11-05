@@ -1,6 +1,7 @@
 ---
 # lovelace_gen
 title: Front Small Bedroom
+subview: true
 icon: mdi:bed-outline
 path: area_bedroom_front_small
 cards:

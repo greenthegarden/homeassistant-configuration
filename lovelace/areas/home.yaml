@@ -1,6 +1,7 @@
 ---
 # lovelace_gen
 title: Home
+subview: true
 icon: mdi:home-outline
 path: area_home
 cards:

@@ -1,6 +1,7 @@
 ---
 # lovelace_gen
 title: Porch
+subview: true
 icon: mdi:coach-lamp
 path: area_porch
 cards:

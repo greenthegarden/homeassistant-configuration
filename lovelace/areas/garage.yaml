@@ -1,5 +1,6 @@
 ---
 # lovelace_gen
 title: Garage
+subview: true
 icon: mdi:garage
 path: area_garage

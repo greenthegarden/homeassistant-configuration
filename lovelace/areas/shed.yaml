@@ -1,5 +1,6 @@
 ---
 # lovelace_gen
 title: Shed
+subview: true
 icon: mdi:shovel
 path: area_shed
