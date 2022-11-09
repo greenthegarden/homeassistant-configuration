@@ -27,6 +27,22 @@ cards:
         entities:
           - entity: sensor.thumper_80ah_voltage_derivative
             name: Battery Voltage Derivative
+      - type: entities
+        entities:
+          - type: custom:numberbox-card
+            entity: input_number.thumper_80Ah_battery_load_time
+            icon: 'mdi:timelapse'
+            secondary_info: last-changed
+            unit: S
+          # - type: custom:numberbox-card
+          #   border: true
+          #   entity: number.office_timer
+          #   unit: time
+          #   name: false
+          #   style: >
+          #     .body{display:block!important}
+          #     .body::after{text-align:center;font-size:10px;content:"Minutes";display:block!important}
+
   - type: vertical-stack
     cards:
       - type: entities

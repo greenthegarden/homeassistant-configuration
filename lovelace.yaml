@@ -46,6 +46,9 @@ resources:
   - url: /local/mushroom.js?v=1.6.2
     type: module
 
+  - url: /local/numberbox-card.js?v=1
+    type: module
+
   - url: /local/power-wheel-card.js
     type: module
 

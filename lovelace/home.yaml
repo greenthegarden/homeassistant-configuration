@@ -155,14 +155,10 @@ cards:
           - entity: sensor.mold_indicator
             name: Mold Indicator
             icon: mdi:virus
-      - type: entities
-        # title: Indoor Air Quality
-        entities:
-          - entity: input_boolean.windows_open
-      - type: entities
-        # title: Indoor Air Quality
-        entities:
-          - entity: input_boolean.heater_on
+      - type: tile
+        entity: input_boolean.windows_open
+      - type: tile
+        entity: input_boolean.heater_on
 
   - type: entities
     title: Bin collection

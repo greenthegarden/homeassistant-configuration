@@ -1,5 +1,11 @@
 ---
+
+# Sensors
+#
+# https://www.home-assistant.io/integrations/sensor/
+#
 sensor:
+  # https://www.home-assistant.io/integrations/derivative/
   - platform: derivative
     source: sensor.thumper_80ah_voltage
     name: Thumper 80Ah Voltage derivative
@@ -8,6 +14,7 @@ sensor:
     # unit: V/m
     # time_window: "00:00:05"
 
+  # https://www.home-assistant.io/integrations/integration/
   - platform: integration
     source: sensor.350w_solar_system_power
     name: 350W Solar System Energy
@@ -16,6 +23,10 @@ sensor:
     method: trapezoidal
     round: 2
 
+# Templates
+#
+# https://www.home-assistant.io/integrations/template/
+#
 template:
   - sensor:
       - name: 350W Solar System Power
@@ -49,6 +60,23 @@ template:
             thumper_80ah_battery_loaded == on
           {% endif %}
 
+# Input Number
+#
+# https://www.home-assistant.io/integrations/input_number/
+#
+input_number:
+  thumper_80ah_battery_load_time:
+    name: Thumper 80Ah Battery Load Time
+    initial: 17
+    min: 15
+    max: 20
+    mode: box
+    step: 1
+
+# Automations
+#
+# https://www.home-assistant.io/docs/automation/basics/
+#
 automation:
   - alias: Thumper 80Ah Voltage Low
     id: thumper_80ah_voltage_low
@@ -56,11 +84,18 @@ automation:
       - platform: numeric_state
         entity_id: sensor.thumper_80ah_voltage
         below: 11.5
+        id: trigger_thumper_80ah_voltage_low
+      - platform: numeric_state
+        entity_id: sensor.thumper_80ah_voltage
+        above: 12.5
+        id: trigger_thumper_80ah_voltage_high
     condition: []
     action:
+      # - variables:
+      #     trigger: "{{ trigger.id }}"
       - service: notify.mobile_app_nokia_5_3
         data_template:
-          message: >
+          message: |
             "Thumper 80Ah battery voltage low"
 
   - alias: "Thumper 80Ah battery load"
@@ -74,16 +109,16 @@ automation:
         data_template:
           message: >
             "Thumper 80Ah battery load"
-      - delay:
-          hours: 0
-          minutes: 15
-          seconds: 0
-          milliseconds: 0
+      - delay: "00:{{ states('input_number.thumper_80Ah_battery_load_time') | int }}:00"
       - service: notify.mobile_app_nokia_5_3
         data_template:
           message: >
             "Thumper 80Ah battery needs checking"
 
+# Utility Meter
+#
+# https://www.home-assistant.io/integrations/utility_meter/
+#
 utility_meter:
   energy:
     name: 350W Solar Daily Energy
