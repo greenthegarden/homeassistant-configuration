@@ -30,14 +30,14 @@ cards:
       - type: entities
         entities:
           - type: custom:numberbox-card
-            entity: input_number.thumper_80Ah_battery_load_time
+            entity: input_number.thumper_80ah_battery_load_time
             icon: 'mdi:timelapse'
             secondary_info: last-changed
             unit: S
           # - type: custom:numberbox-card
           #   border: true
-          #   entity: number.office_timer
-          #   unit: time
+          #   entity: input_number.thumper_80ah_battery_load_time
+          #   unit: S
           #   name: false
           #   style: >
           #     .body{display:block!important}
