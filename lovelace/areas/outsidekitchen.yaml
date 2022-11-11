@@ -28,12 +28,30 @@ cards:
           - entity: sensor.thumper_80ah_voltage_derivative
             name: Battery Voltage Derivative
       - type: entities
+        title: Thumper 80Ah Battery Thresholds
         entities:
+          - type: section
+            label: Trigger Times
           - type: custom:numberbox-card
             entity: input_number.thumper_80ah_battery_load_time
+            name: Time
             icon: 'mdi:timelapse'
             secondary_info: last-changed
-            unit: S
+            unit: mins
+          - type: section
+            label: Voltages
+          - type: custom:numberbox-card
+            entity: input_number.thumper_80ah_battery_voltage_low
+            name: Low Voltage
+            icon: 'mdi:car-battery'
+            secondary_info: last-changed
+            unit: V
+          - type: custom:numberbox-card
+            entity: input_number.thumper_80ah_battery_voltage_high
+            name: High Voltage
+            icon: 'mdi:car-battery'
+            secondary_info: last-changed
+            unit: V
           # - type: custom:numberbox-card
           #   border: true
           #   entity: input_number.thumper_80ah_battery_load_time

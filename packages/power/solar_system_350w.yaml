@@ -73,6 +73,22 @@ input_number:
     mode: box
     step: 1
 
+  thumper_80ah_battery_voltage_low:
+    name: Thumper 80Ah Battery Voltage Low Threshold
+    initial: 11.5
+    min: 10
+    max: 12
+    mode: box
+    step: 0.1
+
+  thumper_80ah_battery_voltage_high:
+    name: Thumper 80Ah Battery Voltage High Threshold
+    initial: 12.5
+    min: 11
+    max: 13
+    mode: box
+    step: 0.1
+
 # Automations
 #
 # https://www.home-assistant.io/docs/automation/basics/
@@ -81,14 +97,14 @@ automation:
   - alias: Thumper 80Ah Voltage Low
     id: thumper_80ah_voltage_low
     trigger:
-      - platform: numeric_state
-        entity_id: sensor.thumper_80ah_voltage
-        below: 11.5
+      # - platform: numeric_state
+      #   entity_id: sensor.thumper_80ah_voltage
+      #   below: 11.5
+      - platform: template
+        value_template: "{{ states('sensor.thumper_80ah_voltage') | default(12.0) < states('input_number.thumper_80ah_battery_voltage_high') | default(11.5) }}"
+        for:
+          minutes: "{{ 3 | default(3) }}"
         id: trigger_thumper_80ah_voltage_low
-      - platform: numeric_state
-        entity_id: sensor.thumper_80ah_voltage
-        above: 12.5
-        id: trigger_thumper_80ah_voltage_high
     condition: []
     action:
       # - variables:
@@ -97,6 +113,26 @@ automation:
         data_template:
           message: |
             "Thumper 80Ah battery voltage low"
+
+  - alias: Thumper 80Ah Voltage High
+    id: thumper_80ah_voltage_high
+    trigger:
+      # - platform: numeric_state
+      #   entity_id: sensor.thumper_80ah_voltage
+      #   above: 12.5
+      - platform: template
+        value_template: "{{ states('sensor.thumper_80ah_voltage') | default(12.0) > states('input_number.thumper_80ah_battery_voltage_high') | default(12.5) }}"
+        for:
+          minutes: "{{ 3 | default(3) }}"
+        id: trigger_thumper_80ah_voltage_high
+    condition: []
+    action:
+      # - variables:
+      #     trigger: "{{ trigger.id }}"
+      - service: notify.mobile_app_nokia_5_3
+        data_template:
+          message: |
+            "Thumper 80Ah battery voltage high"
 
   - alias: "Thumper 80Ah battery load"
     id: rice_cooker_timer_start
@@ -113,7 +149,7 @@ automation:
       - service: notify.mobile_app_nokia_5_3
         data_template:
           message: >
-            "Thumper 80Ah battery needs checking"
+            "Thumper 80Ah battery needs checking after {{ states('input_number.thumper_80Ah_battery_load_time') | int }} mins"
 
 # Utility Meter
 #
