@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from abc import ABC, abstractmethod
 
 from homeassistant.const import (
@@ -91,10 +90,10 @@ class Sun2SensorBase(ABC):
         """Run when entity about to be added to hass."""
         # Determine final name, which will include entity_namespace if it's used.
         slug = slugify(self._orig_name)
-        object_id = self.entity_id.split('.')[1]
+        object_id = self.entity_id.split(".")[1]
         if slug != object_id and object_id.endswith(slug):
-            prefix = object_id[: -len(slug)].replace('_', ' ').strip().title()
-            self._name = f'{prefix} {self._orig_name}'
+            prefix = object_id[: -len(slug)].replace("_", " ").strip().title()
+            self._name = f"{prefix} {self._orig_name}"
 
         # Now that we have final name, let's do the update that was delayed from
         # async_add_entities call.

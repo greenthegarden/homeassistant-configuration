@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Sun2 Helpers."""
 from datetime import timedelta
 
@@ -11,8 +10,8 @@ from homeassistant.const import EVENT_CORE_CONFIG_UPDATE
 from homeassistant.core import callback
 from homeassistant.helpers.dispatcher import dispatcher_send
 
-ATTR_NEXT_CHANGE = 'next_change'
-SIG_LOC_UPDATED = 'sun2_loc_updated'
+ATTR_NEXT_CHANGE = "next_change"
+SIG_LOC_UPDATED = "sun2_loc_updated"
 
 _HASS = None
 _LOC_ELEV = {}
@@ -33,12 +32,12 @@ def _get_astral_location(info):
         from astral.location import Location
 
         latitude, longitude, timezone, elevation = info
-        info = ('', '', timezone, latitude, longitude)
+        info = ("", "", timezone, latitude, longitude)
         return Location(LocationInfo(*info)), elevation
     except ImportError:
         from astral import Location
 
-        info = ('', '', *info)
+        info = ("", "", *info)
         return Location(info), None
 
 
@@ -65,17 +64,17 @@ def astral_event(info, event, date_or_dt, /, depression=None, **kwargs):
         loc.solar_depression = depression
     try:
         if elev is not None:
-            if event in ('solar_midnight', 'solar_noon'):
-                return getattr(loc, event.split('_')[1])(date_or_dt)
-            elif event == 'time_at_elevation':
+            if event in ("solar_midnight", "solar_noon"):
+                return getattr(loc, event.split("_")[1])(date_or_dt)
+            elif event == "time_at_elevation":
                 return getattr(loc, event)(
-                    kwargs['elevation'], date=date_or_dt, direction=kwargs['direction']
+                    kwargs["elevation"], date=date_or_dt, direction=kwargs["direction"]
                 )
             else:
                 return getattr(loc, event)(date_or_dt, observer_elevation=elev)
         return getattr(loc, event)(date_or_dt)
     except AstralError:
-        return 'none'
+        return "none"
 
 
 def nearest_second(time):

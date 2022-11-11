@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Sun2 Binary Sensor."""
 from datetime import timedelta
 import logging
@@ -36,10 +35,10 @@ from .sun2_sensor import Sun2SensorBase
 _LOGGER = logging.getLogger(__name__)
 
 DEFAULT_ELEVATION_ABOVE = -0.833
-DEFAULT_ELEVATION_NAME = 'Above Horizon'
+DEFAULT_ELEVATION_NAME = "Above Horizon"
 
-ABOVE_ICON = 'mdi:white-balance-sunny'
-BELOW_ICON = 'mdi:moon-waxing-crescent'
+ABOVE_ICON = "mdi:white-balance-sunny"
+BELOW_ICON = "mdi:moon-waxing-crescent"
 
 _ONE_DAY = timedelta(days=1)
 _ONE_SEC = timedelta(seconds=1)
@@ -66,7 +65,7 @@ def _val_cfg(config):
         options = config[CONF_ELEVATION]
         for key in options:
             if key not in [CONF_ELEVATION, CONF_ABOVE, CONF_NAME]:
-                raise vol.Invalid(f'{key} not allowed for {CONF_ELEVATION}')
+                raise vol.Invalid(f"{key} not allowed for {CONF_ELEVATION}")
         if CONF_ABOVE not in options:
             options[CONF_ABOVE] = DEFAULT_ELEVATION_ABOVE
         if CONF_NAME not in options:
@@ -74,11 +73,11 @@ def _val_cfg(config):
             if above == DEFAULT_ELEVATION_ABOVE:
                 name = DEFAULT_ELEVATION_NAME
             else:
-                name = 'Above '
+                name = "Above "
                 if above < 0:
-                    name += f'minus {-above}'
+                    name += f"minus {-above}"
                 else:
-                    name += f'{above}'
+                    name += f"{above}"
             options[CONF_NAME] = name
     return config
 
@@ -108,10 +107,10 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
         vol.Required(CONF_MONITORED_CONDITIONS): vol.All(
             cv.ensure_list, [_BINARY_SENSOR_SCHEMA]
         ),
-        vol.Inclusive(CONF_LATITUDE, 'location'): cv.latitude,
-        vol.Inclusive(CONF_LONGITUDE, 'location'): cv.longitude,
-        vol.Inclusive(CONF_TIME_ZONE, 'location'): cv.time_zone,
-        vol.Inclusive(CONF_ELEVATION, 'location'): vol.Coerce(float),
+        vol.Inclusive(CONF_LATITUDE, "location"): cv.latitude,
+        vol.Inclusive(CONF_LONGITUDE, "location"): cv.longitude,
+        vol.Inclusive(CONF_TIME_ZONE, "location"): cv.time_zone,
+        vol.Inclusive(CONF_ELEVATION, "location"): vol.Coerce(float),
     }
 )
 
@@ -151,7 +150,7 @@ class Sun2ElevationSensor(Sun2SensorBase, BinarySensorEntity):
         # Find mid point and throw away fractional seconds since astral package
         # ignores microseconds.
         tn_dttm = nearest_second(t0_dttm + (t1_dttm - t0_dttm) / 2)
-        tn_elev = astral_event(self._info, 'solar_elevation', tn_dttm)
+        tn_elev = astral_event(self._info, "solar_elevation", tn_dttm)
 
         while not (
             (
@@ -172,16 +171,16 @@ class Sun2ElevationSensor(Sun2SensorBase, BinarySensorEntity):
                     break
                 t0_dttm = tn_dttm
             tn_dttm = nearest_second(t0_dttm + (t1_dttm - t0_dttm) / 2)
-            tn_elev = astral_event(self._info, 'solar_elevation', tn_dttm)
+            tn_elev = astral_event(self._info, "solar_elevation", tn_dttm)
 
         # Did we go too far?
         if self._state and tn_elev > self._threshold:
             tn_dttm -= slope * _ONE_SEC
-            if astral_event(self._info, 'solar_elevation', tn_dttm) > self._threshold:
+            if astral_event(self._info, "solar_elevation", tn_dttm) > self._threshold:
                 raise RuntimeError("Couldn't find next update time")
         elif not self._state and tn_elev <= self._threshold:
             tn_dttm += slope * _ONE_SEC
-            if astral_event(self._info, 'solar_elevation', tn_dttm) <= self._threshold:
+            if astral_event(self._info, "solar_elevation", tn_dttm) <= self._threshold:
                 raise RuntimeError("Couldn't find next update time")
 
         return tn_dttm
@@ -198,11 +197,11 @@ class Sun2ElevationSensor(Sun2SensorBase, BinarySensorEntity):
         # midnight (if it is this morning) to after tomorrow's solar midnight
         # (if it is this evening.)
         date = cur_dttm.date()
-        evt_dttm1 = astral_event(self._info, 'solar_midnight', date)
-        evt_dttm2 = astral_event(self._info, 'solar_noon', date)
-        evt_dttm3 = astral_event(self._info, 'solar_midnight', date + _ONE_DAY)
-        evt_dttm4 = astral_event(self._info, 'solar_noon', date + _ONE_DAY)
-        evt_dttm5 = astral_event(self._info, 'solar_midnight', date + 2 * _ONE_DAY)
+        evt_dttm1 = astral_event(self._info, "solar_midnight", date)
+        evt_dttm2 = astral_event(self._info, "solar_noon", date)
+        evt_dttm3 = astral_event(self._info, "solar_midnight", date + _ONE_DAY)
+        evt_dttm4 = astral_event(self._info, "solar_noon", date + _ONE_DAY)
+        evt_dttm5 = astral_event(self._info, "solar_midnight", date + 2 * _ONE_DAY)
 
         # See if segment we're looking for falls between any of these events.
         # If not move ahead a day and try again, but don't look more than a
@@ -238,8 +237,8 @@ class Sun2ElevationSensor(Sun2SensorBase, BinarySensorEntity):
                     t0_dttm = evt_dttm4
                     t1_dttm = evt_dttm5
 
-            t0_elev = astral_event(self._info, 'solar_elevation', t0_dttm)
-            t1_elev = astral_event(self._info, 'solar_elevation', t1_dttm)
+            t0_elev = astral_event(self._info, "solar_elevation", t0_dttm)
+            t1_elev = astral_event(self._info, "solar_elevation", t1_dttm)
 
             # Did we find it?
             # Note, if t1_elev > t0_elev, then we're looking for an elevation
@@ -257,7 +256,7 @@ class Sun2ElevationSensor(Sun2SensorBase, BinarySensorEntity):
                 if nxt_dttm - cur_dttm > _ONE_DAY:
                     if self.hass.state == CoreState.running:
                         _LOGGER.warning(
-                            '%s: Sun elevation will not reach %f again until %s',
+                            "%s: Sun elevation will not reach %f again until %s",
                             self.name,
                             self._threshold,
                             nxt_dttm.date(),
@@ -269,8 +268,8 @@ class Sun2ElevationSensor(Sun2SensorBase, BinarySensorEntity):
             evt_dttm1 = evt_dttm3
             evt_dttm2 = evt_dttm4
             evt_dttm3 = evt_dttm5
-            evt_dttm4 = astral_event(self._info, 'solar_noon', date + _ONE_DAY)
-            evt_dttm5 = astral_event(self._info, 'solar_midnight', date + 2 * _ONE_DAY)
+            evt_dttm4 = astral_event(self._info, "solar_noon", date + _ONE_DAY)
+            evt_dttm5 = astral_event(self._info, "solar_midnight", date + 2 * _ONE_DAY)
 
         # Didn't find one.
         return None
@@ -278,10 +277,10 @@ class Sun2ElevationSensor(Sun2SensorBase, BinarySensorEntity):
     async def async_update(self):
         """Update state."""
         cur_dttm = dt_util.now(self._tzinfo)
-        cur_elev = astral_event(self._info, 'solar_elevation', cur_dttm)
+        cur_elev = astral_event(self._info, "solar_elevation", cur_dttm)
         self._state = cur_elev > self._threshold
         _LOGGER.debug(
-            '%s: above = %f, elevation = %f', self.name, self._threshold, cur_elev
+            "%s: above = %f, elevation = %f", self.name, self._threshold, cur_elev
         )
 
         nxt_dttm = self._get_nxt_dttm(cur_dttm)
@@ -300,7 +299,7 @@ class Sun2ElevationSensor(Sun2SensorBase, BinarySensorEntity):
             self._next_change = None
             if self.hass.state == CoreState.running:
                 _LOGGER.error(
-                    '%s: Sun elevation never reaches %f at this location',
+                    "%s: Sun elevation never reaches %f at this location",
                     self.name,
                     self._threshold,
                 )
