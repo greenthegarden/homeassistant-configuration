@@ -101,7 +101,7 @@ automation:
       #   entity_id: sensor.thumper_80ah_voltage
       #   below: 11.5
       - platform: template
-        value_template: "{{ states('sensor.thumper_80ah_voltage') | default(12.0) < states('input_number.thumper_80ah_battery_voltage_high') | default(11.5) }}"
+        value_template: "{{ states('sensor.thumper_80ah_voltage') | default(12.0) < states('input_number.thumper_80ah_battery_voltage_low') | default(11.5) }}"
         for:
           minutes: "{{ 3 | default(3) }}"
         id: trigger_thumper_80ah_voltage_low
@@ -112,7 +112,7 @@ automation:
       - service: notify.mobile_app_nokia_5_3
         data_template:
           message: |
-            "Thumper 80Ah battery voltage low"
+            "Thumper 80Ah battery low voltage at {{ states('sensor.thumper_80ah_voltage') | float }} volts"
 
   - alias: Thumper 80Ah Voltage High
     id: thumper_80ah_voltage_high
@@ -132,7 +132,7 @@ automation:
       - service: notify.mobile_app_nokia_5_3
         data_template:
           message: |
-            "Thumper 80Ah battery voltage high"
+            "Thumper 80Ah battery high voltage at {{ states('sensor.thumper_80ah_voltage') | float }} volts"
 
   - alias: "Thumper 80Ah battery load"
     id: rice_cooker_timer_start
