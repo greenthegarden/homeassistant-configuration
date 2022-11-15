@@ -19,7 +19,7 @@ automation:
       # an hour after sunset to midnight
       - condition: sun
         after: sunset
-        after_offset: "+01:00:00"
+        after_offset: "+00:30:00"
     action:
       # IKEA porch light device from .storage/core.device_registry
       - type: turn_on
