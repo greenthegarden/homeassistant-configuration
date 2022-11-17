@@ -42,6 +42,18 @@ template:
         state_class: measurement
         unit_of_measurement: "W"
 
+  - sensor:
+      - name: 350W Solar System Energy Daily Current
+        unique_id: solar_system_350w_energy_daily_ah
+        device_class: energy
+        state: >
+          {% set energy = (states('sensor.solar_system_350w_energy_daily') | float(0.0)) %}
+          {% if is_number(energy) %}
+            {{ (energy / 12.0) | round(1, default=0.0) }}
+          {% endif %}
+        state_class: measurement
+        unit_of_measurement: "Ah"
+
   # - sensor:
   #     - name: Thumper 80Ah Battery Voltage Gradient
   #       unique_id: thumper_80ah_voltage_gradient
@@ -112,7 +124,7 @@ automation:
       - service: notify.mobile_app_nokia_5_3
         data_template:
           message: |
-            "Thumper 80Ah battery low voltage at {{ states('sensor.thumper_80ah_voltage') | float }} volts"
+            "Thumper 80Ah battery low voltage at {{ states('sensor.thumper_80ah_voltage') | round(1) }} volts"
 
   - alias: Thumper 80Ah Voltage High
     id: thumper_80ah_voltage_high
@@ -132,7 +144,7 @@ automation:
       - service: notify.mobile_app_nokia_5_3
         data_template:
           message: |
-            "Thumper 80Ah battery high voltage at {{ states('sensor.thumper_80ah_voltage') | float }} volts"
+            "Thumper 80Ah battery high voltage at {{ states('sensor.thumper_80ah_voltage') | round(1) }} volts"
 
   - alias: "Thumper 80Ah battery load"
     id: rice_cooker_timer_start
