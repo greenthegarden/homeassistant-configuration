@@ -86,6 +86,17 @@
 - sensor.marden_temp_min_5
 - sensor.marden_temp_min_6
 - sensor.marden_temp_min_7
+
+# Outside Kitchen
+- input_boolean.thumper_80ah_battery_boiling_water
+- input_boolean.thumper_80ah_battery_cooking_rice
+- input_boolean.thumper_80ah_battery_heating_milk
+- input_boolean.thumper_80ah_battery_heating_food
+- sensor.thumper_80ah_voltage
+- sensor.thumper_80ah_voltage_derivative
+- sensor.solar_350watt_current
+- sensor.power_production_now
+
 # Binary sensors
 
 # Switch

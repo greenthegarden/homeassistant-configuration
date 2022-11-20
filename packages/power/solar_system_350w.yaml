@@ -72,6 +72,27 @@ template:
             thumper_80ah_battery_loaded == on
           {% endif %}
 
+# Input Boolean
+#
+# https://www.home-assistant.io/integrations/input_boolean/
+#
+input_boolean:
+  thumper_80ah_battery_boiling_water:
+    name: Boiling water
+    icon: mdi:kettle-steam
+
+  thumper_80ah_battery_cooking_rice:
+    name: Cooking rice
+    icon: mdi:rice
+
+  thumper_80ah_battery_heating_milk:
+    name: Heating milk
+    icon: mdi:coffee
+
+  thumper_80ah_battery_heating_food:
+    name: Heating food
+    icon: mdi:noodles
+
 # Input Number
 #
 # https://www.home-assistant.io/integrations/input_number/

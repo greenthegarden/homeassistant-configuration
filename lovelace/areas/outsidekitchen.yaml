@@ -28,6 +28,13 @@ cards:
           - entity: sensor.thumper_80ah_voltage_derivative
             name: Battery Voltage Derivative
       - type: entities
+        title: Cooking
+        entities:
+          - entity: input_boolean.thumper_80ah_battery_boiling_water
+          - entity: input_boolean.thumper_80ah_battery_cooking_rice
+          - entity: input_boolean.thumper_80ah_battery_heating_milk
+          - entity: input_boolean.thumper_80ah_battery_heating_food
+      - type: entities
         title: Thumper 80Ah Battery Thresholds
         entities:
           - type: section
