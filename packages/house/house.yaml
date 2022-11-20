@@ -303,7 +303,7 @@ automation:
         - sensor.weathersense_indoor_2_temperature
       above: 24
       for:
-        minutes: "{{ states('input_number.temperature_delay') | int }}"
+        minutes: "{{ states('input_number.temperature_delay') | int(1) }}"
     action:
       service: notify.mobile_app_nokia_5_3
       data:
@@ -317,7 +317,7 @@ automation:
       - platform: template
         value_template: "{{ states('sensor.outdoor_temperature') | float(0.0) < states('sensor.indoor_temperature') | float(0.0) }}"
         for:
-          minutes: "{{ states('input_number.temperature_delay') | int(0) }}"
+          minutes: "{{ states('input_number.temperature_delay') | int(1) }}"
     condition:
       condition: or
       conditions:
@@ -331,7 +331,7 @@ automation:
       - service: notify.mobile_app_nokia_5_3
         data:
           message: >
-            "Open windows! Outside temperature {{ states('sensor.outdoor_temperature') }} lower than inside {{ states('sensor.indoor_temperature') }}"
+            "Open windows! Outside temperature {{ states('sensor.outdoor_temperature') | round(1) }} lower than inside {{ states('sensor.indoor_temperature') | round(1)}}"
 
   # Alert when outside temperature grater than indoor in Summer
   - alias: Close windows in summer
@@ -340,7 +340,7 @@ automation:
       - platform: template
         value_template: "{{ states('sensor.outdoor_temperature') | float(0.0) > states('sensor.indoor_temperature') | float(0.0) }}"
         for:
-          minutes: "{{ states('input_number.temperature_delay') | int(0) }}"
+          minutes: "{{ states('input_number.temperature_delay') | int(1) }}"
     condition:
       condition: or
       conditions:
@@ -354,7 +354,7 @@ automation:
       - service: notify.mobile_app_nokia_5_3
         data:
           message: >
-            "Close windows! Outside temperature {{ states('sensor.outdoor_temperature') }} higher than inside {{ states('sensor.indoor_temperature') }}"
+            "Close windows! Outside temperature {{ states('sensor.outdoor_temperature') | round(1) }} higher than inside {{ states('sensor.indoor_temperature') | round(1) }}"
 
   #######################################################################
   # Healthchecks
