@@ -167,7 +167,7 @@ automation:
           message: |
             "Thumper 80Ah battery high voltage at {{ states('sensor.thumper_80ah_voltage') | round(1) }} volts"
 
-  - alias: "Thumper 80Ah battery load"
+  - alias: Thumper 80Ah battery load
     id: rice_cooker_timer_start
     trigger:
       - platform: numeric_state
@@ -178,11 +178,27 @@ automation:
         data_template:
           message: >
             "Thumper 80Ah battery load"
-      - delay: "00:{{ states('input_number.thumper_80Ah_battery_load_time') | int }}:00"
+      # - delay: "00:{{ states('input_number.thumper_80Ah_battery_load_time') | int }}:00"
+      # - service: notify.mobile_app_nokia_5_3
+      #   data_template:
+      #     message: >
+      #       "Thumper 80Ah battery needs checking after {{ states('input_number.thumper_80Ah_battery_load_time') | int }} mins"
+      - service: timer.start
+        target:
+          entity_id: timer.battery_load
+
+  - alias: Thumper 80Ah timer expired
+    id: thumper_80ah_timer_expired
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.battery_load
+    action:
       - service: notify.mobile_app_nokia_5_3
         data_template:
           message: >
-            "Thumper 80Ah battery needs checking after {{ states('input_number.thumper_80Ah_battery_load_time') | int }} mins"
+            "Thumper 80Ah battery needs checking"
 
 # Utility Meter
 #
@@ -194,3 +210,19 @@ utility_meter:
     unique_id: solar_system_350w_energy_daily
     source: sensor.350w_solar_system_energy
     cycle: daily
+
+# Timer
+#
+# https://www.home-assistant.io/integrations/timer/
+#
+timer:
+  battery_load:
+    duration: "00:17:00"
+
+# tv_timer_on:
+#   alias: Start TV child protection timer
+#   sequence:
+#     - service: timer.start
+#       data_template:
+#         entity_id: timer.tvwatch
+#         duration: "{{states('input_datetime.countdowntime')}}"

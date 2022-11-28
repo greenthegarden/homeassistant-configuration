@@ -101,8 +101,9 @@ sensor:
           {% endif %}
 
 # Switch Template
+#
 # https://www.home-assistant.io/integrations/switch.template/
-
+#
 switch:
   - platform: template
     switches:
@@ -119,8 +120,9 @@ switch:
               entity_id: input_boolean.relayduino_mode_automatic
 
 # Input Boolean
+#
 # https://www.home-assistant.io/integrations/input_boolean/
-
+#
 input_boolean:
   relayduino_relay_state:
     name: Relayduino Relay State
