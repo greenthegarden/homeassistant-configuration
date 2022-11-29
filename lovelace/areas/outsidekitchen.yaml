@@ -45,6 +45,10 @@ cards:
             icon: 'mdi:timelapse'
             secondary_info: last-changed
             unit: mins
+          - entity: input_datetime.battery_load_time
+            name: Duration
+            icon: 'mdi:timelapse'
+            secondary_info: last-changed
           - type: section
             label: Voltages
           - type: custom:numberbox-card

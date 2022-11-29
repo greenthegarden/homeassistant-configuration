@@ -93,6 +93,16 @@ input_boolean:
     name: Heating food
     icon: mdi:noodles
 
+# Input Datetime
+#
+# https://www.home-assistant.io/integrations/input_datetime/
+#
+input_datetime:
+  battery_load_time:
+    name: Battery load time
+    has_date: false
+    has_time: true
+
 # Input Number
 #
 # https://www.home-assistant.io/integrations/input_number/
@@ -184,8 +194,11 @@ automation:
       #     message: >
       #       "Thumper 80Ah battery needs checking after {{ states('input_number.thumper_80Ah_battery_load_time') | int }} mins"
       - service: timer.start
-        target:
+        data_template:
           entity_id: timer.battery_load
+          duration: "{{states('input_datetime.battery_load_time')}}"
+        # target:
+        # entity_id: timer.battery_load
 
   - alias: Thumper 80Ah timer expired
     id: thumper_80ah_timer_expired

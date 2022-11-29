@@ -147,6 +147,10 @@ input_boolean:
     initial: off
     icon: mdi:valve
 
+# Input Number
+#
+# https://www.home-assistant.io/integrations/input_boolean/
+#
 input_number:
   relayduino_relay:
     name: Relay
@@ -192,20 +196,23 @@ input_number:
     mode: box
 
 # Timers
+#
 # https://www.home-assistant.io/integrations/timer/
+#
+timer:
+  # Relayduino status every 5 minutes
+  relayduino_healthcheck_timer:
+    duration: "00:11:00"
+    # restore: true
+    # restore_grace_period: "00:15:00"
 
-# timer:
-#   # Relayduino status every 5 minutes
-#   relayduino_healthcheck_timer:
-#     duration: "00:11:00"
-#     restore: true
-#     restore_grace_period: "00:15:00"
-
-#   relayduino_response_timer:
-#     duration: "00:00:10"
+  relayduino_response_timer:
+    duration: "00:00:10"
 
 # Automations
-
+#
+# https://www.home-assistant.io/docs/automation/basics/
+#
 automation:
   - alias: Reset day count
     id: reset_day_count
