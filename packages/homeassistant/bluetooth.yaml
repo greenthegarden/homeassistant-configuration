@@ -1,0 +1,10 @@
+---
+# Bluetooth
+#
+# The Bluetooth integration will detect nearby Bluetooth devices.
+# Discovered devices will show up in the discovered section on the
+# integrations page in the configuration panel.
+#
+# https://www.home-assistant.io/integrations/bluetooth
+#
+bluetooth:
