@@ -17,6 +17,8 @@ homeassistant:
   # Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: !secret home_elevation
 
+  # country
+  country: AU
   # metric for Metric, imperial for Imperial
   unit_system: metric
   # Select timezone from http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
