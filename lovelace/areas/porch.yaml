@@ -5,6 +5,9 @@ subview: true
 icon: mdi:coach-lamp
 path: area_porch
 cards:
-  - type: light
-    name: Porch Light
+  - type: tile
     entity: light.light
+    name: Porch Light
+    features:
+      - type: "light-brightness"
+      

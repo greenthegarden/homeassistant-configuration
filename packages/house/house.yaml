@@ -21,6 +21,7 @@ template:
 
   - sensor:
       - name: "Indoor Temperature"
+        unique_id: indoor_temperature_template
         device_class: temperature
         state: >
           {% set state = states('sensor.indoor_temperature_average') | float(0.0)  %}
@@ -31,6 +32,7 @@ template:
         unit_of_measurement: "°C"
 
       - name: "Indoor Humidity"
+        unique_id: indoor_humidity_template
         device_class: humidity
         state: >
           {% set state = states('sensor.indoor_humidity_average') | float(0.0) %}
