@@ -10,9 +10,34 @@ sensor:
   #
   - platform: integration
     source: sensor.irrigation_flowrate
-    name: water_used
-    unit_time: h
-    round: 0
+    name: Irrigation Water Used
+    unique_id: irrigation_water_used
+    round: 3
+    # unit_prefix: 
+    # unit_time: s
+    method: trapezoidal
+
+# Utility Meter
+#
+# https://www.home-assistant.io/integrations/utility_meter/
+#
+utility_meter:
+  irrigation_daily:
+    source: sensor.irrigation_water_used
+    name: Irrigation use daily
+    unique_id: irrigation_use_daily
+    cycle: daily
+  irrigation_monthly:
+    source: sensor.irrigation_water_used
+    name: Irrigation use monthly
+    unique_id: irrigation_use_monthly
+    cycle: monthly
+  irrigation_annual:
+    source: sensor.irrigation_water_used
+    name: Irrigation use annual
+    unique_id: irrigation_use_annual
+    cycle: yearly
+
 # Timers
 #
 # https://www.home-assistant.io/integrations/timer/

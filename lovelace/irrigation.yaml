@@ -69,6 +69,15 @@ cards:
           #   name: Relay 7
           - entity: binary_sensor.relayduino_relay_8_state
             name: Back trees
+      - type: entities
+        title: Irrigation Use
+        entities:
+          - entity: sensor.irrigation_use_daily
+            name: Daily
+          - entity: sensor.irrigation_use_monthly
+            name: Month
+          - entity: sensor.irrigation_use_annual
+            name: Year
       # - type: entities
       #   title: Last Run
       #   entities:
@@ -98,28 +107,43 @@ cards:
       #       format: relative
 
   - type: vertical-stack
-    title: Garden
+    title: Soil
     cards:
-      - type: entities
-        entities:
-          - entity: sensor.soil_sht10_temperature
-            name: Soil temperature
-          - entity: sensor.soil_sht10_humidity
-            name: Soil humidity
-      - type: history-graph
-        hours_to_show: 24
-        entities:
-          - entity: input_select.moisture_soil_1
-            name: Sensor 1
-          - entity: input_select.moisture_soil_2
-            name: Sensor 2
-      - type: history-graph
-        hours_to_show: 24
-        entities:
-          - entity: sensor.moisture_1_percent
-            name: Sensor 1
-          - entity: sensor.moisture_2_percent
-            name: Sensor 2
+      - type: conditional
+        conditions:
+          - entity: device_tracker.moisture
+            state: "home"
+        card:
+          type: entities
+          entities:
+            - entity: sensor.soil_sht10_temperature
+              name: Soil temperature
+            - entity: sensor.soil_sht10_humidity
+              name: Soil humidity
+      - type: conditional
+        conditions:
+          - entity: device_tracker.moisture
+            state: "home"
+        card:
+          type: history-graph
+          hours_to_show: 24
+          entities:
+            - entity: input_select.moisture_soil_1
+              name: Sensor 1
+            - entity: input_select.moisture_soil_2
+              name: Sensor 2
+      - type: conditional
+        conditions:
+          - entity: device_tracker.moisture
+            state: "home"
+        card:
+          type: history-graph
+          hours_to_show: 24
+          entities:
+            - entity: sensor.moisture_1_percent
+              name: Sensor 1
+            - entity: sensor.moisture_2_percent
+              name: Sensor 2
 
   - type: vertical-stack
     title: Weather
