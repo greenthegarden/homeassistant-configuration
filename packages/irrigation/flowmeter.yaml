@@ -12,7 +12,7 @@ sensor:
     source: sensor.irrigation_flowrate
     name: Irrigation Water Used
     unique_id: irrigation_water_used
-    round: 3
+    round: 0
     # unit_prefix: 
     # unit_time: s
     method: trapezoidal
