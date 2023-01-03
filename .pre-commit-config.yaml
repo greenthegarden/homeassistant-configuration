@@ -1,7 +1,11 @@
-# -*- mode: yaml -*-
-# vim:ts=2:sw=2:ai:si:syntax=yaml
 ---
+# Pre-commit configuration
+#
+# This will help ensure everything I commit is kinda clean and neat.
+#
 minimum_pre_commit_version: 1.16.1
+
+exclude: ^(custom_components|www/community)/
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks.git
@@ -9,8 +13,7 @@ repos:
     hooks:
       - id: check-added-large-files
         args: ["--maxkb=1024"]
-      # - id: check-case-conflict
-      # exclude: ^custom_components/
+      - id: check-case-conflict
       # - id: check-docstring-first
       - id: check-executables-have-shebangs
         exclude: custom_components/powercalc/
@@ -22,7 +25,7 @@ repos:
       # - id: detect-private-key
       - id: double-quote-string-fixer
       - id: end-of-file-fixer
-        exclude: .HA_VERSION
+        exclude: ^.HA_VERSION
       - id: fix-byte-order-marker
       - id: fix-encoding-pragma
       - id: file-contents-sorter

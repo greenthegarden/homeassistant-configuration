@@ -1,67 +1,91 @@
-# -*- mode: yaml -*-
-# vim:ts=2:sw=2:ai:si:syntax=yaml
-#
+---
 # yamllint configuration directives
 # Project Homepage: https://github.com/adrienverge/yamllint
 #
 # Overriding rules in files:
 # http://yamllint.readthedocs.io/en/latest/disable_with_comments.html
----
+
 extends: default
+
+ignore: |
+  automations.yaml
+  blueprints/*/homeassistant/*.yaml
+  custom_components/
+  esphomeyaml/*/
+  esphome/.esphome/
+  ip_bans.yaml
+  notebooks/
+  scenes.yaml
+  scripts.yaml
+  themes/*.yaml
 
 # Rules documentation: http://yamllint.readthedocs.io/en/latest/rules.html
 rules:
-
   braces:
-    max-spaces-inside: 1
     level: error
-
+    min-spaces-inside: 0
+    max-spaces-inside: 1
+    min-spaces-inside-empty: -1
+    max-spaces-inside-empty: -1
   brackets:
-    max-spaces-inside: 1
     level: error
-
+    min-spaces-inside: 0
+    max-spaces-inside: 0
+    min-spaces-inside-empty: -1
+    max-spaces-inside-empty: -1
   colons:
-    max-spaces-after: -1
     level: error
-
+    max-spaces-before: 0
+    max-spaces-after: 1
   commas:
-    max-spaces-after: -1
     level: error
-
-  comments: disable
-
-  comments-indentation: disable
-
+    max-spaces-before: 0
+    min-spaces-after: 1
+    max-spaces-after: 1
+  comments:
+    level: error
+    require-starting-space: true
+    min-spaces-from-content: 2
+  comments-indentation:
+    level: error
+  document-end:
+    level: error
+    present: false
   document-start:
-    present: true
-
-  empty-lines:
-    max: 3
     level: error
-
+    present: true
+    ignore: |
+      config/known_devices.yaml
+  empty-lines:
+    level: error
+    max: 1
+    max-start: 0
+    max-end: 1
   hyphens:
     level: error
-
+    max-spaces-after: 1
   indentation:
-    # Requiring 2 space indentation
+    level: error
     spaces: 2
-    # Requiring consistent indentation within a file, either indented or not
     indent-sequences: true
-    # Lint indentation in multi-line strings
     check-multi-line-strings: false
-
-  key-duplicates: enable
-
+  key-duplicates:
+    level: error
   line-length:
-    max: 80
+    ignore: |
+      .github/support.yml
+      .github/settings.yml
     level: warning
+    max: 88
+    allow-non-breakable-words: true
     allow-non-breakable-inline-mappings: true
-
-  new-line-at-end-of-file: disable
-
+  new-line-at-end-of-file:
+    level: error
   new-lines:
+    level: error
     type: unix
-
-  trailing-spaces: disable
-
-  truthy: disable
+  trailing-spaces:
+    level: error
+  truthy:
+    level: error
+    

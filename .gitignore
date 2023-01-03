@@ -1,3 +1,14 @@
+# Generic ignores
+*.log
+*.log.*
+*.db
+*.db-shm
+*.db-wal
+*.pyc
+._*
+__pycache__
+core
+
 # do not keep surplus vscode files
 .vscode/*
 !.vscode/settings.json
@@ -19,6 +30,7 @@ home-assistant.log*
 secrets.yaml
 blueprints/
 automations.yaml
+deps/
 # do not keep text to voice recordings
 tts/
 

@@ -1,0 +1,36 @@
+---
+# Package: Lights / Lights
+
+# Automations
+#
+# https://www.home-assistant.io/docs/automation/basics/
+#
+automation:
+  - id: porch_light_on_with_timer
+    alias: Turn porch light on when returning home
+    description: "Turn porch light on when returning home"
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.people_home
+        from: "off"
+        to: "on"
+    condition:
+      # half an hour after sunset to midnight
+      - condition: sun
+        after: sunset
+        after_offset: "+00:30:00"
+    action:
+      - service: light.turn_on
+        target:
+          entity_id: light.light
+        data:
+          brightness_pct: 60
+      - delay:
+          hours: 0
+          minutes: 1
+          seconds: 0
+          milliseconds: 0
+      - service: light.turn_off
+        target:
+          entity_id: light.light
