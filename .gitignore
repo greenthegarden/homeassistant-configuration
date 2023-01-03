@@ -29,7 +29,6 @@ home-assistant.log*
 # known_devices.yaml
 secrets.yaml
 blueprints/
-automations.yaml
 deps/
 # do not keep text to voice recordings
 tts/
