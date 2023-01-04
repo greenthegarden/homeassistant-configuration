@@ -44,14 +44,14 @@ cards:
   #   area: storage_room
   # navigation_path: /lovelace-areas/area_storage_room
   - type: area
-    area: bedroom_front_small
-    navigation_path: /lovelace-areas/area_bedroom_front_small
+    area: exercise_room
+    navigation_path: /lovelace-areas/area_exercise_room
   # - type: area
   #   area: passageway
   # navigation_path: /lovelace-areas/area_passageway
   - type: area
-    area: bedroom_front_big
-    navigation_path: /lovelace-areas/area_bedroom_front_big
+    area: bedroom_main
+    navigation_path: /lovelace-areas/area_bedroom_main
   # - type: area
   #   area: garage
   #   navigation_path: /lovelace-areas/area_garage

@@ -12,13 +12,13 @@ views:
   - !include lovelace/areas/home.yaml
   - !include lovelace/areas/porch.yaml
   - !include lovelace/areas/fronthall.yaml
-  - !include lovelace/areas/livingroom.yaml
-  - !include lovelace/areas/diningroom.yaml
-  - !include lovelace/areas/familyroom.yaml
+  - !include lovelace/areas/living_room.yaml
+  - !include lovelace/areas/dining_room.yaml
+  - !include lovelace/areas/family_room.yaml
   - !include lovelace/areas/kitchen.yaml
-  - !include lovelace/areas/networkcabinet.yaml
-  - !include lovelace/areas/utilityroom.yaml
-  - !include lovelace/areas/bedroomback.yaml
-  - !include lovelace/areas/bedroomfrontsmall.yaml
-  - !include lovelace/areas/bedroomfrontbig.yaml
-  - !include lovelace/areas/outsidekitchen.yaml
+  - !include lovelace/areas/network_cabinet.yaml
+  - !include lovelace/areas/utility_room.yaml
+  - !include lovelace/areas/bedroom_back.yaml
+  - !include lovelace/areas/exercise_room.yaml
+  - !include lovelace/areas/bedroom_main.yaml
+  - !include lovelace/areas/outside_kitchen.yaml

@@ -1,9 +1,9 @@
 ---
 # lovelace_gen
-title: Front Small Bedroom
+title: Exercise Room
 subview: true
-icon: mdi:bed-outline
-path: area_bedroom_front_small
+icon: mdi:run
+path: area_exercise_room
 cards:
   - type: vertical-stack
     cards:

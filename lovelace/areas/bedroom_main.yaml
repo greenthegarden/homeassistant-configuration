@@ -1,6 +1,6 @@
 ---
 # lovelace_gen
-title: Front Big Bedroom
+title: Thanh Bedroom
 subview: true
 icon: mdi:bed-outline
-path: area_bedroom_front_big
+path: area_bedroom_main
