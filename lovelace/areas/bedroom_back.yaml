@@ -11,32 +11,36 @@ cards:
         entities:
           - entity: sensor.weathersense_indoor_2_thermal_perception
             name: Thermal Comfort
+            secondary_info: last-updated
           - entity: sensor.weathersense_indoor_2_temperature
             name: Temperature
+            secondary_info: last-updated
           - entity: sensor.weathersense_indoor_2_humidity
             name: Humidity
+            secondary_info: last-updated
           - entity: binary_sensor.weathersense_indoor_2_battery_low
             name: Battery Low
+            secondary_info: last-updated
           - entity: sensor.weathersense_indoor_2_channel
             name: Weathersense ID
         title: Weathersense
-      - type: entities
-        entities:
-          - entity: sensor.enviroplus_1_temperature
-            name: Temperature
-          - entity: sensor.enviroplus_1_humidity
-            name: Humidity
-          - entity: sensor.enviroplus_1_pressure
-            name: Pressure
-          - entity: sensor.enviroplus_1_light
-            name: Light
-          - entity: sensor.enviroplus_1_oxidised
-            name: Oxidised Gases
-          - entity: sensor.enviroplus_1_reduced
-            name: Reducing Gases
-          - entity: sensor.enviroplus_1_nh3
-            name: NH3 Gases
-        title: Enviro+
+      # - type: entities
+      #   entities:
+      #     - entity: sensor.enviroplus_1_temperature
+      #       name: Temperature
+      #     - entity: sensor.enviroplus_1_humidity
+      #       name: Humidity
+      #     - entity: sensor.enviroplus_1_pressure
+      #       name: Pressure
+      #     - entity: sensor.enviroplus_1_light
+      #       name: Light
+      #     - entity: sensor.enviroplus_1_oxidised
+      #       name: Oxidised Gases
+      #     - entity: sensor.enviroplus_1_reduced
+      #       name: Reducing Gases
+      #     - entity: sensor.enviroplus_1_nh3
+      #       name: NH3 Gases
+      #   title: Enviro+
   - type: vertical-stack
     cards:
       - type: history-graph
@@ -55,13 +59,13 @@ cards:
             name: F016TH
           - entity: sensor.enviroplus_1_humidity
             name: Enviro+
-  - type: history-graph
-    title: Gases
-    hours_to_show: 48
-    entities:
-      - entity: sensor.sensor.enviroplus_1_oxidised
-        name: Oxidised
-      - entity: sensor.enviroplus_1_reduced
-        name: Reduced
-      - entity: sensor.enviroplus_1_nh3
-        name: NH3
+  # - type: history-graph
+  #   title: Gases
+  #   hours_to_show: 48
+  #   entities:
+  #     - entity: sensor.sensor.enviroplus_1_oxidised
+  #       name: Oxidised
+  #     - entity: sensor.enviroplus_1_reduced
+  #       name: Reduced
+  #     - entity: sensor.enviroplus_1_nh3
+  #       name: NH3

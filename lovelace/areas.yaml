@@ -46,6 +46,7 @@ cards:
   - type: area
     area: exercise_room
     navigation_path: /lovelace-areas/area_exercise_room
+    show_camera: true
   # - type: area
   #   area: passageway
   # navigation_path: /lovelace-areas/area_passageway

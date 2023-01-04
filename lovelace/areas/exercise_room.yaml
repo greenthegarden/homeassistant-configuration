@@ -5,18 +5,24 @@ subview: true
 icon: mdi:run
 path: area_exercise_room
 cards:
+  - type: media-control
+    entity: media_player.chromecast5751
   - type: vertical-stack
     cards:
       - type: entities
         entities:
           - entity: sensor.weathersense_indoor_1_thermal_perception
             name: Thermal Comfort
+            secondary_info: last-updated
           - entity: sensor.weathersense_indoor_1_temperature
             name: Temperature
+            secondary_info: last-updated
           - entity: sensor.weathersense_indoor_1_humidity
             name: Humidity
+            secondary_info: last-updated
           - entity: binary_sensor.weathersense_indoor_1_battery_low
             name: Battery Low
+            secondary_info: last-updated
           - entity: sensor.weathersense_indoor_1_channel
             name: Weathersense ID
       - type: history-graph
