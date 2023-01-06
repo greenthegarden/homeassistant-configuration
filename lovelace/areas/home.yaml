@@ -12,23 +12,29 @@ cards:
         entities:
           - entity: sensor.indoor_thermal_comfort_thermal_perception
             name: Thermal Comfort
+            secondary_info: last-updated
           - entity: sensor.indoor_temperature
             name: Temperature
+            secondary_info: last-updated
           - entity: sensor.indoor_humidity
             name: Humidity
+            secondary_info: last-updated
           # - entity: sensor.enviro_3_bme280_pressure
           #   name: Pressure
           - entity: sensor.mold_indicator
             name: Mold Indicator
             icon: mdi:virus
+            secondary_info: last-updated
       - type: entities
         # title: Indoor Air Quality
         entities:
           - entity: input_boolean.windows_open
+            secondary_info: last-updated
       - type: entities
         # title: Indoor Air Quality
         entities:
           - entity: input_boolean.heater_on
+            secondary_info: last-updated
 
   - type: entities
     title: Bin collection

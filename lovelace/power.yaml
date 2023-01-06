@@ -46,14 +46,19 @@ cards:
         entities:
           - entity: sensor.grid_power_import
             name: Import
+            secondary_info: last-updated
           - entity: sensor.grid_power_export
             name: Export
+            secondary_info: last-updated
           - entity: sensor.solar_power_generation
             name: Solar
+            secondary_info: last-updated
           - entity: sensor.home_power_usage
             name: Use
+            secondary_info: last-updated
           - entity: sensor.emoncms2_vrms
             name: Voltage
+            secondary_info: last-updated
       - type: history-graph
         # title: AC Power
         hours_to_show: 24
@@ -90,28 +95,37 @@ cards:
         entities:
           - entity: sensor.grid_energy_import_daily
             name: Import
+            secondary_info: last-updated
           - entity: sensor.solar_energy_generation_daily
             name: Solar
+            secondary_info: last-updated
           - entity: sensor.home_energy_usage_daily
             name: Use
+            secondary_info: last-updated
       - type: entities
         title: Monthly Energy
         entities:
           - entity: sensor.grid_energy_import_monthly
             name: Import
+            secondary_info: last-updated
           - entity: sensor.solar_energy_generation_monthly
             name: Solar
+            secondary_info: last-updated
           - entity: sensor.home_energy_usage_monthly
             name: Use
+            secondary_info: last-updated
       - type: entities
         title: Annual Energy
         entities:
           - entity: sensor.grid_energy_import_annually
             name: Import
+            secondary_info: last-updated
           - entity: sensor.solar_energy_generation_annually
             name: Solar
+            secondary_info: last-updated
           - entity: sensor.home_energy_usage_annually
             name: Use
+            secondary_info: last-updated
 
   - type: vertical-stack
     cards:
@@ -123,9 +137,10 @@ cards:
             attribute: genvsdemand
             name: Generation v Demand
             suffix: MW
-          # - entity: sensor.generation_versus_demand
+            secondary_info: last-updated
           - entity: sensor.renewables_versus_generation
             icon: mdi:transmission-tower
+            secondary_info: last-updated
       - type: history-graph
         entities:
           - entity: sensor.sa_power_price

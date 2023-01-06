@@ -31,9 +31,13 @@ cards:
         title: Cooking
         entities:
           - entity: input_boolean.thumper_80ah_battery_boiling_water
+            secondary_info: last-updated
           - entity: input_boolean.thumper_80ah_battery_cooking_rice
+            secondary_info: last-updated
           - entity: input_boolean.thumper_80ah_battery_heating_milk
+            secondary_info: last-updated
           - entity: input_boolean.thumper_80ah_battery_heating_food
+            secondary_info: last-updated
       - type: entities
         title: Thumper 80Ah Battery Thresholds
         entities:
@@ -78,10 +82,13 @@ cards:
         entities:
           - entity: sensor.solar_350watt_current
             name: Solar Current
+            secondary_info: last-updated
           - entity: sensor.350w_solar_system_power
             name: Solar Power
+            secondary_info: last-updated
           - entity: sensor.350w_solar_daily_energy
             name: Solar Energy
+            secondary_info: last-updated
         title: Solar Production
       - type: history-graph
         hours_to_show: 24

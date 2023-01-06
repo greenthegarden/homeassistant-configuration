@@ -74,7 +74,7 @@ dashboards:
     filename: ui-perth.yaml
     title: Perth
     icon: mdi:account-supervisor-circle
-    show_in_sidebar: true
+    show_in_sidebar: false
   lovelace-system: # Needs to contain a hyphen (-)
     mode: yaml
     filename: ui-system.yaml

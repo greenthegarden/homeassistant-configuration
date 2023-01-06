@@ -9,31 +9,42 @@ cards:
     entities:
       - entity: sensor.outdoor_thermal_comfort_thermal_perception
         name: Thermal Comfort
+        secondary_info: last-updated
       - entity: sensor.outdoor_thermal_comfort_dew_point
         name: Dew Point
+        secondary_info: last-updated
       - entity: sensor.outdoor_thermal_comfort_frost_point
         name: Frost Point
+        secondary_info: last-updated
       - entity: sensor.outdoor_thermal_comfort_frost_risk
         name: Frost Risk
+        secondary_info: last-updated
       - entity: sensor.bom_home_temp
         name: Temperature
+        secondary_info: last-updated
       - entity: sensor.bom_home_temp_feels_like
         name: Feels like
+        secondary_info: last-updated
       - entity: sensor.bom_home_humidity
         name: Humidity
+        secondary_info: last-updated
       - entity: sensor.bom_home_rain_since_9am
         name: Rain since 9am
         icon: mdi:weather-rainy
+        secondary_info: last-updated
 
   - type: entities
     title: Rainfall
     entities:
       - entity: sensor.rainfall_daily
         name: Daily
+        secondary_info: last-updated
       - entity: sensor.rainfall_monthly
         name: Month
+        secondary_info: last-updated
       - entity: sensor.rainfall_annual
         name: Year
+        secondary_info: last-updated
 
   - type: statistics-graph
     title: Temperature
@@ -219,12 +230,16 @@ cards:
         entities:
           - entity: sensor.current_ozone_level
             name: Current Ozone Level
+            secondary_info: last-updated
           - entity: sensor.current_uv_level
             name: Current UV Level
+            secondary_info: last-updated
           - entity: sensor.current_uv_index
             name: Current UV Index
+            secondary_info: last-updated
           - entity: sensor.max_uv_index
             name: Maximum UV Index
+            secondary_info: last-updated
       - type: history-graph
         hours_to_show: 12
         entities:
@@ -257,6 +272,7 @@ cards:
         entities:
           - entity: sensor.waqi_adelaide_cbd
             name: Adelaide CDB
+            secondary_info: last-updated
       - type: history-graph
         # title: Air Quality
         hours_to_show: 80

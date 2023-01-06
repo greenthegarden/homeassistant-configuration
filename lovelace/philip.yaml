@@ -20,30 +20,37 @@ cards:
           #   name: Whereabouts
           - entity: sensor.philip_home_away
             name: Home or away
+            secondary_info: last-updated
           - entity: sensor.skin_type_1_safe_exposure_time
             name: UV safe exposure time
+            secondary_info: last-updated
           - entity: input_boolean.philip_bed
             name: In bed
+            secondary_info: last-updated
       - type: entities
         title: Devices
         entities:
           - entity: sensor.philip_phone
             name: Nokia 5.3 Phone
+            secondary_info: last-updated
           - entity: sensor.philip_laptop
             name: Dell Laptop
-          # - entity: sensor.thanh_desktop
-          #   name: Lenovo Desktop
+            secondary_info: last-updated
       - type: entities
         title: Nokia 5.3
         entities:
           - entity: sensor.nokia_5_3_battery_level
             name: Battery Level
+            secondary_info: last-updated
           - entity: sensor.nokia_5_3_battery_state
             name: Battery State
+            secondary_info: last-updated
           - entity: sensor.nokia_5_3_charger_type
             name: Charger Type
+            secondary_info: last-updated
           - entity: binary_sensor.nokia_5_3_is_charging
             name: Is charging
+            secondary_info: last-updated
 
   - type: vertical-stack
     cards:

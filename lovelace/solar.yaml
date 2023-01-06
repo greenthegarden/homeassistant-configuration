@@ -43,6 +43,7 @@ cards:
           #   name: Duo State
           - entity: sensor.350w_solar_daily_energy
             name: Solar Daily Energy
+            secondary_info: last-updated
           - type: section
             label: Forecast
           # - entity: sensor.energy_next_hour
@@ -55,8 +56,10 @@ cards:
           #   name: Estimated energy production - tomorrow
           - entity: sensor.power_production_now
             name: Estimated power production - now
+            secondary_info: last-updated
           - entity: sensor.power_highest_peak_time_today
             name: Highest power peak time - today
+            secondary_info: last-updated
           # - entity: sensor.power_highest_peak_time_tomorrow
           #   name: Highest power peak time - tomorrow
         title: 350W Solar System
@@ -88,8 +91,10 @@ cards:
           #   name: Estimated energy production - tomorrow
           - entity: sensor.power_production_now_3
             name: Estimated power production - now
+            secondary_info: last-updated
           - entity: sensor.power_highest_peak_time_today_3
             name: Highest power peak time - today
+            secondary_info: last-updated
           # - entity: sensor.power_highest_peak_time_tomorrow_3
           #   name: Highest power peak time - tomorrow
         title: 500Watt Solar System
@@ -116,8 +121,10 @@ cards:
             secondary_info: last-updated
           - entity: sensor.solar_energy_generation_daily
             name: Solar Daily Energy
+            secondary_info: last-updated
           - type: section
             label: Forecast
+            secondary_info: last-updated
           # - entity: sensor.energy_next_hour_2
           #   name: Estimated energy production - next hour
           # - entity: sensor.energy_current_hour_2
@@ -128,8 +135,10 @@ cards:
           #   name: Estimated energy production - tomorrow
           - entity: sensor.power_production_now_2
             name: Estimated power production - now
+            secondary_info: last-updated
           - entity: sensor.power_highest_peak_time_today_2
             name: Highest power peak time - today
+            secondary_info: last-updated
           # - entity: sensor.power_highest_peak_time_tomorrow_2
           #   name: Highest power peak time - tomorrow
         title: 1kW Solar System

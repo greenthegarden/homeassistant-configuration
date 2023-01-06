@@ -7,23 +7,17 @@ path: area_bedroom_back
 cards:
   - type: vertical-stack
     cards:
-      - type: entities
-        entities:
-          - entity: sensor.weathersense_indoor_2_thermal_perception
-            name: Thermal Comfort
-            secondary_info: last-updated
-          - entity: sensor.weathersense_indoor_2_temperature
-            name: Temperature
-            secondary_info: last-updated
-          - entity: sensor.weathersense_indoor_2_humidity
-            name: Humidity
-            secondary_info: last-updated
-          - entity: binary_sensor.weathersense_indoor_2_battery_low
-            name: Battery Low
-            secondary_info: last-updated
-          - entity: sensor.weathersense_indoor_2_channel
-            name: Weathersense ID
-        title: Weathersense
+      - type: tile
+        entity: sensor.weathersense_indoor_2_thermal_perception
+        name: Thermal Comfort
+        secondary_info: last-updated
+          # - entity: sensor.weathersense_indoor_2_temperature
+          #   name: Temperature
+          #   secondary_info: last-updated
+          # - entity: sensor.weathersense_indoor_2_humidity
+          #   name: Humidity
+          #   secondary_info: last-updated
+
       # - type: entities
       #   entities:
       #     - entity: sensor.enviroplus_1_temperature
@@ -41,24 +35,41 @@ cards:
       #     - entity: sensor.enviroplus_1_nh3
       #       name: NH3 Gases
       #   title: Enviro+
-  - type: vertical-stack
-    cards:
-      - type: history-graph
-        title: Temperature
-        hours_to_show: 48
-        entities:
-          - entity: sensor.weathersense_indoor_2_temperature
-            name: F016TH
-          - entity: sensor.enviroplus_1_temperature
-            name: Enviro+
-      - type: history-graph
-        title: Humidity
-        hours_to_show: 48
-        entities:
-          - entity: sensor.weathersense_indoor_2_humidity
-            name: F016TH
-          - entity: sensor.enviroplus_1_humidity
-            name: Enviro+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.weathersense_indoor_2_temperature
+                name: F016TH
+            hours_to_show: 48
+            color_thresholds:
+              - value: 20
+                color: "#f39c12"
+              - value: 21
+                color: "#d35400"
+              - value: 21.5
+                color: "#c0392b"
+            title: Temperature
+              # - entity: sensor.enviroplus_1_temperature
+            #   name: Enviro+
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.weathersense_indoor_2_humidity
+                name: F016TH
+            hours_to_show: 48
+            title: Humidity
+              # - entity: sensor.enviroplus_1_humidity
+              #   name: Enviro+
+
+  - type: entities
+    entities:
+      - entity: binary_sensor.weathersense_indoor_2_battery_low
+        name: Battery Low
+        secondary_info: last-updated
+      - entity: sensor.weathersense_indoor_2_channel
+        name: Channel
+    title: Weathersense
+        
   # - type: history-graph
   #   title: Gases
   #   hours_to_show: 48

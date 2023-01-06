@@ -7,33 +7,40 @@ path: area_exercise_room
 cards:
   - type: media-control
     entity: media_player.chromecast5751
+
   - type: vertical-stack
     cards:
-      - type: entities
-        entities:
-          - entity: sensor.weathersense_indoor_1_thermal_perception
-            name: Thermal Comfort
-            secondary_info: last-updated
-          - entity: sensor.weathersense_indoor_1_temperature
-            name: Temperature
-            secondary_info: last-updated
-          - entity: sensor.weathersense_indoor_1_humidity
-            name: Humidity
-            secondary_info: last-updated
-          - entity: binary_sensor.weathersense_indoor_1_battery_low
-            name: Battery Low
-            secondary_info: last-updated
-          - entity: sensor.weathersense_indoor_1_channel
-            name: Weathersense ID
-      - type: history-graph
-        title: Temperature
-        hours_to_show: 24
-        entities:
-          - entity: sensor.weathersense_indoor_1_temperature
-            name: Temperature
-      - type: history-graph
-        title: Humidity
-        hours_to_show: 24
-        entities:
-          - entity: sensor.weathersense_indoor_1_humidity
-            name: Humidity
+      - type: tile
+        entity: sensor.weathersense_indoor_1_thermal_perception
+        name: Thermal Comfort
+        secondary_info: last-updated
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.weathersense_indoor_1_temperature
+                name: F016TH
+            hours_to_show: 24
+            color_thresholds:
+              - value: 20
+                color: "#f39c12"
+              - value: 21
+                color: "#d35400"
+              - value: 21.5
+                color: "#c0392b"
+            title: Temperature
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.weathersense_indoor_1_humidity
+                name: F016TH
+            hours_to_show: 24
+            title: Humidity
+
+  - type: entities
+    entities:
+      - entity: binary_sensor.weathersense_indoor_1_battery_low
+        name: Battery Low
+        secondary_info: last-updated
+      - entity: sensor.weathersense_indoor_1_channel
+        name: Channel
+    title: Weathersense

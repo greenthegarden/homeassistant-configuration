@@ -9,6 +9,7 @@ cards:
     entities:
       - entity: binary_sensor.people_home
         name: People home
+        secondary_info: last-updated
 
   - type: vertical-stack
     cards:
@@ -88,38 +89,50 @@ cards:
     entities:
       - entity: sensor.outdoor_thermal_comfort_thermal_perception
         name: Thermal Comfort
+        secondary_info: last-updated
       - entity: sensor.weatherstation_temperature
         name: Temperature
+        secondary_info: last-updated
       - entity: sensor.weatherstation_humidity
         name: Humidity
+        secondary_info: last-updated
       - entity: sensor.weatherstation_windspeed_avg
         name: Windspeed
         icon: mdi:weather-windy
+        secondary_info: last-updated
       - entity: sensor.wind_direction
         name: Wind Direction
         icon: mdi:windsock
+        secondary_info: last-updated
       - entity: sensor.rainfall_daily
         name: Rain
         icon: mdi:weather-rainy
+        secondary_info: last-updated
       - entity: sensor.weatherstation_uv
         name: UV
         icon: mdi:sun-wireless
+        secondary_info: last-updated
       - entity: sensor.weatherstation_light
         name: Light
         icon: mdi:weather-sunny
+        secondary_info: last-updated
 
   - type: entities
     title: Current weather
     entities:
       - entity: sensor.bom_home_temp
         name: Temp
+        secondary_info: last-updated
       - entity: sensor.bom_home_temp_feels_like
         name: Feels like
+        secondary_info: last-updated
       - entity: sensor.bom_home_humidity
         name: Humidity
+        secondary_info: last-updated
       - entity: sensor.bom_home_rain_since_9am
         name: Rain since 9am
         icon: mdi:weather-rainy
+        secondary_info: last-updated
 
   - type: history-graph
     title: Temperature
@@ -146,19 +159,26 @@ cards:
         entities:
           - entity: sensor.indoor_thermal_comfort_thermal_perception
             name: Thermal Comfort
+            secondary_info: last-updated
           - entity: sensor.indoor_temperature
             name: Temperature
+            secondary_info: last-updated
           - entity: sensor.indoor_humidity
             name: Humidity
+            secondary_info: last-updated
           - entity: sensor.enviro_3_bme280_pressure
             name: Pressure
+            secondary_info: last-updated
           - entity: sensor.mold_indicator
             name: Mold Indicator
             icon: mdi:virus
+            secondary_info: last-updated
       - type: tile
         entity: input_boolean.windows_open
+        secondary_info: last-updated
       - type: tile
         entity: input_boolean.heater_on
+        secondary_info: last-updated
 
   - type: entities
     title: Bin collection

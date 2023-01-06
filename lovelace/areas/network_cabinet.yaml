@@ -36,7 +36,8 @@ cards:
     title: Power
   - type: entities
     entities:
-      - update.dream_machine
+      - entity: update.dream_machine
+        secondary_info: last-updated
     title: Dream Machine
   - type: entities
     entities:
@@ -60,29 +61,39 @@ cards:
         entities:
           - entity: sensor.speedtest_ping
             name: Ping
+            secondary_info: last-updated
           - entity: sensor.speedtest_download
             name: Download
+            secondary_info: last-updated
           - entity: sensor.speedtest_upload
             name: Upload
+            secondary_info: last-updated
       - type: history-graph
         title: WAN speed
         entities:
           - entity: sensor.speedtest_download
             name: Download
+            secondary_info: last-updated
           - entity: sensor.speedtest_upload
             name: Upload
+            secondary_info: last-updated
   - type: entities
     entities:
       - entity: sensor.ups_status
         name: Status
+        secondary_info: last-updated
       - entity: sensor.ups_status_data
         name: Status Data
+        secondary_info: last-updated
       - entity: sensor.ups_battery_charge
         name: Battery Charge
+        secondary_info: last-updated
       - entity: sensor.ups_load
         name: Load
+        secondary_info: last-updated
       - entity: sensor.ups_input_voltage
         name: Input Voltage
+        secondary_info: last-updated
     title: UPS
   - type: conditional
     conditions:
@@ -95,23 +106,31 @@ cards:
         # NAS System Information
         - entity: sensor.storology_cpu_utilization_total
           name: CPU Load (Total)
+          secondary_info: last-updated
         - entity: sensor.storology_memory_usage_real
           name: Memory Usage
+          secondary_info: last-updated
         - entity: sensor.storology_temperature
           name: Temperature
+          secondary_info: last-updated
         - entity: update.storology_dsm_update
           name: Update Available
+          secondary_info: last-updated
         - entity: binary_sensor.storology_security_status
           name: Security Status
         # Drive 1 Information
+          secondary_info: last-updated
         - type: section
           label: Drive 1
         - entity: sensor.storology_drive_1_status
           name: Status (SMART)
+          secondary_info: last-updated
         - entity: binary_sensor.storology_drive_1_below_min_remaining_life
           name: Below Min Remaining Life
+          secondary_info: last-updated
         - entity: binary_sensor.storology_drive_1_exceeded_max_bad_sectors
           name: Exceeded Max Bad Sectors
+          secondary_info: last-updated
         - entity: sensor.storology_drive_1_temperature
           name: Temperature
         # Drive 2 Information
@@ -119,21 +138,28 @@ cards:
           label: Drive 2
         - entity: sensor.storology_drive_2_status
           name: Status (SMART)
+          secondary_info: last-updated
         - entity: binary_sensor.storology_drive_2_below_min_remaining_life
           name: Below Min Remaining Life
+          secondary_info: last-updated
         - entity: binary_sensor.storology_drive_2_exceeded_max_bad_sectors
           name: Exceeded Max Bad Sectors
+          secondary_info: last-updated
         - entity: sensor.storology_drive_2_temperature
           name: Temperature
+          secondary_info: last-updated
         # Volume 1 Information
         - type: section
           label: Volume 1
         - entity: sensor.storology_volume_1_status
           name: Status
+          secondary_info: last-updated
         - entity: sensor.storology_volume_1_volume_used
           name: Volume Used
+          secondary_info: last-updated
         - entity: sensor.storology_volume_1_average_disk_temp
           name: Avg Disk Temperature
+          secondary_info: last-updated
         # Buttons
         - type: divider
         - type: buttons
