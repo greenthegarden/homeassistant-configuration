@@ -13,11 +13,11 @@ template:
       - name: "Indoor temperature higher than outside"
         state: "{{ states('sensor.indoor_temperature') | float(0.0) > states('sensor.outdoor_temperature') | float(0.0) }}"
 
-      - name: "Weathersense Indoor 1 Battery Low"
-        state: "{{ states('sensor.weathersense_indoor_1_battery') != 'OK' }}"
+      - name: "F016TH Channel 1 Battery Low"
+        state: "{{ states('sensor.f016th_channel_1_battery_state') | int(0) < 100 }}"
 
-      - name: "Weathersense Indoor 2 Battery Low"
-        state: "{{ states('sensor.weathersense_indoor_2_battery') != 'OK' }}"
+      - name: "F016TH Channel 2 Battery Low"
+        state: "{{ states('sensor.f016th_channel_2_battery_state') | int(0) < 100 }}"
 
   - sensor:
       - name: "Indoor Temperature"
@@ -122,79 +122,69 @@ mqtt:
     #     "mic": "CRC"
     # }
 
-    - name: WeatherSense Indoor 1 Channel
-      state_topic: "weathersense/F016TH/1"
-      expire_after: 600
-      icon: mdi:identifier
-      unique_id: weathersense_indoor_1_channel
-      value_template: "{{ value_json.channel }}"
+    # - name: WeatherSense Indoor 1 Channel
+    #   state_topic: "weathersense/F016TH/1"
+    #   expire_after: 600
+    #   icon: mdi:identifier
+    #   unique_id: weathersense_indoor_1_channel
+    #   value_template: "{{ value_json.channel }}"
 
-    - name: WeatherSense Indoor 1 Battery
-      state_topic: "weathersense/F016TH/1"
-      expire_after: 600
-      unique_id: weathersense_indoor_1_battery
-      value_template: "{{ value_json.battery }}"
+    # - name: WeatherSense Indoor 1 Battery
+    #   state_topic: "weathersense/F016TH/1"
+    #   expire_after: 600
+    #   unique_id: weathersense_indoor_1_battery
+    #   value_template: "{{ value_json.battery }}"
 
-    - name: WeatherSense Indoor 1 Temperature
-      state_topic: "weathersense/F016TH/1"
-      device_class: temperature
-      expire_after: 600
-      unique_id: weathersense_indoor_1_temperature
-      unit_of_measurement: "°C"
-      value_template: "{{ ((( value_json.temperature_F | float(0.0) ) - 32) * 5/9) | round(1) }}"
+    # - name: WeatherSense Indoor 1 Temperature
+    #   state_topic: "weathersense/F016TH/1"
+    #   device_class: temperature
+    #   expire_after: 600
+    #   unique_id: weathersense_indoor_1_temperature
+    #   unit_of_measurement: "°C"
+    #   value_template: "{{ ((( value_json.temperature_F | float(0.0) ) - 32) * 5/9) | round(1) }}"
 
-    - name: WeatherSense Indoor 1 Humidity
-      state_topic: "weathersense/F016TH/1"
-      device_class: humidity
-      expire_after: 600
-      unique_id: weathersense_indoor_1_humidity
-      unit_of_measurement: "%"
-      value_template: "{{ value_json.humidity }}"
+    # - name: WeatherSense Indoor 1 Humidity
+    #   state_topic: "weathersense/F016TH/1"
+    #   device_class: humidity
+    #   expire_after: 600
+    #   unique_id: weathersense_indoor_1_humidity
+    #   unit_of_measurement: "%"
+    #   value_template: "{{ value_json.humidity }}"
 
-    - name: WeatherSense Indoor 2 Channel
-      state_topic: "weathersense/F016TH/2"
-      expire_after: 600
-      icon: mdi:identifier
-      unique_id: weathersense_indoor_2_channel
-      value_template: "{{ value_json.channel }}"
+    # - name: WeatherSense Indoor 2 Channel
+    #   state_topic: "weathersense/F016TH/2"
+    #   expire_after: 600
+    #   icon: mdi:identifier
+    #   unique_id: weathersense_indoor_2_channel
+    #   value_template: "{{ value_json.channel }}"
 
-    - name: WeatherSense Indoor 2 Battery
-      state_topic: "weathersense/F016TH/2"
-      expire_after: 600
-      unique_id: weathersense_indoor_2_battery
-      value_template: "{{ value_json.battery }}"
+    # - name: WeatherSense Indoor 2 Battery
+    #   state_topic: "weathersense/F016TH/2"
+    #   expire_after: 600
+    #   unique_id: weathersense_indoor_2_battery
+    #   value_template: "{{ value_json.battery }}"
 
-    - name: WeatherSense Indoor 2 Temperature
-      state_topic: "weathersense/F016TH/2"
-      device_class: temperature
-      expire_after: 600
-      unique_id: weathersense_indoor_2_temperature
-      unit_of_measurement: "°C"
-      value_template: "{{ ((( value_json.temperature_F | float(0.0) ) - 32) * 5/9) | round(1) }}"
+    # - name: WeatherSense Indoor 2 Temperature
+    #   state_topic: "weathersense/F016TH/2"
+    #   device_class: temperature
+    #   expire_after: 600
+    #   unique_id: weathersense_indoor_2_temperature
+    #   unit_of_measurement: "°C"
+    #   value_template: "{{ ((( value_json.temperature_F | float(0.0) ) - 32) * 5/9) | round(1) }}"
 
-    - name: WeatherSense Indoor 2 Humidity
-      state_topic: "weathersense/F016TH/2"
-      device_class: humidity
-      expire_after: 600
-      unique_id: weathersense_indoor_2_humidity
-      unit_of_measurement: "%"
-      value_template: "{{ value_json.humidity }}"
+    # - name: WeatherSense Indoor 2 Humidity
+    #   state_topic: "weathersense/F016TH/2"
+    #   device_class: humidity
+    #   expire_after: 600
+    #   unique_id: weathersense_indoor_2_humidity
+    #   unit_of_measurement: "%"
+    #   value_template: "{{ value_json.humidity }}"
 
 # Sensors
 #
 # https://www.home-assistant.io/integrations/sensor/
 #
 sensor:
-  # Derivative
-  #
-  # https://www.home-assistant.io/integrations/derivative/
-  #
-  - platform: derivative
-    source: sensor.indoor_temperature
-    name: Indoor temperature change per hour
-    round: 1
-    unit_time: h # the resulting "unit_of_measurement" will be °C/h if the sensor.temperate has set °C as it's unit
-    time_window: "00:30:00" # we look at the change over the last half hour
 
   # Average
   #
@@ -203,15 +193,15 @@ sensor:
   - platform: average
     name: Indoor Temperature Average
     entities:
-      - sensor.weathersense_indoor_1_temperature
-      - sensor.weathersense_indoor_2_temperature
+      - sensor.f016th_channel_1_temperature
+      - sensor.f016th_channel_2_temperature
       # - sensor.enviro_3_bme280_temperature
 
   - platform: average
     name: Indoor Humidity Average
     entities:
-      - sensor.weathersense_indoor_1_humidity
-      - sensor.weathersense_indoor_2_humidity
+      - sensor.f016th_channel_1_humidity
+      - sensor.f016th_channel_2_humidity
 
   # Mold Indicator
   #
@@ -230,18 +220,18 @@ sensor:
 thermal_comfort:
   - custom_icons: true
     sensor:
-      - name: "Weathersense Indoor 1"
-        temperature_sensor: sensor.weathersense_indoor_1_temperature
-        humidity_sensor: sensor.weathersense_indoor_1_humidity
+      - name: "Thermal Comfort F016TH Channel 1"
+        temperature_sensor: sensor.f016th_channel_1_temperature
+        humidity_sensor: sensor.f016th_channel_1_humidity
         sensor_types:
           - absolute_humidity
           - heat_index
           - humidex
           - humidex_perception
           - thermal_perception
-      - name: "Weathersense Indoor 2"
-        temperature_sensor: sensor.weathersense_indoor_2_temperature
-        humidity_sensor: sensor.weathersense_indoor_2_humidity
+      - name: "Thermal Comfort F016TH Channel 2"
+        temperature_sensor: sensor.f016th_channel_2_temperature
+        humidity_sensor: sensor.f016th_channel_2_humidity
         sensor_types:
           - absolute_humidity
           - heat_index
@@ -267,7 +257,7 @@ input_boolean:
 # https://www.home-assistant.io/integrations/input_number/
 #
 input_number:
-  temperature_delay:
+  delay_temperature_alert:
     name: Delay for temperature alerts
     initial: 5
     min: 0
@@ -296,16 +286,16 @@ input_number:
 #
 automation:
   # Alert when indoor temperature is higher then 24oC
-  - alias: Indoor Temperature alert
-    id: alert_indoor_temperature
+  - alias: Alert Indoor Temperature High
+    id: alert_indoor_temperature_high
     trigger:
       platform: numeric_state
       entity_id:
-        - sensor.weathersense_indoor_1_temperature
-        - sensor.weathersense_indoor_2_temperature
+        - sensor.f016th_channel_1_temperature
+        - sensor.f016th_channel_2_temperature
       above: 24
       for:
-        minutes: "{{ states('input_number.temperature_delay') | int(1) }}"
+        minutes: "{{ states('input_number.delay_temperature_alert') | int(1) }}"
     action:
       service: notify.mobile_app_nokia_5_3
       data:
@@ -313,13 +303,13 @@ automation:
           "{{ trigger.to_state.attributes.friendly_name }} above 24°C"
 
   # Alert when outside temperature less than indoor - time to open windows
-  - alias: Open windows in summer
-    id: windows_summmer_open
+  - alias: Open windows in Summer
+    id: alert_summer_open_windows
     trigger:
       - platform: template
         value_template: "{{ states('sensor.outdoor_temperature') | float(0.0) < states('sensor.indoor_temperature') | float(0.0) }}"
         for:
-          minutes: "{{ states('input_number.temperature_delay') | int(1) }}"
+          minutes: "{{ states('input_number.delay_temperature_alert') | int(1) }}"
     condition:
       condition: or
       conditions:
@@ -336,8 +326,8 @@ automation:
             "Open windows! Outside temperature {{ states('sensor.outdoor_temperature') | round(1) }} lower than inside {{ states('sensor.indoor_temperature') | round(1)}}"
 
   # Alert when outside temperature grater than indoor in Summer
-  - alias: Close windows in summer
-    id: windows_summer_close
+  - alias: Close windows in Summer
+    id: alert_summer_close_windows
     trigger:
       - platform: template
         value_template: "{{ states('sensor.outdoor_temperature') | float(0.0) > states('sensor.indoor_temperature') | float(0.0) }}"

@@ -222,7 +222,7 @@ template:
       - name: "Outdoor Temperature"
         device_class: temperature
         state: >
-          {% set state = states('sensor.weatherstation_temperature') | float(0.0) %}
+          {% set state = states('sensor.ft020t_temperature') | float(0.0) %}
           {% if is_number(state) and state > 0.0 and state < 50.0 %}
             {{ state }}
           {% endif %}
@@ -232,7 +232,7 @@ template:
       - name: "Outdoor Humidity"
         device_class: humidity
         state: >
-          {% set state = states('sensor.weatherstation_humidity') | float(0.0) %}
+          {% set state = states('sensor.ft020t_humidity') | float(0.0) %}
           {% if is_number(state) and state > 0.0 and state < 100.0 %}
             {{ state }}
           {% endif %}
@@ -242,7 +242,7 @@ template:
         # Based on https://community.home-assistant.io/t/template-sensor-wind-direction/297574/17
       - name: "Wind Direction"
         state: >
-          {%- if states('sensor.weatherstation_windspeed_avg') | float(0.0) < 0.1 -%}
+          {%- if states('sensor.ft020t_windspeed_avg_2') | float(0.0) < 0.1 -%}
           CALM
           {%- else -%}
           {% set direction = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW','N'] %}
@@ -354,11 +354,11 @@ automation:
 #
 utility_meter:
   rainfall_daily:
-    source: sensor.weatherstation_cumulative_rain
+    source: sensor.ft020t_cumulative_rain
     cycle: daily
   rainfall_monthly:
-    source: sensor.weatherstation_cumulative_rain
+    source: sensor.ft020t_cumulative_rain
     cycle: monthly
   rainfall_annual:
-    source: sensor.weatherstation_cumulative_rain
+    source: sensor.ft020t_cumulative_rain
     cycle: yearly

@@ -63,6 +63,12 @@ resources:
 
 # Add more dashboards
 dashboards:
+  lovelace-overview:
+    mode: yaml
+    filename: ui-lovelace.yaml
+    title: Overview
+    icon: mdi:home
+    show_in_sidebar: true
   lovelace-areas: # Needs to contain a hyphen (-)
     mode: yaml
     filename: ui-areas.yaml

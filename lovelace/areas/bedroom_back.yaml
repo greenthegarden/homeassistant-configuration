@@ -8,7 +8,7 @@ cards:
   - type: vertical-stack
     cards:
       - type: tile
-        entity: sensor.weathersense_indoor_2_thermal_perception
+        entity: sensor.thermal_comfort_f016th_channel_2_thermal_perception
         name: Thermal Comfort
         secondary_info: last-updated
           # - entity: sensor.weathersense_indoor_2_temperature
@@ -39,7 +39,7 @@ cards:
         cards:
           - type: custom:mini-graph-card
             entities:
-              - entity: sensor.weathersense_indoor_2_temperature
+              - entity: sensor.f016th_channel_2_temperature
                 name: F016TH
             hours_to_show: 48
             color_thresholds:
@@ -54,7 +54,7 @@ cards:
             #   name: Enviro+
           - type: custom:mini-graph-card
             entities:
-              - entity: sensor.weathersense_indoor_2_humidity
+              - entity: sensor.f016th_channel_2_humidity
                 name: F016TH
             hours_to_show: 48
             title: Humidity
@@ -63,12 +63,10 @@ cards:
 
   - type: entities
     entities:
-      - entity: binary_sensor.weathersense_indoor_2_battery_low
+      - entity: binary_sensor.f016th_channel_2_battery_low
         name: Battery Low
         secondary_info: last-updated
-      - entity: sensor.weathersense_indoor_2_channel
-        name: Channel
-    title: Weathersense
+    title: F016TH Thermo-Hygrometer Channel 2
         
   # - type: history-graph
   #   title: Gases
