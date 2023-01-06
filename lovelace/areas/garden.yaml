@@ -1,9 +1,9 @@
 ---
 # lovelace_gen
-title: House
+title: Garden
 subview: true
 icon: mdi:home-outline
-path: area_home
+path: area_garden
 cards:
   - type: vertical-stack
     cards:

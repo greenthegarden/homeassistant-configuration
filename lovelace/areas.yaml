@@ -8,6 +8,9 @@ cards:
     area: region
     navigation_path: /lovelace-areas/area_region
   - type: area
+    area: garden
+    navigation_path: /lovelace-areas/area_garden
+  - type: area
     area: home
     navigation_path: /lovelace-areas/area_home
   - type: area

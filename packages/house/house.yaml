@@ -210,7 +210,7 @@ sensor:
   - platform: mold_indicator
     indoor_temp_sensor: sensor.indoor_temperature
     indoor_humidity_sensor: sensor.indoor_humidity
-    outdoor_temp_sensor: sensor.weatherstation_temperature
+    outdoor_temp_sensor: sensor.outdoor_temperature
     calibration_factor: 2.0
 
 # Thermal Comfort

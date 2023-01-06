@@ -90,13 +90,13 @@ cards:
       - entity: sensor.outdoor_thermal_comfort_thermal_perception
         name: Thermal Comfort
         secondary_info: last-updated
-      - entity: sensor.weatherstation_temperature
+      - entity: sensor.outdoor_temperature
         name: Temperature
         secondary_info: last-updated
-      - entity: sensor.weatherstation_humidity
+      - entity: sensor.outdoor_humidity
         name: Humidity
         secondary_info: last-updated
-      - entity: sensor.weatherstation_windspeed_avg
+      - entity: sensor.ft020t_windspeed_avg
         name: Windspeed
         icon: mdi:weather-windy
         secondary_info: last-updated
@@ -108,11 +108,11 @@ cards:
         name: Rain
         icon: mdi:weather-rainy
         secondary_info: last-updated
-      - entity: sensor.weatherstation_uv
-        name: UV
-        icon: mdi:sun-wireless
-        secondary_info: last-updated
-      - entity: sensor.weatherstation_light
+      # - entity: sensor.ft020t_uv
+      #   name: UV
+      #   icon: mdi:sun-wireless
+      #   secondary_info: last-updated
+      - entity: sensor.ft020t_light
         name: Light
         icon: mdi:weather-sunny
         secondary_info: last-updated
