@@ -9,6 +9,7 @@ title: Areas
 views:
   - !include lovelace/areas.yaml
   - !include lovelace/areas/region.yaml
+  - !include lovelace/areas/garden.yaml
   - !include lovelace/areas/home.yaml
   - !include lovelace/areas/porch.yaml
   - !include lovelace/areas/fronthall.yaml

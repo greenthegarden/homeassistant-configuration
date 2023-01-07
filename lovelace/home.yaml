@@ -78,80 +78,6 @@ cards:
           - entity: sensor.time_in_london
             name: London
 
-  # - type: entities
-  #   title: Switches
-  #   entities:
-  #     - switch.relay_1
-  #     - switch.relay_2
-
-  - type: entities
-    title: Weather Sensor
-    entities:
-      - entity: sensor.outdoor_thermal_comfort_thermal_perception
-        name: Thermal Comfort
-        secondary_info: last-updated
-      - entity: sensor.outdoor_temperature
-        name: Temperature
-        secondary_info: last-updated
-      - entity: sensor.outdoor_humidity
-        name: Humidity
-        secondary_info: last-updated
-      - entity: sensor.ft020t_windspeed_avg
-        name: Windspeed
-        icon: mdi:weather-windy
-        secondary_info: last-updated
-      - entity: sensor.wind_direction
-        name: Wind Direction
-        icon: mdi:windsock
-        secondary_info: last-updated
-      - entity: sensor.rainfall_daily
-        name: Rain
-        icon: mdi:weather-rainy
-        secondary_info: last-updated
-      # - entity: sensor.ft020t_uv
-      #   name: UV
-      #   icon: mdi:sun-wireless
-      #   secondary_info: last-updated
-      - entity: sensor.ft020t_light
-        name: Light
-        icon: mdi:weather-sunny
-        secondary_info: last-updated
-
-  - type: entities
-    title: Current weather
-    entities:
-      - entity: sensor.bom_home_temp
-        name: Temp
-        secondary_info: last-updated
-      - entity: sensor.bom_home_temp_feels_like
-        name: Feels like
-        secondary_info: last-updated
-      - entity: sensor.bom_home_humidity
-        name: Humidity
-        secondary_info: last-updated
-      - entity: sensor.bom_home_rain_since_9am
-        name: Rain since 9am
-        icon: mdi:weather-rainy
-        secondary_info: last-updated
-
-  - type: history-graph
-    title: Temperature
-    hours_to_show: 24
-    entities:
-      # - entity: sensor.enviro_3_bme280_temperature
-      #   name: Enviro+
-      - entity: sensor.weathersense_indoor_1_temperature
-        name: WeatherSense 1
-      - entity: sensor.weathersense_indoor_2_temperature
-        name: WeatherSense 2
-      - entity: sensor.indoor_temperature
-        name: Indoor average
-      - entity: sensor.outdoor_temperature
-        name: WeatherSensor
-
-  - type: weather-forecast
-    entity: weather.bom_home
-
   - type: vertical-stack
     cards:
       - type: entities
@@ -160,29 +86,132 @@ cards:
           - entity: sensor.indoor_thermal_comfort_thermal_perception
             name: Thermal Comfort
             secondary_info: last-updated
-          - entity: sensor.indoor_temperature
-            name: Temperature
-            secondary_info: last-updated
-          - entity: sensor.indoor_humidity
-            name: Humidity
-            secondary_info: last-updated
-          - entity: sensor.enviro_3_bme280_pressure
-            name: Pressure
-            secondary_info: last-updated
+          # - entity: sensor.indoor_temperature
+          #   name: Temperature
+          #   secondary_info: last-updated
+          # - entity: sensor.indoor_humidity
+          #   name: Humidity
+          #   secondary_info: last-updated
+          # - entity: sensor.enviro_3_bme280_pressure
+          #   name: Pressure
+          #   secondary_info: last-updated
           - entity: sensor.mold_indicator
             name: Mold Indicator
             icon: mdi:virus
             secondary_info: last-updated
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.indoor_temperature
+                name: Indoor
+            hours_to_show: 48
+            color_thresholds:
+              - value: 20
+                color: "#f39c12"
+              - value: 21
+                color: "#d35400"
+              - value: 21.5
+                color: "#c0392b"
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.indoor_humidity
+                name: Indoor
+            hours_to_show: 48
+      - type: entities
+        title: Outdoor Conditions
+        entities:
+          - entity: sensor.outdoor_thermal_comfort_thermal_perception
+            name: Thermal Comfort
+            secondary_info: last-updated
+          # - entity: sensor.outdoor_temperature
+          #   name: Temperature
+          #   secondary_info: last-updated
+          # - entity: sensor.outdoor_humidity
+          #   name: Humidity
+          #   secondary_info: last-updated
+          - entity: sensor.ft020t_windspeed_avg
+            name: Windspeed
+            icon: mdi:weather-windy
+            secondary_info: last-updated
+          - entity: sensor.wind_direction
+            name: Wind Direction
+            icon: mdi:windsock
+            secondary_info: last-updated
+          - entity: sensor.rainfall_daily
+            name: Rain
+            icon: mdi:weather-rainy
+            secondary_info: last-updated
+          # - entity: sensor.ft020t_uv
+          #   name: UV
+          #   icon: mdi:sun-wireless
+          #   secondary_info: last-updated
+          - entity: sensor.ft020t_light
+            name: Light
+            icon: mdi:weather-sunny
+            secondary_info: last-updated
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.outdoor_temperature
+                name: Outdoor
+            hours_to_show: 48
+            color_thresholds:
+              - value: 20
+                color: "#f39c12"
+              - value: 21
+                color: "#d35400"
+              - value: 21.5
+                color: "#c0392b"
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.outdoor_humidity
+                name: Outdoor
+            hours_to_show: 48
+      - type: history-graph
+        title: Temperature
+        hours_to_show: 24
+        entities:
+          # - entity: sensor.enviro_3_bme280_temperature
+          #   name: Enviro+
+          - entity: sensor.f016th_channel_1_temperature
+            name: WeatherSense 1
+          - entity: sensor.f016th_channel_2_temperature
+            name: WeatherSense 2
+          - entity: sensor.indoor_temperature
+            name: Indoor
+          - entity: sensor.outdoor_temperature
+            name: Outdoor
+
+  - type: vertical-stack
+    cards:
+      - type: entities
+        title: Weather
+        entities:
+          - entity: sensor.bom_home_temp
+            name: Temp
+            secondary_info: last-updated
+          - entity: sensor.bom_home_temp_feels_like
+            name: Feels like
+            secondary_info: last-updated
+          - entity: sensor.bom_home_humidity
+            name: Humidity
+            secondary_info: last-updated
+          - entity: sensor.bom_home_rain_since_9am
+            name: Rain since 9am
+            icon: mdi:weather-rainy
+            secondary_info: last-updated
+      - type: weather-forecast
+        entity: weather.bom_home
+
+
+
+
+  - type: vertical-stack
+    cards:
+
       - type: tile
         entity: input_boolean.windows_open
-        secondary_info: last-updated
       - type: tile
         entity: input_boolean.heater_on
-        secondary_info: last-updated
-
-  - type: entities
-    title: Bin collection
-    entities:
-      - entity: sensor.general_waste
-      - entity: sensor.green_waste
-      - entity: sensor.recycling

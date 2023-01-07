@@ -13,18 +13,38 @@ cards:
           - entity: sensor.indoor_thermal_comfort_thermal_perception
             name: Thermal Comfort
             secondary_info: last-updated
-          - entity: sensor.indoor_temperature
-            name: Temperature
-            secondary_info: last-updated
-          - entity: sensor.indoor_humidity
-            name: Humidity
-            secondary_info: last-updated
+          # - entity: sensor.indoor_temperature
+          #   name: Temperature
+          #   secondary_info: last-updated
+          # - entity: sensor.indoor_humidity
+          #   name: Humidity
+          #   secondary_info: last-updated
           # - entity: sensor.enviro_3_bme280_pressure
           #   name: Pressure
+          #   secondary_info: last-updated
           - entity: sensor.mold_indicator
             name: Mold Indicator
             icon: mdi:virus
             secondary_info: last-updated
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.indoor_temperature
+                name: Indoor
+            hours_to_show: 48
+            color_thresholds:
+              - value: 20
+                color: "#f39c12"
+              - value: 21
+                color: "#d35400"
+              - value: 21.5
+                color: "#c0392b"
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.indoor_humidity
+                name: Indoor
+            hours_to_show: 48
       - type: entities
         # title: Indoor Air Quality
         entities:
@@ -35,10 +55,3 @@ cards:
         entities:
           - entity: input_boolean.heater_on
             secondary_info: last-updated
-
-  - type: entities
-    title: Bin collection
-    entities:
-      - entity: sensor.general_waste
-      - entity: sensor.green_waste
-      - entity: sensor.recycling

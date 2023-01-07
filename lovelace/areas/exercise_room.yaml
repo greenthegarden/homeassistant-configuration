@@ -35,10 +35,9 @@ cards:
                 name: F016TH
             hours_to_show: 24
             title: Humidity
-
-  - type: entities
-    entities:
-      - entity: binary_sensor.f016th_channel_1_battery_low
-        name: Battery Low
-        secondary_info: last-updated
-    title: F016TH Thermo-Hygrometer Channel 1
+      - type: entities
+        entities:
+          - entity: binary_sensor.f016th_channel_1_battery_low
+            name: Battery Low
+            secondary_info: last-updated
+        title: F016TH Thermo-Hygrometer Channel 1

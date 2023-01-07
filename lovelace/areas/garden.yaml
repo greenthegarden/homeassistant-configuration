@@ -8,33 +8,109 @@ cards:
   - type: vertical-stack
     cards:
       - type: entities
-        title: Indoor Conditions
         entities:
-          - entity: sensor.indoor_thermal_comfort_thermal_perception
+          - entity: sensor.outdoor_thermal_comfort_thermal_perception
             name: Thermal Comfort
+          - entity: sensor.ft020t_windspeed_avg_2
+            name: Windspeed
             secondary_info: last-updated
-          - entity: sensor.indoor_temperature
-            name: Temperature
+          - entity: sensor.wind_direction
             secondary_info: last-updated
-          - entity: sensor.indoor_humidity
-            name: Humidity
-            secondary_info: last-updated
-          # - entity: sensor.enviro_3_bme280_pressure
-          #   name: Pressure
-          - entity: sensor.mold_indicator
-            name: Mold Indicator
-            icon: mdi:virus
-            secondary_info: last-updated
+        title: Outdoor Conditions
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.outdoor_temperature
+                # name: 
+            hours_to_show: 24
+            color_thresholds:
+              - value: 20
+                color: "#f39c12"
+              - value: 21
+                color: "#d35400"
+              - value: 21.5
+                color: "#c0392b"
+            title: Temperature
+              # - entity: sensor.enviroplus_1_temperature
+            #   name: Enviro+
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.outdoor_humidity
+                # name: F016TH
+            hours_to_show: 24
+            title: Humidity
+              # - entity: sensor.enviroplus_1_humidity
+              #   name: Enviro+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.ft020t_light
+            hours_to_show: 24
+            title: Light
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.ft020t_uv
+            hours_to_show: 24
+            title: UV
+
+  - type: vertical-stack
+    cards:
       - type: entities
-        # title: Indoor Air Quality
         entities:
-          - entity: input_boolean.windows_open
+          # - entity: sensor.solarmax_battery_curent
+          #   name: Battery Current
+          #   secondary_info: last-updated
+          # - entity: sensor.solarmax_battery_voltage
+          #   name: Battery Voltage
+          #   secondary_info: last-updated
+          - entity: sensor.solarmax_battery_power
+            name: Battery Power
             secondary_info: last-updated
-      - type: entities
-        # title: Indoor Air Quality
-        entities:
-          - entity: input_boolean.heater_on
+          # - entity: sensor.solarmax_solar_current
+          #   naeme: Solar Current
+          #   secondary_info: last-updated
+          # - entity: sensor.solarmax_solar_voltage
+          #   name: Solar Voltage
+          #   secondary_info: last-updated
+          - entity: sensor.solarmax_solar_power
+            name: Solar Power
             secondary_info: last-updated
+          # - entity: sensor.solarmax_load_current
+          #   name: Load Current
+          #   secondary_info: last-updated
+          # - entity: sensor.solarmax_load_voltage
+          #   name: Load Voltage
+          #   secondary_info: last-updated
+          - entity: sensor.solarmax_load_power
+            name: Load Power
+            secondary_info: last-updated
+        title: SolarMAX
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.solarmax_battery_curent
+                name: Battery
+              - entity: sensor.solarmax_solar_current
+                name: Solar
+              - entity: sensor.solarmax_load_current
+                name: Load
+            hours_to_show: 24
+            title: Current
+              # - entity: sensor.enviroplus_1_temperature
+            #   name: Enviro+
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.solarmax_battery_voltage
+                name: Battery
+              - entity: sensor.solarmax_solar_voltage
+                name: Solar
+              - entity: sensor.solarmax_load_voltage
+                name: Load
+            hours_to_show: 24
+            title: Voltage
 
   - type: entities
     title: Bin collection

@@ -61,12 +61,12 @@ cards:
               # - entity: sensor.enviroplus_1_humidity
               #   name: Enviro+
 
-  - type: entities
-    entities:
-      - entity: binary_sensor.f016th_channel_2_battery_low
-        name: Battery Low
-        secondary_info: last-updated
-    title: F016TH Thermo-Hygrometer Channel 2
+      - type: entities
+        entities:
+          - entity: binary_sensor.f016th_channel_2_battery_low
+            name: Battery Low
+            secondary_info: last-updated
+        title: F016TH Thermo-Hygrometer Channel 2
         
   # - type: history-graph
   #   title: Gases

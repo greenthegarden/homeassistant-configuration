@@ -1,0 +1,35 @@
+---
+# Package: Power / SolarMAX
+
+# new templating structure
+template:
+  - sensor:
+      - name: "SolarMAX Battery Power"
+        unique_id: solarmax_battery_power
+        device_class: power
+        state: >
+          {% set current = states('sensor.solarmax_battery_curent') | float(0.0) %}
+          {% set voltage = states('sensor.solarmax_battery_voltage') | float(0.0) %}
+          {{ (current * voltage) | round(2, default=0) }}
+        state_class: measurement
+        unit_of_measurement: "W"
+
+      - name: "SolarMAX Solar Power"
+        unique_id: solarmax_solar_power
+        device_class: power
+        state: >
+          {% set current = states('sensor.solarmax_solar_current') | float(0.0) %}
+          {% set voltage = states('sensor.solarmax_solar_voltage') | float(0.0) %}
+          {{ (current * voltage) | round(2, default=0) }}
+        state_class: measurement
+        unit_of_measurement: "W"
+
+      - name: "SolarMAX Load Power"
+        unique_id: solarmax_load_power
+        device_class: power
+        state: >
+          {% set current = states('sensor.solarmax_load_current') | float(0.0) %}
+          {% set voltage = states('sensor.solarmax_load_voltage') | float(0.0) %}
+          {{ (current * voltage) | round(2, default=0) }}
+        state_class: measurement
+        unit_of_measurement: "W"

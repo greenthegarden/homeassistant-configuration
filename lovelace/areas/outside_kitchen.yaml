@@ -8,26 +8,6 @@ cards:
   - type: vertical-stack
     cards:
       - type: entities
-        entities:
-          - entity: sensor.duo_solar_monitor_state
-            name: Duo State
-            secondary_info: last-updated
-      - type: entities
-        entities:
-          - entity: sensor.thumper_80ah_voltage
-            name: Battery Voltage
-            secondary_info: last-updated
-      - type: history-graph
-        hours_to_show: 24
-        entities:
-          - entity: sensor.thumper_80ah_voltage
-            name: Battery Voltage
-      - type: history-graph
-        hours_to_show: 24
-        entities:
-          - entity: sensor.thumper_80ah_voltage_derivative
-            name: Battery Voltage Derivative
-      - type: entities
         title: Cooking
         entities:
           - entity: input_boolean.thumper_80ah_battery_boiling_water
@@ -38,8 +18,40 @@ cards:
             secondary_info: last-updated
           - entity: input_boolean.thumper_80ah_battery_heating_food
             secondary_info: last-updated
+
+  - type: vertical-stack
+    cards:
       - type: entities
-        title: Thumper 80Ah Battery Thresholds
+        title: Thumper 80Ah Battery
+        entities:
+          - entity: sensor.thumper_80ah_voltage
+            name: Battery Voltage
+            secondary_info: last-updated
+      # - type: history-graph
+      #   hours_to_show: 24
+      #   entities:
+      #     - entity: sensor.thumper_80ah_voltage_derivative
+            # name: Battery Voltage Derivative
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.thumper_80ah_voltage
+                name: Voltage
+            hours_to_show: 24
+            # title: Temperature
+              # - entity: sensor.enviroplus_1_temperature
+            #   name: Enviro+
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.thumper_80ah_voltage_derivative
+                name: Derivative
+            hours_to_show: 24
+            # title: Humidity
+              # - entity: sensor.enviroplus_1_humidity
+              #   name: Enviro+
+      - type: entities
+        title: Thresholds
         entities:
           - type: section
             label: Trigger Times
@@ -75,6 +87,11 @@ cards:
           #   style: >
           #     .body{display:block!important}
           #     .body::after{text-align:center;font-size:10px;content:"Minutes";display:block!important}
+      - type: entities
+        entities:
+          - entity: sensor.duo_solar_monitor_state
+            name: Duo State
+            secondary_info: last-updated
 
   - type: vertical-stack
     cards:
@@ -90,13 +107,21 @@ cards:
             name: Solar Energy
             secondary_info: last-updated
         title: Solar Production
-      - type: history-graph
+      # - type: history-graph
+      #   hours_to_show: 24
+      #   entities:
+      #     - entity: sensor.350w_solar_system_power
+      #       name: Measured Solar Power
+      #     - entity: sensor.power_production_now
+      #       name: Estimated Solar Power
+      #   # title: Solar Power
+      - type: custom:mini-graph-card
         hours_to_show: 24
         entities:
           - entity: sensor.350w_solar_system_power
-            name: Measured Solar Power
+            name: Measured
           - entity: sensor.power_production_now
-            name: Estimated Solar Power
+            name: Estimated
         # title: Solar Power
       - type: entities
         entities:
