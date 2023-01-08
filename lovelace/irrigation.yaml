@@ -52,6 +52,22 @@ cards:
           - entity: sensor.irrigation_flowrate
             name: Flowrate
             secondary_info: last-updated
+      - type: horizontal-stack
+        cards:
+          - type: button
+            name: Zones
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-irrigation/irrigation_zones
+          - type: button
+            name: Configuration
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-irrigation/irrigation_configuration
+
+  - type: vertical-stack
+    title: Flowrates
+    cards:
       - type: history-graph
         hours_to_show: 24
         entities:
@@ -163,236 +179,16 @@ cards:
       - type: entities
         title: Current Conditions
         entities:
-          - entity: sensor.weatherstation_temperature
+          - entity: sensor.outdoor_temperature
             name: Temperature
             secondary_info: last-updated
-          - entity: sensor.weatherstation_humidity
+          - entity: sensor.outdoor_humidity
             name: Humidity
             secondary_info: last-updated
           - entity: sensor.rainfall_daily
             name: Rain
             secondary_info: last-updated
-          - entity: sensor.weatherstation_uv
+          - entity: sensor.ft020t_uv
             name: UV
             secondary_info: last-updated
 
-  - type: vertical-stack
-    title: Zones
-    cards:
-      - type: conditional
-        conditions:
-          - entity: input_boolean.relayduino_mode_automatic
-            state: "on"
-          - entity: input_boolean.relayduino_relay_1_enabled
-            state: "on"
-        card:
-          type: entities
-          title: Front lawn
-          entities:
-            - input_number.relayduino_relay_1_duration
-            - input_datetime.relayduino_relay_1_start_time
-            - input_number.relayduino_relay_1_interval
-            - counter.relayduino_relay_1_days_count
-            - input_boolean.relayduino_relay_1_state
-      - type: conditional
-        conditions:
-          - entity: input_boolean.relayduino_mode_automatic
-            state: "on"
-          - entity: input_boolean.relayduino_relay_2_enabled
-            state: "on"
-        card:
-          type: entities
-          title: Front trees
-          entities:
-            - input_number.relayduino_relay_2_duration
-            - input_datetime.relayduino_relay_2_start_time
-            - input_number.relayduino_relay_2_interval
-            - counter.relayduino_relay_2_days_count
-            - input_boolean.relayduino_relay_2_state
-      - type: conditional
-        conditions:
-          - entity: input_boolean.relayduino_mode_automatic
-            state: "on"
-          - entity: input_boolean.relayduino_relay_3_enabled
-            state: "on"
-        card:
-          type: entities
-          title: Shrubs
-          entities:
-            - input_number.relayduino_relay_3_duration
-            - input_datetime.relayduino_relay_3_start_time
-            - input_number.relayduino_relay_3_interval
-            - counter.relayduino_relay_3_days_count
-            - input_boolean.relayduino_relay_3_state
-      - type: conditional
-        conditions:
-          - entity: input_boolean.relayduino_mode_automatic
-            state: "on"
-          - entity: input_boolean.relayduino_relay_4_enabled
-            state: "on"
-        card:
-          type: entities
-          title: Back vegetables
-          entities:
-            - input_number.relayduino_relay_4_duration
-            - input_datetime.relayduino_relay_4_start_time
-            - input_number.relayduino_relay_4_interval
-            - counter.relayduino_relay_4_days_count
-            - input_boolean.relayduino_relay_4_state
-      - type: conditional
-        conditions:
-          - entity: input_boolean.relayduino_mode_automatic
-            state: "on"
-          - entity: input_boolean.relayduino_relay_5_enabled
-            state: "on"
-        card:
-          type: entities
-          title: Relay 5
-          entities:
-            - input_number.relayduino_relay_5_duration
-            - input_datetime.relayduino_relay_5_start_time
-            - input_number.relayduino_relay_5_interval
-            - counter.relayduino_relay_5_days_count
-            - input_boolean.relayduino_relay_5_state
-      - type: conditional
-        conditions:
-          - entity: input_boolean.relayduino_mode_automatic
-            state: "on"
-          - entity: input_boolean.relayduino_relay_6_enabled
-            state: "on"
-        card:
-          type: entities
-          title: Relay 6
-          entities:
-            - input_number.relayduino_relay_6_duration
-            - input_datetime.relayduino_relay_6_start_time
-            - input_number.relayduino_relay_6_interval
-            - counter.relayduino_relay_6_days_count
-            - input_boolean.relayduino_relay_6_state
-      - type: conditional
-        conditions:
-          - entity: input_boolean.relayduino_mode_automatic
-            state: "on"
-          - entity: input_boolean.relayduino_relay_7_enabled
-            state: "on"
-        card:
-          type: entities
-          title: Relay 7
-          entities:
-            - input_number.relayduino_relay_7_duration
-            - input_datetime.relayduino_relay_7_start_time
-            - input_number.relayduino_relay_7_interval
-            - counter.relayduino_relay_7_days_count
-            - input_boolean.relayduino_relay_7_control
-
-      - type: conditional
-        conditions:
-          - entity: input_boolean.relayduino_mode_automatic
-            state: "on"
-          - entity: input_boolean.relayduino_relay_8_enabled
-            state: "on"
-        card:
-          type: entities
-          title: Back trees
-          entities:
-            - input_number.relayduino_relay_8_duration
-            - input_datetime.relayduino_relay_8_start_time
-            - input_number.relayduino_relay_8_interval
-            - counter.relayduino_relay_8_days_count
-            - input_boolean.relayduino_relay_8_control
-
-  - type: vertical-stack
-    title: Configuration
-    cards:
-      - type: entities
-        title: Relays Enabled
-        entities:
-          - entity: input_boolean.relayduino_relay_1_enabled
-            name: Front lawn
-          - entity: input_boolean.relayduino_relay_2_enabled
-            name: Front trees
-          - entity: input_boolean.relayduino_relay_3_enabled
-            name: Shrubs
-          - entity: input_boolean.relayduino_relay_4_enabled
-            name: Back vegetables
-          - entity: input_boolean.relayduino_relay_5_enabled
-            name: Relay 5
-          - entity: input_boolean.relayduino_relay_6_enabled
-            name: Relay 6
-          - entity: input_boolean.relayduino_relay_7_enabled
-            name: Relay 7
-          - entity: input_boolean.relayduino_relay_8_enabled
-            name: Back trees
-      - type: entities
-        title: Main Relay
-        entities:
-          - entity: input_boolean.relayduino_use_main_relay
-            name: Use main relay
-      - type: conditional
-        conditions:
-          - entity: input_boolean.relayduino_use_main_relay
-            state: "on"
-        card:
-          type: entities
-          entities:
-            - entity: input_number.relayduino_main_relay
-              name: Main relay to use
-      - type: entities
-        title: Status
-        entities:
-          - entity: sensor.relayduino_status_uptime
-            name: Uptime
-          - entity: sensor.relayduino_status_memory
-            name: Memory
-          - entity: sensor.relayduino_status_relay
-            name: Relay
-          - entity: sensor.relayduino_status_alarm
-            name: Alarm
-          # - entity: timer.relayduino_healthcheck_timer
-          #   name: Healthcheck
-          # - entity: timer.relayduino_response_timer
-          #   name: Response
-      - type: entities
-        title: Reset counter
-        entities:
-          - input_boolean.relayduino_reset_days_count
-
-  # - type: entities
-  #   title: Debug
-  #   entities:
-  #     - entity: input_boolean.relayduino_mode_automatic
-  #       name: input_boolean.relayduino_mode_automatic
-
-  #     - entity: binary_sensor.relayduino_relay_state
-  #       name: binary_sensor.relayduino_relay_state
-
-  #     - entity: input_boolean.relayduino_relay_state
-  #       name: input_boolean.relayduino_relay_state
-
-  #     - entity: sensor.relayduino_relay_running
-  #       name: sensor.relayduino_relay_running
-
-  #     - entity: input_number.relayduino_relay
-  #       name: input_number.relayduino_relay
-
-  #     - entity: input_number.relayduino_relay_next
-  #       name: input_number.relayduino_relay_next
-
-  #     - entity: input_number.relayduino_relay_duration
-  #       name: input_number.relayduino_relay_duration
-
-  #     - entity: input_number.relayduino_relay_duration_next
-  #       name: input_number.relayduino_relay_duration_next
-
-  #     - entity: input_boolean.relayduino_relay_1_state
-  #       name: input_boolean.relayduino_relay_1_state
-  #     - entity: input_boolean.relayduino_relay_2_state
-  #       name: input_boolean.relayduino_relay_2_state
-  #     - entity: input_boolean.relayduino_relay_7_state
-  #       name: input_boolean.relayduino_relay_7_state
-  #     - entity: input_boolean.relayduino_relay_8_state
-  #       name: input_boolean.relayduino_relay_8_state
-  #     - entity: automation.relayduino_running
-  #       name: automation.relayduino_running
-  #     - entity: automation.relayduino_relay_on
-  #       name: automation.relayduino_relay_on

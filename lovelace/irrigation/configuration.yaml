@@ -1,0 +1,112 @@
+---
+# lovelace_gen
+
+# Zones
+# Relay 1: Shrubs
+# Relay 2: Front trees
+# Relay 3: Front lawn
+# Relay 4: Back vegetables
+# Relay 5:
+# Relay 6:
+# Relay 7:
+# Relay 8:
+
+title: Irrigation Configuration
+icon: mdi:cog-outline
+path: irrigation_configuration
+cards:
+  - type: vertical-stack
+    title: Configuration
+    cards:
+      - type: entities
+        title: Relays Enabled
+        entities:
+          - entity: input_boolean.relayduino_relay_1_enabled
+            name: Front lawn
+          - entity: input_boolean.relayduino_relay_2_enabled
+            name: Front trees
+          - entity: input_boolean.relayduino_relay_3_enabled
+            name: Shrubs
+          - entity: input_boolean.relayduino_relay_4_enabled
+            name: Back vegetables
+          - entity: input_boolean.relayduino_relay_5_enabled
+            name: Relay 5
+          - entity: input_boolean.relayduino_relay_6_enabled
+            name: Relay 6
+          - entity: input_boolean.relayduino_relay_7_enabled
+            name: Relay 7
+          - entity: input_boolean.relayduino_relay_8_enabled
+            name: Back trees
+      - type: entities
+        title: Main Relay
+        entities:
+          - entity: input_boolean.relayduino_use_main_relay
+            name: Use main relay
+      - type: conditional
+        conditions:
+          - entity: input_boolean.relayduino_use_main_relay
+            state: "on"
+        card:
+          type: entities
+          entities:
+            - entity: input_number.relayduino_main_relay
+              name: Main relay to use
+      - type: entities
+        title: Status
+        entities:
+          - entity: sensor.relayduino_status_uptime
+            name: Uptime
+          - entity: sensor.relayduino_status_memory
+            name: Memory
+          - entity: sensor.relayduino_status_relay
+            name: Relay
+          - entity: sensor.relayduino_status_alarm
+            name: Alarm
+          # - entity: timer.relayduino_healthcheck_timer
+          #   name: Healthcheck
+          # - entity: timer.relayduino_response_timer
+          #   name: Response
+      - type: entities
+        title: Reset counter
+        entities:
+          - input_boolean.relayduino_reset_days_count
+
+  # - type: entities
+  #   title: Debug
+  #   entities:
+  #     - entity: input_boolean.relayduino_mode_automatic
+  #       name: input_boolean.relayduino_mode_automatic
+
+  #     - entity: binary_sensor.relayduino_relay_state
+  #       name: binary_sensor.relayduino_relay_state
+
+  #     - entity: input_boolean.relayduino_relay_state
+  #       name: input_boolean.relayduino_relay_state
+
+  #     - entity: sensor.relayduino_relay_running
+  #       name: sensor.relayduino_relay_running
+
+  #     - entity: input_number.relayduino_relay
+  #       name: input_number.relayduino_relay
+
+  #     - entity: input_number.relayduino_relay_next
+  #       name: input_number.relayduino_relay_next
+
+  #     - entity: input_number.relayduino_relay_duration
+  #       name: input_number.relayduino_relay_duration
+
+  #     - entity: input_number.relayduino_relay_duration_next
+  #       name: input_number.relayduino_relay_duration_next
+
+  #     - entity: input_boolean.relayduino_relay_1_state
+  #       name: input_boolean.relayduino_relay_1_state
+  #     - entity: input_boolean.relayduino_relay_2_state
+  #       name: input_boolean.relayduino_relay_2_state
+  #     - entity: input_boolean.relayduino_relay_7_state
+  #       name: input_boolean.relayduino_relay_7_state
+  #     - entity: input_boolean.relayduino_relay_8_state
+  #       name: input_boolean.relayduino_relay_8_state
+  #     - entity: automation.relayduino_running
+  #       name: automation.relayduino_running
+  #     - entity: automation.relayduino_relay_on
+  #       name: automation.relayduino_relay_on
