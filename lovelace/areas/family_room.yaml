@@ -1,6 +1,6 @@
 ---
 # lovelace_gen
 title: Family Room
-subview: true
 icon: mdi:sofa-outline
 path: area_family_room
+subview: true

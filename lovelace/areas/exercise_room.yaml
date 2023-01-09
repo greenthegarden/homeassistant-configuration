@@ -1,9 +1,9 @@
 ---
 # lovelace_gen
 title: Exercise Room
-subview: true
 icon: mdi:run
 path: area_exercise_room
+subview: true
 cards:
   - type: media-control
     entity: media_player.chromecast5751

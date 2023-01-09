@@ -1,9 +1,9 @@
 ---
 # lovelace_gen
 title: Porch
-subview: true
 icon: mdi:coach-lamp
 path: area_porch
+subview: true
 cards:
   - type: tile
     entity: light.light

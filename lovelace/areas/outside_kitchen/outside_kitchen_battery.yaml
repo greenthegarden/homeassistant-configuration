@@ -1,9 +1,9 @@
 ---
 # lovelace_gen
 title: Outside Kitchen Battery
-subview: true
 icon: mdi:battery
 path: area_outside_kitchen_battery
+subview: true
 cards:
   - type: vertical-stack
     cards:

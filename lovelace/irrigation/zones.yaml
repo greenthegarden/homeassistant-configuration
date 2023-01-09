@@ -13,6 +13,7 @@
 title: Irrigation Zones
 icon: mdi:floor-plan
 path: irrigation_zones
+subview: true
 cards:
   - type: vertical-stack
     title: Zones

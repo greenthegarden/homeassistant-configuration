@@ -1,9 +1,9 @@
 ---
 # lovelace_gen
 title: Region
-subview: true
 icon: mdi:home-group
 path: area_region
+subview: true
 cards:
   - type: custom:bom-weather-card
     title: BOM Weather

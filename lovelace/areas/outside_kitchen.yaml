@@ -1,9 +1,9 @@
 ---
 # lovelace_gen
 title: Outside Kitchen
-subview: true
 icon: mdi:pot-steam-outline
 path: area_outside_kitchen
+subview: true
 cards:
   - type: vertical-stack
     cards:

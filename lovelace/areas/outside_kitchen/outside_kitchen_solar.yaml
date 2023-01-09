@@ -1,9 +1,9 @@
 ---
 # lovelace_gen
 title: Outside Kitchen Solar
-subview: true
 icon: mdi:solar
 path: area_outside_kitchen_solar
+subview: true
 cards:
   - type: vertical-stack
     cards:

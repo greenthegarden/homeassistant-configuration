@@ -1,9 +1,9 @@
 ---
 # lovelace_gen
 title: Philip Bedroom
-subview: true
 icon: mdi:bed-outline
 path: area_bedroom_back
+subview: true
 cards:
   - type: vertical-stack
     cards:

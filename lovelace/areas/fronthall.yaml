@@ -1,8 +1,8 @@
 ---
 title: Hall
-subview: true
 icon: mdi:camera
 path: area_fronthall
+subview: true
 cards:
   - type: entities
     show_header_toggle: false

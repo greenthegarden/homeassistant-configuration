@@ -1,6 +1,6 @@
 ---
 # lovelace_gen
 title: Utility Room
-subview: true
 icon: mdi:washing-machine
 path: area_utility_room
+subview: true

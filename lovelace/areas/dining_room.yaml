@@ -1,6 +1,6 @@
 ---
 # lovelace_gen
 title: Dining Room
-subview: true
 icon: mdi:silverware
 path: area_dining_room
+subview: true

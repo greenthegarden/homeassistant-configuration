@@ -56,11 +56,13 @@ cards:
         cards:
           - type: button
             name: Zones
+            icon: mdi:floor-plan
             tap_action:
               action: navigate
               navigation_path: /lovelace-irrigation/irrigation_zones
           - type: button
             name: Configuration
+            icon: mdi:cog-outline
             tap_action:
               action: navigate
               navigation_path: /lovelace-irrigation/irrigation_configuration

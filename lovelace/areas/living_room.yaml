@@ -1,9 +1,9 @@
 ---
 # lovelace_gen
 title: Living Room
-subview: true
 icon: mdi:sofa-outline
 path: area_living_room
+subview: true
 cards:
   - type: media-control
     entity: media_player.living_room_tv

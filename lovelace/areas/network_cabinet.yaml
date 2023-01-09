@@ -1,9 +1,9 @@
 ---
 # lovelace_gen
 title: Network Cabinet
-subview: true
 icon: mdi:server-network
 path: area_network_cabinet
+subview: true
 cards:
   - type: entities
     entities:

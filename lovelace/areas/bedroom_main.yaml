@@ -1,6 +1,6 @@
 ---
 # lovelace_gen
 title: Thanh Bedroom
-subview: true
 icon: mdi:bed-outline
 path: area_bedroom_main
+subview: true
