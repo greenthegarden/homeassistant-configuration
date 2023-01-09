@@ -1,0 +1,54 @@
+---
+# lovelace_gen
+title: Outside Kitchen Battery
+subview: true
+icon: mdi:battery
+path: area_outside_kitchen_battery
+cards:
+  - type: vertical-stack
+    cards:
+      - type: entities
+        title: Thumper 80Ah Battery
+        entities:
+          - entity: sensor.thumper_80ah_voltage
+            name: Battery Voltage
+            secondary_info: last-updated
+          - entity: sensor.thumper_80ah_voltage_derivative
+            name: Derivative
+            secondary_info: last-updated
+      - type: history-graph
+        entities:
+          - entity: sensor.thumper_80ah_voltage
+            name: Voltage
+        hours_to_show: 24
+      - type: entities
+        title: Thresholds
+        entities:
+          - type: section
+            label: Voltages
+          - type: custom:numberbox-card
+            entity: input_number.thumper_80ah_battery_voltage_low
+            name: Low Voltage
+            icon: 'mdi:car-battery'
+            secondary_info: last-changed
+            unit: V
+          - type: custom:numberbox-card
+            entity: input_number.thumper_80ah_battery_voltage_high
+            name: High Voltage
+            icon: 'mdi:car-battery'
+            secondary_info: last-changed
+            unit: V
+          # - type: custom:numberbox-card
+          #   border: true
+          #   entity: input_number.thumper_80ah_battery_load_time
+          #   unit: S
+          #   name: false
+          #   style: >
+          #     .body{display:block!important}
+          #     .body::after{text-align:center;font-size:10px;content:"Minutes";display:block!important}
+      - type: entities
+        entities:
+          - entity: sensor.duo_solar_monitor_state
+            name: Duo State
+            secondary_info: last-updated
+

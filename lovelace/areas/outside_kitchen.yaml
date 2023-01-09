@@ -18,125 +18,26 @@ cards:
             secondary_info: last-updated
           - entity: input_boolean.thumper_80ah_battery_heating_food
             secondary_info: last-updated
-
-  - type: vertical-stack
-    cards:
-      - type: entities
-        title: Thumper 80Ah Battery
-        entities:
-          - entity: sensor.thumper_80ah_voltage
-            name: Battery Voltage
-            secondary_info: last-updated
-      # - type: history-graph
-      #   hours_to_show: 24
-      #   entities:
-      #     - entity: sensor.thumper_80ah_voltage_derivative
-            # name: Battery Voltage Derivative
-      - type: horizontal-stack
-        cards:
-          - type: custom:mini-graph-card
-            entities:
-              - entity: sensor.thumper_80ah_voltage
-                name: Voltage
-            hours_to_show: 24
-            # title: Temperature
-              # - entity: sensor.enviroplus_1_temperature
-            #   name: Enviro+
-          - type: custom:mini-graph-card
-            entities:
-              - entity: sensor.thumper_80ah_voltage_derivative
-                name: Derivative
-            hours_to_show: 24
-            # title: Humidity
-              # - entity: sensor.enviroplus_1_humidity
-              #   name: Enviro+
       - type: entities
         title: Thresholds
         entities:
           - type: section
             label: Trigger Times
-          - type: custom:numberbox-card
-            entity: input_number.thumper_80ah_battery_load_time
-            name: Time
-            icon: 'mdi:timelapse'
-            secondary_info: last-changed
-            unit: mins
           - entity: input_datetime.battery_load_time
             name: Duration
             icon: 'mdi:timelapse'
             secondary_info: last-changed
-          - type: section
-            label: Voltages
-          - type: custom:numberbox-card
-            entity: input_number.thumper_80ah_battery_voltage_low
-            name: Low Voltage
-            icon: 'mdi:car-battery'
-            secondary_info: last-changed
-            unit: V
-          - type: custom:numberbox-card
-            entity: input_number.thumper_80ah_battery_voltage_high
-            name: High Voltage
-            icon: 'mdi:car-battery'
-            secondary_info: last-changed
-            unit: V
-          # - type: custom:numberbox-card
-          #   border: true
-          #   entity: input_number.thumper_80ah_battery_load_time
-          #   unit: S
-          #   name: false
-          #   style: >
-          #     .body{display:block!important}
-          #     .body::after{text-align:center;font-size:10px;content:"Minutes";display:block!important}
-      - type: entities
-        entities:
-          - entity: sensor.duo_solar_monitor_state
-            name: Duo State
-            secondary_info: last-updated
-
-  - type: vertical-stack
-    cards:
-      - type: entities
-        entities:
-          - entity: sensor.solar_350watt_current
-            name: Solar Current
-            secondary_info: last-updated
-          - entity: sensor.350w_solar_system_power
-            name: Solar Power
-            secondary_info: last-updated
-          - entity: sensor.350w_solar_daily_energy
-            name: Solar Energy
-            secondary_info: last-updated
-        title: Solar Production
-      # - type: history-graph
-      #   hours_to_show: 24
-      #   entities:
-      #     - entity: sensor.350w_solar_system_power
-      #       name: Measured Solar Power
-      #     - entity: sensor.power_production_now
-      #       name: Estimated Solar Power
-      #   # title: Solar Power
-      - type: custom:mini-graph-card
-        hours_to_show: 24
-        entities:
-          - entity: sensor.350w_solar_system_power
-            name: Measured
-          - entity: sensor.power_production_now
-            name: Estimated
-        # title: Solar Power
-      - type: entities
-        entities:
-          - entity: sensor.energy_next_hour
-            name: Estimated energy production - next hour
-          - entity: sensor.energy_current_hour
-            name: Estimated energy production - this hour
-          - entity: sensor.energy_production_today
-            name: Estimated energy production - today
-          - entity: sensor.energy_production_tomorrow
-            name: Estimated energy production - tomorrow
-          - entity: sensor.power_production_now
-            name: Estimated power production - now
-          - entity: sensor.power_highest_peak_time_today
-            name: Highest power peak time - today
-          - entity: sensor.power_highest_peak_time_tomorrow
-            name: Highest power peak time - tomorrow
-        title: Solar Production Forecast
+      - type: horizontal-stack
+        cards:
+          - type: button
+            name: Battery
+            icon: mdi:car-battery
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-areas/area_outside_kitchen_battery
+          - type: button
+            name: Solar
+            icon: mdi:solar-power-variant
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-areas/area_outside_kitchen_solar

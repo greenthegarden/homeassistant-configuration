@@ -1,0 +1,54 @@
+---
+# lovelace_gen
+title: Outside Kitchen Solar
+subview: true
+icon: mdi:solar
+path: area_outside_kitchen_solar
+cards:
+  - type: vertical-stack
+    cards:
+      - type: entities
+        entities:
+          - entity: sensor.solar_350watt_current
+            name: Solar Current
+            secondary_info: last-updated
+          - entity: sensor.350w_solar_system_power
+            name: Solar Power
+            secondary_info: last-updated
+          - entity: sensor.350w_solar_daily_energy
+            name: Solar Energy
+            secondary_info: last-updated
+        title: Solar Production
+      # - type: history-graph
+      #   hours_to_show: 24
+      #   entities:
+      #     - entity: sensor.350w_solar_system_power
+      #       name: Measured Solar Power
+      #     - entity: sensor.power_production_now
+      #       name: Estimated Solar Power
+      #   # title: Solar Power
+      - type: history-graph
+        hours_to_show: 24
+        entities:
+          - entity: sensor.350w_solar_system_power
+            name: Measured
+          - entity: sensor.power_production_now
+            name: Estimated
+        # title: Solar Power
+      - type: entities
+        entities:
+          - entity: sensor.energy_next_hour
+            name: Estimated energy production - next hour
+          - entity: sensor.energy_current_hour
+            name: Estimated energy production - this hour
+          - entity: sensor.energy_production_today
+            name: Estimated energy production - today
+          - entity: sensor.energy_production_tomorrow
+            name: Estimated energy production - tomorrow
+          - entity: sensor.power_production_now
+            name: Estimated power production - now
+          - entity: sensor.power_highest_peak_time_today
+            name: Highest power peak time - today
+          - entity: sensor.power_highest_peak_time_tomorrow
+            name: Highest power peak time - tomorrow
+        title: Solar Production Forecast

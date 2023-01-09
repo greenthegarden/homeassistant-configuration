@@ -23,3 +23,6 @@ views:
   - !include lovelace/areas/exercise_room.yaml
   - !include lovelace/areas/bedroom_main.yaml
   - !include lovelace/areas/outside_kitchen.yaml
+  - !include lovelace/areas/outside_kitchen.yaml
+  - !include lovelace/areas/outside_kitchen/outside_kitchen_battery.yaml
+  - !include lovelace/areas/outside_kitchen/outside_kitchen_solar.yaml
