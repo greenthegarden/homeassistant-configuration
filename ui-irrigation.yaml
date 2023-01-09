@@ -8,6 +8,6 @@ title: Irrigation
 # background:
 views:
   - !include lovelace/irrigation.yaml
-  - !include lovelace/irrigation/configuration.yaml
   - !include lovelace/irrigation/zones.yaml
+  - !include lovelace/irrigation/configuration.yaml
 

@@ -212,14 +212,18 @@ thermal_comfort:
 template:
   - binary_sensor:
       - name: "Poor Air Quality"
+        unique_id: binary_sensor_poor_air_quality
         state: "{{ states('sensor.waqi_adelaide_cbd') | int(0) > 100 }}"
       - name: "UV High"
+        unique_id: binary_sensor_uv_high
         state: "{{ states('sensor.weatherstation_uv') | float(0.0) > 5.0 }}"
       - name: "Weatherstation Battery Low"
-        state: "{{ states('sensor.weatherstation_battery') | int(0) == 1 }}"
+        unique_id: binary_sensor_ft020t_battery_low
+        state: "{{ states('sensor.ft020t_battery_state_2') | int(0) == 1 }}"
 
   - sensor:
       - name: "Outdoor Temperature"
+        unique_id: template_outdoor_temperature
         device_class: temperature
         state: >
           {% set state = states('sensor.ft020t_temperature') | float(0.0) %}
@@ -230,6 +234,7 @@ template:
         unit_of_measurement: "°C"
 
       - name: "Outdoor Humidity"
+        unique_id: template_outdoor_humidity
         device_class: humidity
         state: >
           {% set state = states('sensor.ft020t_humidity') | float(0.0) %}
@@ -241,6 +246,7 @@ template:
 
         # Based on https://community.home-assistant.io/t/template-sensor-wind-direction/297574/17
       - name: "Wind Direction"
+        unique_id: template_wind_direction
         state: >
           {%- if states('sensor.ft020t_windspeed_avg_2') | float(0.0) < 0.1 -%}
           CALM
