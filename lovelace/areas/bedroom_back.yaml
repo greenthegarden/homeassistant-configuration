@@ -61,6 +61,26 @@ cards:
               # - entity: sensor.enviroplus_1_humidity
               #   name: Enviro+
 
+      - type: vertical-stack
+        cards:
+          - type: entities
+            entities:
+              - entity: sensor.weathersenseaqi_air_quality_index
+                name: AQI
+                secondary_info: last-updated
+            title: Air Quality
+          - type: horizontal-stack
+            cards:
+              - type: tile
+                entity: sensor.weathersenseaqi_1_0_micron_particles_atmospheric
+                name: 1.0 micron
+              - type: tile
+                entity: sensor.weathersenseaqi_2_5_micron_particles_atmospheric
+                name: 2.5 micron
+              - type: tile
+                entity: sensor.weathersenseaqi_10_micron_particles_atmospheric
+                name: 10 micron
+
       - type: entities
         entities:
           - entity: binary_sensor.f016th_channel_2_battery_low
@@ -78,3 +98,4 @@ cards:
   #       name: Reduced
   #     - entity: sensor.enviroplus_1_nh3
   #       name: NH3
+
