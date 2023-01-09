@@ -84,7 +84,7 @@ input_number:
     name: Interval
     min: 1
     max: 14
-    initial: 1
+    # initial: 1
     step: 1
     mode: box
     unit_of_measurement: days
@@ -95,7 +95,7 @@ input_number:
     name: Duration
     min: 10
     max: 30
-    initial: 10
+    # initial: 10
     step: 5
     mode: box
     unit_of_measurement: minutes

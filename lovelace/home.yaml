@@ -176,9 +176,9 @@ cards:
           # - entity: sensor.enviro_3_bme280_temperature
           #   name: Enviro+
           - entity: sensor.f016th_channel_1_temperature
-            name: WeatherSense 1
+            name: Exercise Room
           - entity: sensor.f016th_channel_2_temperature
-            name: WeatherSense 2
+            name: Back Bedroom
           - entity: sensor.indoor_temperature
             name: Indoor
           - entity: sensor.outdoor_temperature
