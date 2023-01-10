@@ -1,0 +1,44 @@
+---
+# lovelace_gen
+title: Network Cabinet Solar
+icon: mdi:solar
+path: area_network_cabinet_solar
+subview: true
+cards:
+  - type: vertical-stack
+    title: Solar Production
+    cards:
+      - type: entities
+        # title: Solar power system
+        entities:
+          - sensor.solar_voltage_2
+      - type: history-graph
+        # title: Power
+        hours_to_show: 24
+        entities:
+          # - entity: sensor.solar_system_350w_power
+          #   name: Measured Solar Power
+          - entity: sensor.power_production_now_3
+            name: Estimated Solar Power
+
+  - type: vertical-stack
+    title: Solar Forecast
+    cards:
+      - type: entities
+        # title: Solar production forecast
+        entities:
+          - entity: sensor.energy_next_hour_3
+            name: Estimated energy production - next hour
+          - entity: sensor.energy_current_hour_3
+            name: Estimated energy production - this hour
+          - entity: sensor.energy_production_today_3
+            name: Estimated energy production - today
+          - entity: sensor.energy_production_tomorrow_3
+            name: Estimated energy production - tomorrow
+          - entity: sensor.power_production_now_3
+            name: Estimated power production - now
+          - entity: sensor.power_highest_peak_time_today_3
+            name: Highest power peak time - today
+          - entity: sensor.power_highest_peak_time_tomorrow_3
+            name: Highest power peak time - tomorrow
+

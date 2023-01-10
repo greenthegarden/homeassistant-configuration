@@ -18,6 +18,10 @@ views:
   - !include lovelace/areas/family_room.yaml
   - !include lovelace/areas/kitchen.yaml
   - !include lovelace/areas/network_cabinet.yaml
+  - !include lovelace/areas/network_cabinet/network_cabinet_dns.yaml
+  - !include lovelace/areas/network_cabinet/network_cabinet_nas.yaml
+  - !include lovelace/areas/network_cabinet/network_cabinet_solar.yaml
+  - !include lovelace/areas/network_cabinet/network_cabinet_ups.yaml
   - !include lovelace/areas/utility_room.yaml
   - !include lovelace/areas/bedroom_back.yaml
   - !include lovelace/areas/exercise_room.yaml

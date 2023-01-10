@@ -1,0 +1,45 @@
+---
+# lovelace_gen
+title: AdGuard Home DNS
+icon: mdi:shield-check
+path: area_network_cabinet_dns
+subview: true
+cards:
+  - type: vertical-stack
+    title: State
+    cards:
+      - type: entities
+        # title: DNS State
+        entities:
+          - sensor.adguard_home_average_processing_speed
+          - sensor.adguard_home_dns_queries
+          - sensor.adguard_home_dns_queries_blocked
+          - sensor.adguard_home_dns_queries_blocked_ratio
+          - sensor.adguard_home_parental_control_blocked
+          - sensor.adguard_home_safe_browsing_blocked
+          - sensor.adguard_home_safe_searches_enforced
+          # - sensor.adguard_home_rules_count
+      - type: history-graph
+        # title: Power
+        hours_to_show: 24
+        entities:
+          - entity: sensor.adguard_home_average_processing_speed
+
+  - type: vertical-stack
+    title: Controls
+    cards:
+      - type: entities
+        # title: AdGuard Home Controls
+        entities:
+          - entity: switch.adguard_home_filtering
+            name: Filtering
+          - entity: switch.adguard_home_parental_control
+            name: Parental control
+          - entity: switch.adguard_home_protection
+            name: Protection
+          - entity: switch.adguard_home_query_log
+            name: Query log
+          - entity: switch.adguard_home_safe_browsing
+            name: Safe browsing
+          - entity: switch.adguard_home_safe_search
+            name: Safe search

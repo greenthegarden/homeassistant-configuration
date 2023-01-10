@@ -1,0 +1,28 @@
+---
+# lovelace_gen
+title: Back-UPS ES 550G
+icon: mdi:power-plug-battery
+path: area_network_cabinet_ups
+subview: true
+cards:
+  - type: vertical-stack
+    # title: Back-UPS ES 550G
+    cards:
+      - type: entities
+        # title: Back-UPS ES 550G
+        entities:
+          - entity: sensor.ups_status
+            name: Status
+            secondary_info: last-updated
+          - entity: sensor.ups_status_data
+            name: Status Data
+            secondary_info: last-updated
+          - entity: sensor.ups_battery_charge
+            name: Battery Charge
+            secondary_info: last-updated
+          - entity: sensor.ups_load
+            name: Load
+            secondary_info: last-updated
+          - entity: sensor.ups_input_voltage
+            name: Input Voltage
+            secondary_info: last-updated

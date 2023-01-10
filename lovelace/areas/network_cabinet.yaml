@@ -5,59 +5,28 @@ icon: mdi:server-network
 path: area_network_cabinet
 subview: true
 cards:
-  - type: entities
-    entities:
-      - sensor.solar_voltage_2
-    title: Solar power system
-  - type: entities
-    entities:
-      - entity: sensor.energy_next_hour_3
-        name: Estimated energy production - next hour
-      - entity: sensor.energy_current_hour_3
-        name: Estimated energy production - this hour
-      - entity: sensor.energy_production_today_3
-        name: Estimated energy production - today
-      - entity: sensor.energy_production_tomorrow_3
-        name: Estimated energy production - tomorrow
-      - entity: sensor.power_production_now_3
-        name: Estimated power production - now
-      - entity: sensor.power_highest_peak_time_today_3
-        name: Highest power peak time - today
-      - entity: sensor.power_highest_peak_time_tomorrow_3
-        name: Highest power peak time - tomorrow
-    title: Solar production forecast
-  - type: history-graph
-    hours_to_show: 24
-    entities:
-      # - entity: sensor.solar_system_350w_power
-      #   name: Measured Solar Power
-      - entity: sensor.power_production_now_3
-        name: Estimated Solar Power
-    title: Power
-  - type: entities
-    entities:
-      - entity: update.dream_machine
-        secondary_info: last-updated
-    title: Dream Machine
-  - type: entities
-    entities:
-      - entity: switch.adguard_home_filtering
-        name: Filtering
-      - entity: switch.adguard_home_parental_control
-        name: Parental control
-      - entity: switch.adguard_home_protection
-        name: Protection
-      - entity: switch.adguard_home_query_log
-        name: Query log
-      - entity: switch.adguard_home_safe_browsing
-        name: Safe browsing
-      - entity: switch.adguard_home_safe_search
-        name: Safe search
-    title: AdGuard Home
+
   - type: vertical-stack
+    title: Ubiquity Dream Machine
     cards:
       - type: entities
-        title: Speed test
+        # title: Dream Machine
+        entities:
+          - entity: update.dream_machine
+            secondary_info: last-updated
+
+
+  - type: vertical-stack
+    title: External Network
+    cards:
+      - type: entities
+        # title: WAN IP
+        entities:
+          - entity: sensor.myip
+            name: WAN IP
+            secondary_info: last-updated
+      - type: entities
+        # title: Speed test
         entities:
           - entity: sensor.speedtest_ping
             name: Ping
@@ -69,7 +38,7 @@ cards:
             name: Upload
             secondary_info: last-updated
       - type: history-graph
-        title: WAN speed
+        # title: WAN speed
         entities:
           - entity: sensor.speedtest_download
             name: Download
@@ -77,94 +46,32 @@ cards:
           - entity: sensor.speedtest_upload
             name: Upload
             secondary_info: last-updated
-  - type: entities
-    entities:
-      - entity: sensor.ups_status
-        name: Status
-        secondary_info: last-updated
-      - entity: sensor.ups_status_data
-        name: Status Data
-        secondary_info: last-updated
-      - entity: sensor.ups_battery_charge
-        name: Battery Charge
-        secondary_info: last-updated
-      - entity: sensor.ups_load
-        name: Load
-        secondary_info: last-updated
-      - entity: sensor.ups_input_voltage
-        name: Input Voltage
-        secondary_info: last-updated
-    title: UPS
-  - type: conditional
-    conditions:
-      - entity: sensor.storology
-        state: "Online"
-    card:
-      type: entities
-      title: Storology
-      entities:
-        # NAS System Information
-        - entity: sensor.storology_cpu_utilization_total
-          name: CPU Load (Total)
-          secondary_info: last-updated
-        - entity: sensor.storology_memory_usage_real
-          name: Memory Usage
-          secondary_info: last-updated
-        - entity: sensor.storology_temperature
-          name: Temperature
-          secondary_info: last-updated
-        - entity: update.storology_dsm_update
-          name: Update Available
-          secondary_info: last-updated
-        - entity: binary_sensor.storology_security_status
-          name: Security Status
-        # Drive 1 Information
-          secondary_info: last-updated
-        - type: section
-          label: Drive 1
-        - entity: sensor.storology_drive_1_status
-          name: Status (SMART)
-          secondary_info: last-updated
-        - entity: binary_sensor.storology_drive_1_below_min_remaining_life
-          name: Below Min Remaining Life
-          secondary_info: last-updated
-        - entity: binary_sensor.storology_drive_1_exceeded_max_bad_sectors
-          name: Exceeded Max Bad Sectors
-          secondary_info: last-updated
-        - entity: sensor.storology_drive_1_temperature
-          name: Temperature
-        # Drive 2 Information
-        - type: section
-          label: Drive 2
-        - entity: sensor.storology_drive_2_status
-          name: Status (SMART)
-          secondary_info: last-updated
-        - entity: binary_sensor.storology_drive_2_below_min_remaining_life
-          name: Below Min Remaining Life
-          secondary_info: last-updated
-        - entity: binary_sensor.storology_drive_2_exceeded_max_bad_sectors
-          name: Exceeded Max Bad Sectors
-          secondary_info: last-updated
-        - entity: sensor.storology_drive_2_temperature
-          name: Temperature
-          secondary_info: last-updated
-        # Volume 1 Information
-        - type: section
-          label: Volume 1
-        - entity: sensor.storology_volume_1_status
-          name: Status
-          secondary_info: last-updated
-        - entity: sensor.storology_volume_1_volume_used
-          name: Volume Used
-          secondary_info: last-updated
-        - entity: sensor.storology_volume_1_average_disk_temp
-          name: Avg Disk Temperature
-          secondary_info: last-updated
-        # Buttons
-        - type: divider
-        - type: buttons
-          entities:
-            - entity: button.storology_reboot
-              name: Reboot
-            - entity: button.storology_shutdown
-              name: Shutdown
+
+  - type: vertical-stack
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: button
+            name: AdGuard Home
+            icon: mdi:shield-check
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-areas/area_network_cabinet_dns
+          - type: button
+            name: NAS
+            icon: mdi:nas
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-areas/area_network_cabinet_nas
+          - type: button
+            name: UPS
+            icon: mdi:power-plug-battery
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-areas/area_network_cabinet_ups
+          - type: button
+            name: Solar
+            icon: mdi:solar-power-variant
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-areas/area_network_cabinet_solar
