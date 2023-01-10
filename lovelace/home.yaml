@@ -4,14 +4,9 @@ title: Home
 icon: mdi:home-assistant
 path: home
 cards:
-  - type: entities
-    title: At home
-    entities:
-      - entity: binary_sensor.people_home
-        name: People home
-        secondary_info: last-updated
 
   - type: vertical-stack
+    title: Date and Time
     cards:
       - type: markdown
         content: |
@@ -51,7 +46,7 @@ cards:
           {% endif %}
         theme: transparent-card
       - type: entities
-        title: Date and Time
+        # title: Date and Time
         entities:
           - entity: sensor.date_2
           - entity: sensor.time
@@ -79,9 +74,10 @@ cards:
             name: London
 
   - type: vertical-stack
+    title: Conditions
     cards:
       - type: entities
-        title: Indoor Conditions
+        title: Indoor
         entities:
           - entity: sensor.indoor_thermal_comfort_thermal_perception
             name: Thermal Comfort
@@ -118,18 +114,37 @@ cards:
               - entity: sensor.indoor_humidity
                 name: Indoor
             hours_to_show: 48
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.outdoor_temperature
+                name: Outdoor
+            hours_to_show: 48
+            color_thresholds:
+              - value: 20
+                color: "#f39c12"
+              - value: 21
+                color: "#d35400"
+              - value: 21.5
+                color: "#c0392b"
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.outdoor_humidity
+                name: Outdoor
+            hours_to_show: 48
       - type: entities
-        title: Outdoor Conditions
+        title: Outdoor
         entities:
           - entity: sensor.outdoor_thermal_comfort_thermal_perception
             name: Thermal Comfort
             secondary_info: last-updated
-          # - entity: sensor.outdoor_temperature
-          #   name: Temperature
-          #   secondary_info: last-updated
-          # - entity: sensor.outdoor_humidity
-          #   name: Humidity
-          #   secondary_info: last-updated
+          - entity: sensor.outdoor_temperature
+            name: Temperature
+            secondary_info: last-updated
+          - entity: sensor.outdoor_humidity
+            name: Humidity
+            secondary_info: last-updated
           - entity: sensor.ft020t_windspeed_avg
             name: Windspeed
             icon: mdi:weather-windy
@@ -150,25 +165,6 @@ cards:
             name: Light
             icon: mdi:weather-sunny
             secondary_info: last-updated
-      - type: horizontal-stack
-        cards:
-          - type: custom:mini-graph-card
-            entities:
-              - entity: sensor.outdoor_temperature
-                name: Outdoor
-            hours_to_show: 48
-            color_thresholds:
-              - value: 20
-                color: "#f39c12"
-              - value: 21
-                color: "#d35400"
-              - value: 21.5
-                color: "#c0392b"
-          - type: custom:mini-graph-card
-            entities:
-              - entity: sensor.outdoor_humidity
-                name: Outdoor
-            hours_to_show: 48
       - type: history-graph
         title: Temperature
         hours_to_show: 24
@@ -185,9 +181,10 @@ cards:
             name: Outdoor
 
   - type: vertical-stack
+    title: BOM Weather
     cards:
       - type: entities
-        title: Weather
+        # title: Weather
         entities:
           - entity: sensor.bom_home_temp
             name: Temp
@@ -205,12 +202,12 @@ cards:
       - type: weather-forecast
         entity: weather.bom_home
 
-
-
-
   - type: vertical-stack
+    title: Home Settings
     cards:
-
+      - type: tile
+        entity: binary_sensor.people_home
+        name: People home
       - type: tile
         entity: input_boolean.windows_open
       - type: tile
