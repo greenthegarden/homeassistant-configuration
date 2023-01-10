@@ -6,8 +6,10 @@ path: area_outside_kitchen_solar
 subview: true
 cards:
   - type: vertical-stack
+    title: Solar Production
     cards:
       - type: entities
+        # title: Solar Production
         entities:
           - entity: sensor.solar_350watt_current
             name: Solar Current
@@ -18,7 +20,6 @@ cards:
           - entity: sensor.350w_solar_daily_energy
             name: Solar Energy
             secondary_info: last-updated
-        title: Solar Production
       # - type: history-graph
       #   hours_to_show: 24
       #   entities:
@@ -35,7 +36,12 @@ cards:
           - entity: sensor.power_production_now
             name: Estimated
         # title: Solar Power
+
+  - type: vertical-stack
+    title: Solar Forecast
+    cards:
       - type: entities
+        # title: Solar Production Forecast
         entities:
           - entity: sensor.energy_next_hour
             name: Estimated energy production - next hour
@@ -51,4 +57,3 @@ cards:
             name: Highest power peak time - today
           - entity: sensor.power_highest_peak_time_tomorrow
             name: Highest power peak time - tomorrow
-        title: Solar Production Forecast

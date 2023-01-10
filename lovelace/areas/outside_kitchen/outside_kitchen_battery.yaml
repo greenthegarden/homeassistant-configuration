@@ -6,9 +6,10 @@ path: area_outside_kitchen_battery
 subview: true
 cards:
   - type: vertical-stack
+    title: Thumper 80Ah Battery
     cards:
       - type: entities
-        title: Thumper 80Ah Battery
+        # title: Thumper 80Ah Battery
         entities:
           - entity: sensor.thumper_80ah_voltage
             name: Battery Voltage
@@ -22,19 +23,19 @@ cards:
             name: Voltage
         hours_to_show: 24
       - type: entities
-        title: Thresholds
+        # title: Thresholds
         entities:
-          - type: section
-            label: Voltages
+          # - type: section
+          #   label: Voltages
           - type: custom:numberbox-card
             entity: input_number.thumper_80ah_battery_voltage_low
-            name: Low Voltage
+            name: Low Voltage Alert Threshold
             icon: 'mdi:car-battery'
             secondary_info: last-changed
             unit: V
           - type: custom:numberbox-card
             entity: input_number.thumper_80ah_battery_voltage_high
-            name: High Voltage
+            name: High Voltage Alert Threshold
             icon: 'mdi:car-battery'
             secondary_info: last-changed
             unit: V

@@ -6,6 +6,7 @@ path: area_garden
 subview: true
 cards:
   - type: vertical-stack
+    title: Outdoor Conditions
     cards:
       - type: entities
         entities:
@@ -16,7 +17,7 @@ cards:
             secondary_info: last-updated
           - entity: sensor.wind_direction
             secondary_info: last-updated
-        title: Outdoor Conditions
+        # title: Outdoor Conditions
       - type: horizontal-stack
         cards:
           - type: custom:mini-graph-card
@@ -56,6 +57,7 @@ cards:
             title: UV
 
   - type: vertical-stack
+    title: SolarMAX
     cards:
       - type: entities
         entities:
@@ -86,7 +88,7 @@ cards:
           - entity: sensor.solarmax_load_power
             name: Load Power
             secondary_info: last-updated
-        title: SolarMAX
+        # title: SolarMAX
       - type: horizontal-stack
         cards:
           - type: custom:mini-graph-card
@@ -112,9 +114,12 @@ cards:
             hours_to_show: 24
             title: Voltage
 
-  - type: entities
-    title: Bin collection
-    entities:
-      - entity: sensor.general_waste
-      - entity: sensor.green_waste
-      - entity: sensor.recycling
+  - type: vertical-stack
+    title: Bin Collection
+    cards:
+      - type: entities
+        entities:
+          - entity: sensor.general_waste
+          - entity: sensor.green_waste
+          - entity: sensor.recycling
+        # title: Bin collection

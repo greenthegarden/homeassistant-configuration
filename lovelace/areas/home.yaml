@@ -6,9 +6,9 @@ path: area_home
 subview: true
 cards:
   - type: vertical-stack
+    title: Indoor Conditions
     cards:
       - type: entities
-        title: Indoor Conditions
         entities:
           - entity: sensor.indoor_thermal_comfort_thermal_perception
             name: Thermal Comfort
@@ -26,6 +26,7 @@ cards:
             name: Mold Indicator
             icon: mdi:virus
             secondary_info: last-updated
+        # title: Indoor Conditions
       - type: horizontal-stack
         cards:
           - type: custom:mini-graph-card
@@ -45,8 +46,11 @@ cards:
               - entity: sensor.indoor_humidity
                 name: Indoor
             hours_to_show: 48
+
+  - type: vertical-stack
+    title: House State
+    cards:
       - type: entities
-        # title: Indoor Air Quality
         entities:
           - entity: input_boolean.windows_open
             secondary_info: last-updated

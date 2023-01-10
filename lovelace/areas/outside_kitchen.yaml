@@ -6,9 +6,10 @@ path: area_outside_kitchen
 subview: true
 cards:
   - type: vertical-stack
+    title: Cooking
     cards:
       - type: entities
-        title: Cooking
+        # title: Cooking
         entities:
           - entity: input_boolean.thumper_80ah_battery_boiling_water
             secondary_info: last-updated
@@ -19,12 +20,10 @@ cards:
           - entity: input_boolean.thumper_80ah_battery_heating_food
             secondary_info: last-updated
       - type: entities
-        title: Thresholds
+        # title: Thresholds
         entities:
-          - type: section
-            label: Trigger Times
           - entity: input_datetime.battery_load_time
-            name: Duration
+            name: Alert Duration
             icon: 'mdi:timelapse'
             secondary_info: last-changed
       - type: horizontal-stack
