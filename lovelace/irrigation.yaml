@@ -19,7 +19,7 @@ cards:
     title: Status
     cards:
       - type: entities
-        title: Mode
+        # title: Mode
         entities:
           - entity: input_boolean.relayduino_mode_automatic
             secondary_info: last-updated
@@ -41,7 +41,7 @@ cards:
               name: Run
               secondary_info: last-updated
       - type: entities
-        title: States
+        # title: States
         entities:
           - entity: input_boolean.relayduino_relay_state
             name: Irrigation running
@@ -68,7 +68,7 @@ cards:
               navigation_path: /lovelace-irrigation/irrigation_configuration
 
   - type: vertical-stack
-    title: Flowrates
+    title: Monitoring
     cards:
       - type: history-graph
         hours_to_show: 24
@@ -81,21 +81,21 @@ cards:
           - entity: binary_sensor.relayduino_relay_1_state
             name: Front lawn
           - entity: binary_sensor.relayduino_relay_2_state
-            name: Front trees
+            name: Trees
           - entity: binary_sensor.relayduino_relay_3_state
             name: Shrubs
           - entity: binary_sensor.relayduino_relay_4_state
-            name: Back vegetables
+            name: Vegetables
           # - entity: binary_sensor.relayduino_relay_5_state
           #   name: Relay 5
           # - entity: binary_sensor.relayduino_relay_6_state
           #   name: Relay 6
           # - entity: binary_sensor.relayduino_relay_7_state
           #   name: Relay 7
-          - entity: binary_sensor.relayduino_relay_8_state
-            name: Back trees
+          # - entity: binary_sensor.relayduino_relay_8_state
+          #   name: Back Trees
       - type: entities
-        title: Irrigation Use
+        # title: Irrigation Use
         entities:
           - entity: sensor.irrigation_use_daily
             name: Daily

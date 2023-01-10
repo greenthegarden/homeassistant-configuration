@@ -16,7 +16,7 @@ path: irrigation_zones
 subview: true
 cards:
   - type: vertical-stack
-    title: Zones
+    # title: Zones
     cards:
       - type: conditional
         conditions:

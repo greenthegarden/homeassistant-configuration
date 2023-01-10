@@ -15,6 +15,40 @@ cards:
           - entity: update.dream_machine
             secondary_info: last-updated
 
+  - type: vertical-stack
+    title: Other Systems
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: button
+            name: AdGuard Home
+            icon: mdi:shield-check
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-areas/area_network_cabinet_dns
+          - type: conditional
+            conditions:
+              - entity: sensor.storology
+                state: "Online"
+            card:
+              - type: button
+                name: NAS
+                icon: mdi:nas
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-areas/area_network_cabinet_nas
+          - type: button
+            name: UPS
+            icon: mdi:power-plug-battery
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-areas/area_network_cabinet_ups
+          - type: button
+            name: Solar
+            icon: mdi:solar-power-variant
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-areas/area_network_cabinet_solar
 
   - type: vertical-stack
     title: External Network
@@ -47,31 +81,3 @@ cards:
             name: Upload
             secondary_info: last-updated
 
-  - type: vertical-stack
-    cards:
-      - type: horizontal-stack
-        cards:
-          - type: button
-            name: AdGuard Home
-            icon: mdi:shield-check
-            tap_action:
-              action: navigate
-              navigation_path: /lovelace-areas/area_network_cabinet_dns
-          - type: button
-            name: NAS
-            icon: mdi:nas
-            tap_action:
-              action: navigate
-              navigation_path: /lovelace-areas/area_network_cabinet_nas
-          - type: button
-            name: UPS
-            icon: mdi:power-plug-battery
-            tap_action:
-              action: navigate
-              navigation_path: /lovelace-areas/area_network_cabinet_ups
-          - type: button
-            name: Solar
-            icon: mdi:solar-power-variant
-            tap_action:
-              action: navigate
-              navigation_path: /lovelace-areas/area_network_cabinet_solar

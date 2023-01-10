@@ -17,7 +17,7 @@ path: irrigation_configuration
 subview: true
 cards:
   - type: vertical-stack
-    title: Configuration
+    # title: Configuration
     cards:
       - type: entities
         title: Relays Enabled
