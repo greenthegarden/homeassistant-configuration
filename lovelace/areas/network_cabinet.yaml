@@ -7,6 +7,19 @@ subview: true
 cards:
 
   - type: vertical-stack
+    title: Home Assistant Server
+    cards:
+      - type: entities
+        # title: Host System
+        entities:
+          - entity: sensor.disk_use_percent
+            name: Disk Use
+          - entity: sensor.memory_use_percent
+            name: Memory Use
+          - entity: sensor.cpu_speed
+            name: Processor Use
+
+  - type: vertical-stack
     title: Ubiquity Dream Machine
     cards:
       - type: entities
@@ -14,9 +27,22 @@ cards:
         entities:
           - entity: update.dream_machine
             secondary_info: last-updated
+      - type: entities
+        title: Ubiquity Gateway
+        entities:
+          - entity: sensor.unifi_gateway_wlan
+          - entity: sensor.unifi_gateway_firmware_upgradable
+          - entity: sensor.unifi_gateway_alerts
+          - entity: sensor.unifi_gateway_www
+          # - entity: sensor.unifi_gateway_alerts
+          #   name: Country
+          #   attribute: usgipGeo.country_name
+          # - entity: sensor.unifi_gateway_alerts
+          #   name: IP
+          #   attribute: usgip
 
   - type: vertical-stack
-    title: Other Systems
+    title: Links
     cards:
       - type: horizontal-stack
         cards:
@@ -59,25 +85,71 @@ cards:
           - entity: sensor.myip
             name: WAN IP
             secondary_info: last-updated
-      - type: entities
-        # title: Speed test
-        entities:
-          - entity: sensor.speedtest_ping
-            name: Ping
-            secondary_info: last-updated
-          - entity: sensor.speedtest_download
-            name: Download
-            secondary_info: last-updated
-          - entity: sensor.speedtest_upload
-            name: Upload
-            secondary_info: last-updated
-      - type: history-graph
-        # title: WAN speed
-        entities:
-          - entity: sensor.speedtest_download
-            name: Download
-            secondary_info: last-updated
-          - entity: sensor.speedtest_upload
-            name: Upload
-            secondary_info: last-updated
+      # - type: entities
+      #   # title: Speed test
+      #   entities:
+      #     - entity: sensor.speedtest_ping
+      #       name: Ping
+      #       secondary_info: last-updated
+      #     - entity: sensor.speedtest_download
+      #       name: Download
+      #       secondary_info: last-updated
+      #     - entity: sensor.speedtest_upload
+      #       name: Upload
+      #       secondary_info: last-updated
+      # - type: history-graph
+      #   # title: WAN speed
+      #   entities:
+      #     - entity: sensor.speedtest_download
+      #       name: Download
+      #       secondary_info: last-updated
+      #     - entity: sensor.speedtest_upload
+      #       name: Upload
+      #       secondary_info: last-updated
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - sensor.speedtest_ping
+            height: 20
+            line_width: 2
+            font_size: 70
+            hours_to_show: 24
+            points_per_hour: 4
+            show:
+              # extrema: true
+              fill: true
+              graph: bar
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - sensor.speedtest_download
+            height: 50
+            line_width: 2
+            font_size: 70
+            hours_to_show: 24
+            points_per_hour: 4
+            show:
+              extrema: true
+              fill: true
+            color_thresholds:
+              - value: 10
+                color: "#bf4040"
+
+          - type: custom:mini-graph-card
+            entities:
+              - sensor.speedtest_upload
+            height: 50
+            line_width: 2
+            font_size: 70
+            hours_to_show: 24
+            points_per_hour: 4
+            show:
+              extrema: true
+              fill: true
+            color_thresholds:
+              - value: 1.2
+                color: "#bf4040"
 

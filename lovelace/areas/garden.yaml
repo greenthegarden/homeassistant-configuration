@@ -23,8 +23,14 @@ cards:
           - type: custom:mini-graph-card
             entities:
               - entity: sensor.outdoor_temperature
-                # name: 
+                name: Temperature
+            line_width: 2
+            font_size: 70
             hours_to_show: 24
+            points_per_hour: 4
+            show:
+              extrema: true
+              fill: true
             color_thresholds:
               - value: 20
                 color: "#f39c12"
@@ -38,8 +44,14 @@ cards:
           - type: custom:mini-graph-card
             entities:
               - entity: sensor.outdoor_humidity
-                # name: F016TH
+                name: Humidity
+            line_width: 2
+            font_size: 70
             hours_to_show: 24
+            points_per_hour: 4
+            show:
+              extrema: true
+              fill: true
             title: Humidity
               # - entity: sensor.enviroplus_1_humidity
               #   name: Enviro+
@@ -48,12 +60,26 @@ cards:
           - type: custom:mini-graph-card
             entities:
               - entity: sensor.ft020t_light
+                name: Light
+            line_width: 2
+            font_size: 70
             hours_to_show: 24
+            points_per_hour: 4
+            show:
+              extrema: true
+              fill: true
             title: Light
           - type: custom:mini-graph-card
             entities:
               - entity: sensor.ft020t_uv
+                name: UV
+            line_width: 2
+            font_size: 70
             hours_to_show: 24
+            points_per_hour: 4
+            show:
+              extrema: true
+              fill: true
             title: UV
 
   - type: vertical-stack
@@ -99,7 +125,13 @@ cards:
                 name: Solar
               - entity: sensor.solarmax_load_current
                 name: Load
+            line_width: 2
+            font_size: 70
             hours_to_show: 24
+            points_per_hour: 4
+            show:
+              extrema: true
+              fill: true
             title: Current
               # - entity: sensor.enviroplus_1_temperature
             #   name: Enviro+
@@ -111,7 +143,13 @@ cards:
                 name: Solar
               - entity: sensor.solarmax_load_voltage
                 name: Load
+            line_width: 2
+            font_size: 70
             hours_to_show: 24
+            points_per_hour: 4
+            show:
+              extrema: true
+              fill: true
             title: Voltage
 
   - type: vertical-stack

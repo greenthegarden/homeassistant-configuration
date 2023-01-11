@@ -40,8 +40,14 @@ cards:
           - type: custom:mini-graph-card
             entities:
               - entity: sensor.f016th_channel_2_temperature
-                name: F016TH
-            hours_to_show: 48
+                name: Temperature
+            line_width: 2
+            font_size: 70
+            hours_to_show: 24
+            points_per_hour: 4
+            show:
+              extrema: true
+              fill: true
             color_thresholds:
               - value: 20
                 color: "#f39c12"
@@ -55,8 +61,14 @@ cards:
           - type: custom:mini-graph-card
             entities:
               - entity: sensor.f016th_channel_2_humidity
-                name: F016TH
-            hours_to_show: 48
+                name: Humidity
+            line_width: 2
+            font_size: 70
+            hours_to_show: 24
+            points_per_hour: 4
+            show:
+              extrema: true
+              fill: true
             title: Humidity
               # - entity: sensor.enviroplus_1_humidity
               #   name: Enviro+

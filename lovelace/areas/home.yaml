@@ -33,7 +33,13 @@ cards:
             entities:
               - entity: sensor.indoor_temperature
                 name: Indoor
+            line_width: 2
+            font_size: 70
             hours_to_show: 48
+            points_per_hour: 4
+            show:
+              extrema: true
+              fill: true
             color_thresholds:
               - value: 20
                 color: "#f39c12"
@@ -45,7 +51,13 @@ cards:
             entities:
               - entity: sensor.indoor_humidity
                 name: Indoor
+            line_width: 2
+            font_size: 70
             hours_to_show: 48
+            points_per_hour: 4
+            show:
+              extrema: true
+              fill: true
       - type: history-graph
         title: Temperature
         hours_to_show: 24
