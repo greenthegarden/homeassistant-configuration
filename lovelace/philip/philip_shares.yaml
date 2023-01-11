@@ -1,0 +1,72 @@
+---
+# lovelace_gen
+
+# To find user variable look in
+# homeassistant/.storage/person
+
+title: Philip Shares
+icon: mdi:currency-usd
+path: philip_shares
+subview: true
+# visible:
+#   - user: 320e6b0e2ec2483bbbe7e2bdceae0807
+# theme: sad
+cards:
+  - type: vertical-stack
+    title: Cummulative Shares
+    cards:
+      - type: history-graph
+        hours_to_show: 240
+        entities:
+          - entity: sensor.shares_value_edv
+            name: Endeavour Group
+          - entity: sensor.shares_value_tls
+            name: Telstra
+          - entity: sensor.shares_value_wow
+            name: Woolworths
+      - type: entities
+        entities:
+          - entity: sensor.shares_value_total
+            name: Total Value
+          - entity: sensor.asx_data_last_updated
+            # name: Last Updated
+
+  - type: vertical-stack
+    title: Share Details
+    cards:
+      - type: entities
+        title: Endeavour Group
+        entities:
+          - entity: sensor.share_value_edv
+            name: Price
+            secondary_info: last-updated
+          - entity: input_number.shares_edv
+            name: Number
+            secondary_info: last-updated
+          - entity: sensor.shares_value_edv
+            name: Value
+            icon: mdi:currency-usd
+      - type: entities
+        title: Telstra
+        entities:
+          - entity: sensor.share_value_tls
+            name: Price
+            secondary_info: last-updated
+          - entity: input_number.shares_tls
+            name: Number
+            secondary_info: last-updated
+          - entity: sensor.shares_value_tls
+            name: Value
+            icon: mdi:currency-usd
+      - type: entities
+        title: Woolworths
+        entities:
+          - entity: sensor.share_value_wow
+            name: Price
+            secondary_info: last-updated
+          - entity: input_number.shares_wow
+            name: Number
+            secondary_info: last-updated
+          - entity: sensor.shares_value_wow
+            name: Value
+            icon: mdi:currency-usd

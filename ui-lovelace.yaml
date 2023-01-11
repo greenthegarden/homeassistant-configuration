@@ -9,6 +9,7 @@ title: Home
 views:
   - !include lovelace/home.yaml
   - !include lovelace/philip.yaml
+  - !include lovelace/philip/philip_shares.yaml
   - !include lovelace/thanh.yaml
   - !include lovelace/environment.yaml
   - !include lovelace/solar.yaml

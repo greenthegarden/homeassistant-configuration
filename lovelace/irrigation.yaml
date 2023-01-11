@@ -179,7 +179,7 @@ cards:
       - type: weather-forecast
         entity: weather.bom_home
       - type: entities
-        title: Current Conditions
+        # title: Current Conditions
         entities:
           - entity: sensor.outdoor_temperature
             name: Temperature

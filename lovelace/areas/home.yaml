@@ -46,7 +46,21 @@ cards:
               - entity: sensor.indoor_humidity
                 name: Indoor
             hours_to_show: 48
-
+      - type: history-graph
+        title: Temperature
+        hours_to_show: 24
+        entities:
+          # - entity: sensor.enviro_3_bme280_temperature
+          #   name: Enviro+
+          - entity: sensor.f016th_channel_1_temperature
+            name: Exercise Room
+          - entity: sensor.f016th_channel_2_temperature
+            name: Back Bedroom
+          - entity: sensor.indoor_temperature
+            name: Indoor
+          - entity: sensor.outdoor_temperature
+            name: Outdoor
+            
   - type: vertical-stack
     title: House State
     cards:

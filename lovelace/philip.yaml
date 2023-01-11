@@ -12,9 +12,10 @@ visible:
 # theme: sad
 cards:
   - type: vertical-stack
+    title: Status
     cards:
       - type: entities
-        title: Philip
+        # title: Philip
         entities:
           # - entity: person.philip
           #   name: Whereabouts
@@ -27,8 +28,24 @@ cards:
           - entity: input_boolean.philip_bed
             name: In bed
             secondary_info: last-updated
+
+  - type: vertical-stack
+    title: Links
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: button
+            name: Shares
+            icon: mdi:currency-usd
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace/philip_shares
+
+  - type: vertical-stack
+    title: Devices
+    cards:
       - type: entities
-        title: Devices
+        # title: Devices
         entities:
           - entity: sensor.philip_phone
             name: Nokia 5.3 Phone
@@ -52,49 +69,55 @@ cards:
             name: Is charging
             secondary_info: last-updated
 
-  - type: vertical-stack
-    cards:
-      - type: history-graph
-        hours_to_show: 240
-        entities:
-          - entity: sensor.shares_value_edv
-            name: Endeavour Group
-          - entity: sensor.shares_value_tls
-            name: Telstra
-          - entity: sensor.shares_value_wow
-            name: Woolworths
-      - type: entities
-        title: Shares
-        entities:
-          - type: section
-            label: Total Value
-          - entity: sensor.shares_value_total
-            name: Total
-          - type: section
-            label: Endeavour Group
-          - entity: sensor.share_value_edv
-            name: Price
-          - entity: input_number.shares_edv
-            name: Number
-          - entity: sensor.shares_value_edv
-            name: Value
-            icon: mdi:currency-usd
-          - type: section
-            label: Telstra
-          - entity: sensor.share_value_tls
-            name: Price
-          - entity: input_number.shares_tls
-            name: Number
-          - entity: sensor.shares_value_tls
-            name: Value
-            icon: mdi:currency-usd
-          - type: section
-            label: Woolworths
-          - entity: sensor.share_value_wow
-            name: Price
-          - entity: input_number.shares_wow
-            name: Number
-          - entity: sensor.shares_value_wow
-            name: Value
-            icon: mdi:currency-usd
-          - entity: sensor.asx_data_last_updated
+
+
+
+  # - type: vertical-stack
+  #   title: Shares
+  #   cards:
+  #     - type: history-graph
+  #       hours_to_show: 240
+  #       entities:
+  #         - entity: sensor.shares_value_edv
+  #           name: Endeavour Group
+  #         - entity: sensor.shares_value_tls
+  #           name: Telstra
+  #         - entity: sensor.shares_value_wow
+  #           name: Woolworths
+  #     - type: entities
+  #       # title: Shares
+  #       entities:
+  #         # - type: section
+  #         #   label: Total Value
+  #         - entity: sensor.shares_value_total
+  #           name: Total Value
+  #         - type: section
+  #           label: Endeavour Group
+  #         - entity: sensor.share_value_edv
+  #           name: Price
+  #         - entity: input_number.shares_edv
+  #           name: Number
+  #         - entity: sensor.shares_value_edv
+  #           name: Value
+  #           icon: mdi:currency-usd
+  #         - type: section
+  #           label: Telstra
+  #         - entity: sensor.share_value_tls
+  #           name: Price
+  #         - entity: input_number.shares_tls
+  #           name: Number
+  #         - entity: sensor.shares_value_tls
+  #           name: Value
+  #           icon: mdi:currency-usd
+  #         - type: section
+  #           label: Woolworths
+  #         - entity: sensor.share_value_wow
+  #           name: Price
+  #         - entity: input_number.shares_wow
+  #           name: Number
+  #         - entity: sensor.shares_value_wow
+  #           name: Value
+  #           icon: mdi:currency-usd
+  #         - type: section
+  #           # label: Total Value
+  #         - entity: sensor.asx_data_last_updated

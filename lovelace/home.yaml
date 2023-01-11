@@ -139,13 +139,13 @@ cards:
           - entity: sensor.outdoor_thermal_comfort_thermal_perception
             name: Thermal Comfort
             secondary_info: last-updated
-          - entity: sensor.outdoor_temperature
-            name: Temperature
-            secondary_info: last-updated
-          - entity: sensor.outdoor_humidity
-            name: Humidity
-            secondary_info: last-updated
-          - entity: sensor.ft020t_windspeed_avg
+          # - entity: sensor.outdoor_temperature
+          #   name: Temperature
+          #   secondary_info: last-updated
+          # - entity: sensor.outdoor_humidity
+          #   name: Humidity
+          #   secondary_info: last-updated
+          - entity: sensor.ft020t_windspeed_avg_2
             name: Windspeed
             icon: mdi:weather-windy
             secondary_info: last-updated
@@ -181,7 +181,7 @@ cards:
             name: Outdoor
 
   - type: vertical-stack
-    title: BOM Weather
+    title: BOM Forecast
     cards:
       - type: entities
         # title: Weather
